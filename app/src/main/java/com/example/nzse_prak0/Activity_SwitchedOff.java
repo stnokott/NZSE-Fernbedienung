@@ -2,6 +2,7 @@ package com.example.nzse_prak0;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,20 +18,22 @@ public class Activity_SwitchedOff extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_main_off);
 
-        final LottieAnimationView btnSwitchLottie = findViewById(R.id.btnSwitchLottie);
-        btnSwitchLottie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnSwitchLottie.playAnimation();
-            }
-        });
-
-        FloatingActionButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
+        final FloatingActionButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
         btnSwitchOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Activity_SwitchedOff.this, Activity_SwitchedOn.class));
-                finish(); // verhindert, dass man aus Activity_SwitchedOn per Back-Button zurück gehen kann
+                final LottieAnimationView btnSwitchLottie = findViewById(R.id.lottieViewPower);
+                btnSwitchLottie.setVisibility(View.VISIBLE);
+                btnSwitchLottie.playAnimation();
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(Activity_SwitchedOff.this, Activity_SwitchedOn.class));
+                        finish(); // verhindert, dass man aus Activity_SwitchedOn per Back-Button zurück gehen kann
+                    }
+                }, 2000);
             }
         });
     }

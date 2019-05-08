@@ -19,7 +19,7 @@ public class Activity_SwitchedOn extends AppCompatActivity {
         setContentView(R.layout.activity_main_on);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(R.drawable.ic_settings_white_32px);
+        actionBar.setIcon(R.drawable.ic_settings_white_36dp);
 
         ImageButton btnSwitchOff = findViewById(R.id.btnSwitchOff);
         btnSwitchOff.setOnClickListener(new View.OnClickListener() {

@@ -6,59 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".Activity_SwitchedOff">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieViewPower"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_power_white_150dp" />
+        app:lottie_autoPlay="false"
+        app:lottie_colorFilter="@color/colorAccent"
+        app:lottie_fileName="loader_circle2.json"
+        app:lottie_loop="true"
+        app:lottie_scale="1.4" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/btnSwitchLottie"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSwitchOn"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ic_power_settings_new_white_36dp"
+        android:foregroundTint="#FFFFFF"
+        android:padding="@dimen/control_icon_padding"
+        android:scaleType="fitCenter"
+        app:backgroundTint="#D81B60"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.9"
-        app:lottie_autoPlay="false"
-        app:lottie_fileName="muzli.json"
-        app:lottie_loop="true" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnSwitchOn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:scaleType="center"
-        android:visibility="invisible"
-        app:backgroundTint="@android:color/holo_red_light"
-        app:fabCustomSize="250dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.4"
         app:maxImageSize="150dp"
-        app:srcCompat="@drawable/ic_power_white_150dp" />
+        app:rippleColor="@color/colorAccentLight" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
