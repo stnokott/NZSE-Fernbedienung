@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/btnSettings"
-        android:icon="@drawable/ic_settings_white_32px"
+        android:icon="@drawable/ic_settings_white_36dp"
         app:showAsAction="always" />
 
 
