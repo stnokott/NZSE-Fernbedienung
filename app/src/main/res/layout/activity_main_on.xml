@@ -16,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:adjustViewBounds="true"
-        android:backgroundTint="@android:color/holo_red_light"
+        android:backgroundTint="@color/colorAccent"
         android:backgroundTintMode="src_over"
         android:contentDescription="@string/descBtnPower"
         android:elevation="@dimen/control_elevation_material"
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_power_white_150dp" />
+        app:srcCompat="@drawable/ic_power_settings_new_white_36dp" />
 
     <Button
         android:id="@+id/btnChannels"
@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.15"
-        app:srcCompat="@drawable/ic_star_40px" />
+        app:srcCompat="@drawable/ic_star_black_36dp" />
 
     <ImageView
         android:id="@+id/imgTV"
@@ -83,7 +83,7 @@
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.12"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_tv_24px" />
+        app:srcCompat="@drawable/ic_tv_black_36dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -109,7 +109,7 @@
             android:padding="@dimen/control_icon_padding"
             android:scaleType="fitCenter"
             android:tint="@color/colorAccent"
-            app:srcCompat="@drawable/ic_navigate_before_40px" />
+            app:srcCompat="@drawable/ic_navigate_before_black_36dp" />
 
         <ImageButton
             android:id="@+id/btnVolumeUp"
@@ -122,7 +122,7 @@
             android:padding="@dimen/control_icon_padding"
             android:scaleType="fitCenter"
             android:tint="@color/colorAccent"
-            app:srcCompat="@drawable/ic_navigate_next_40px" />
+            app:srcCompat="@drawable/ic_navigate_next_black_36dp" />
     </LinearLayout>
 
     <ImageButton
@@ -141,7 +141,7 @@
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.12"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_volume_32px" />
+        app:srcCompat="@drawable/ic_volume_up_black_36dp" />
 
     <SeekBar
         android:id="@+id/sliderVolume"
@@ -175,7 +175,7 @@
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_clone_24px" />
+        app:srcCompat="@drawable/ic_filter_none_black_36dp" />
 
     <View
         android:id="@+id/divider2"
@@ -257,7 +257,7 @@
                 android:tint="@color/colorPrimaryDark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_star_border_40px" />
+                app:srcCompat="@drawable/ic_star_border_black_36dp" />
 
             <TextView
                 android:id="@+id/lblPlaying"
@@ -279,7 +279,7 @@
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -295,7 +295,7 @@
                 android:padding="@dimen/control_icon_padding"
                 android:scaleType="fitCenter"
                 android:tint="@color/colorPrimaryDark"
-                app:srcCompat="@drawable/ic_pause_150dp" />
+                app:srcCompat="@drawable/ic_pause_black_36dp" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
