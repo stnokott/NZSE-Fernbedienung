@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.nzse_prak0.Activity_SwitchedOn">
+
+    <item
+        android:id="@+id/btnSettings"
+        android:icon="@drawable/ic_settings_white_32px"
+        app:showAsAction="always" />
+
+
+</menu>

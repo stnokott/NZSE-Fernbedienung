@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">NZSE Praktikum</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login2">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="descBtnSettings">Settings Button</string>
+    <string name="descBtnPower">Power Button</string>
+    <string name="descBtnFavs">Favorites Button</string>
+    <string name="descImgTV">TV Image</string>
+    <string name="descBtnVolumeDown">Volume Down Button</string>
+    <string name="descBtnVolumeUp">Volume Up Button</string>
+    <string name="descBtnMute">Mute Button</string>
+    <string name="descBtnPiP">Picture-In-Picture Button</string>
+    <string name="descBtnPause">Pause Button</string>
+
+    <string name="lblBtnChannels">Programme</string>
+    <string name="lblPlaying">Pro 7</string>
+    <string name="lblCurrentChannel">Aktueller Sender</string>
+    <string name="lblRatio">Seitenverhältnis</string>
+    <string name="lblMisc">Beispieleinstellung</string>
+
+    <string name="titleMainOff">Fernseher anschalten</string>
+    <string name="titleMainOn">Fernseher bedienen</string>
+
+    <string-array name="ratios_array">
+        <item>16:9</item>
+        <item>16:10</item>
+        <item>4:3</item>
+    </string-array>
+
+</resources>

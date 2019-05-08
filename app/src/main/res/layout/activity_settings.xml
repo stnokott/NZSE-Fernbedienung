@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity_Settings">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/control_padding_material"
+        android:paddingBottom="@dimen/control_padding_material"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/control_padding_material"
+                android:paddingRight="@dimen/control_padding_material">
+
+                <TextView
+                    android:id="@+id/lblRatio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/selectRatio"
+                    android:text="@string/lblRatio"
+                    android:textSize="@dimen/control_label_fontsize" />
+
+                <Spinner
+                    android:id="@+id/selectRatio"
+                    style="@android:style/Widget.Material.Light.Spinner.Underlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/ratios_array" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/control_border_thickness"
+                android:layout_marginTop="@dimen/control_padding_material"
+                android:layout_marginBottom="@dimen/control_padding_material"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/control_padding_material"
+                android:paddingRight="@dimen/control_padding_material">
+
+                <TextView
+                    android:id="@+id/lblMisc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:labelFor="@id/selectRatio"
+                    android:text="@string/lblMisc"
+                    android:textSize="@dimen/control_label_fontsize" />
+
+                <Switch
+                    android:id="@+id/toggleMisc"
+                    style="@android:style/Widget.Material.Light.CompoundButton.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:switchMinWidth="32dp"
+                    tools:checked="true" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/control_border_thickness"
+                android:layout_marginTop="@dimen/control_padding_material"
+                android:layout_marginBottom="@dimen/control_padding_material"
+                android:background="@android:color/darker_gray" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
