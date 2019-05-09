@@ -16,7 +16,7 @@ public class Activity_SwitchedOn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        setContentView(R.layout.activity_main_on);
+        setContentView(R.layout.activity_main_on_vert);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);

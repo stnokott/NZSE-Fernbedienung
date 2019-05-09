@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="false"
         app:lottie_colorFilter="@color/colorAccent"
-        app:lottie_fileName="loader_circle2.json"
+        app:lottie_fileName="loader_circle.json"
         app:lottie_loop="true"
         app:lottie_scale="1.4" />
 
