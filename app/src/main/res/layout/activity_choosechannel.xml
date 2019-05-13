@@ -48,13 +48,14 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:text="1"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="1" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/btnFavorite0"
@@ -107,13 +108,14 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:text="2"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="2" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/btnFavorite1"
@@ -177,13 +179,14 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:text="3"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="3" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/btnFavorite2"
@@ -236,6 +239,8 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:text="4"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -305,13 +310,14 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:text="5"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="5" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/btnFavorite4"
@@ -364,13 +370,14 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:text="6"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="6" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/btnFavorite5"
@@ -433,13 +440,14 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:text="7"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="7" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/btnFavorite6"
@@ -492,13 +500,14 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:text="8"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="8" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/btnFavorite7"
@@ -518,7 +527,7 @@
                             app:srcCompat="@drawable/ic_star_border_black_36dp" />
 
                         <TextView
-                            android:id="@+id/lbl5"
+                            android:id="@+id/lbl7"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="#26000000"

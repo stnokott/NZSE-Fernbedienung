@@ -30,7 +30,7 @@ public class Activity_SwitchedOff extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(new Intent(Activity_SwitchedOff.this, Activity_ChooseChannel.class));
+                        startActivity(new Intent(Activity_SwitchedOff.this, Activity_ChooseFavorite.class));
                         finish(); // verhindert, dass man aus Activity_SwitchedOn per Back-Button zurück gehen kann
                     }
                 }, 2000);

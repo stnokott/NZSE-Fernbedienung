@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activity_ChooseChannel"
-            android:label="Kanal wählen">
+            android:name=".Activity_ChooseFavorite"
+            android:label="Favorit wählen">
         </activity>
+        <activity
+            android:name=".Activity_ChooseChannel"
+            android:label="Kanal wählen"></activity>
         <activity
             android:name=".Activity_Settings"
             android:label="Einstellungen">
@@ -23,20 +26,17 @@
         <activity
             android:name=".Activity_SwitchedOn"
             android:label="@string/titleMainOn"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activity_SwitchedOff"
             android:label="@string/titleMainOff"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
