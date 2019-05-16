@@ -37,11 +37,11 @@
                         android:backgroundTint="#EF5350"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
-                        app:layout_constraintEnd_toStartOf="@+id/tile1"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent=".4" >
+                        app:layout_constraintWidth_percent=".4">
 
                         <TextView
                             android:id="@+id/lblBg0"
@@ -88,6 +88,13 @@
                             app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/tile1"
                         android:layout_width="0dp"
@@ -98,10 +105,10 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tile0"
+                        app:layout_constraintStart_toStartOf="@+id/guideline"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent=".4" >
+                        app:layout_constraintWidth_percent=".4">
 
                         <TextView
                             android:id="@+id/lblBg1"
@@ -168,7 +175,7 @@
                         android:backgroundTint="#66BB6A"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
-                        app:layout_constraintEnd_toStartOf="@+id/tile3"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_default="percent"
@@ -219,6 +226,13 @@
                             app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/tile3"
                         android:layout_width="0dp"
@@ -229,7 +243,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tile2"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_default="percent"
                         app:layout_constraintWidth_percent=".4">
@@ -299,7 +313,7 @@
                         android:backgroundTint="#AB47BC"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
-                        app:layout_constraintEnd_toStartOf="@+id/tile5"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_default="percent"
@@ -350,6 +364,13 @@
                             app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/tile5"
                         android:layout_width="0dp"
@@ -360,7 +381,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tile4"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_default="percent"
                         app:layout_constraintWidth_percent=".4">
@@ -429,7 +450,7 @@
                         android:backgroundTint="#42A5F5"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
-                        app:layout_constraintEnd_toStartOf="@+id/tile7"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline4"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_default="percent"
@@ -480,6 +501,13 @@
                             app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/tile7"
                         android:layout_width="0dp"
@@ -490,7 +518,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tile6"
+                        app:layout_constraintStart_toStartOf="@+id/guideline4"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_default="percent"
                         app:layout_constraintWidth_percent=".4">
