@@ -26,6 +26,8 @@
     <string name="lblCurrentChannel">Aktueller Sender</string>
     <string name="lblRatio">Seitenverhältnis</string>
     <string name="lblMisc">Beispieleinstellung</string>
+    <string name="lblBtnSearch">Suche</string>
+    <string name="lblBtnSettings">Einstellungen</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>

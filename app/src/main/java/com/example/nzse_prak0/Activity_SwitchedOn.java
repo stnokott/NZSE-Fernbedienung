@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.ActionBar;
@@ -16,18 +17,12 @@ public class Activity_SwitchedOn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        setContentView(R.layout.activity_main_on_vert);
+        setContentView(R.layout.activity_main_on);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
 
-        ImageButton btnSwitchOff = findViewById(R.id.btnSwitchOff);
-        btnSwitchOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Activity_SwitchedOn.this, Activity_SwitchedOff.class));
-            }
-        });
+        createListeners();
     }
 
     @Override
@@ -39,7 +34,7 @@ public class Activity_SwitchedOn extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main_on, menu);
         return true;
     }
 
@@ -61,5 +56,23 @@ public class Activity_SwitchedOn extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // tu nichts (verhindert Back-Button-Nutzung)
+    }
+
+    private void createListeners() {
+        ImageButton btnSwitchOff = findViewById(R.id.btnSwitchOff);
+        btnSwitchOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_SwitchedOn.this, Activity_SwitchedOff.class));
+            }
+        });
+
+        Button btnChannels = findViewById(R.id.btnChannels);
+        btnChannels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_SwitchedOn.this, Activity_ChooseChannel.class));
+            }
+        });
     }
 }
