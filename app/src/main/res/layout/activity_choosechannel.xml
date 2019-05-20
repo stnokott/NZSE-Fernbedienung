@@ -34,8 +34,7 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_margin="8dp"
-                        android:background="@drawable/ic_bg_black"
-                        android:backgroundTint="#EF5350"
+                        android:background="#EF5350"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1"
                         app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -47,7 +46,6 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:alpha="0.2"
-                            android:fontFamily="sans-serif-condensed-medium"
                             android:text="1"
                             android:textAlignment="center"
                             app:autoSizeTextType="uniform"
@@ -58,12 +56,10 @@
 
                         <ImageButton
                             android:id="@+id/btnFavorite0"
-                            style="@android:style/Widget.DeviceDefault.Light.ImageButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/descBtnFavs"
                             android:elevation="3dp"
@@ -555,81 +551,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/tile8"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/ic_bg_black"
-                        android:backgroundTint="#42A5F5"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/lblBg8"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:alpha="0.2"
-                            android:fontFamily="sans-serif-condensed-medium"
-                            android:text="9"
-                            android:textAlignment="center"
-                            app:autoSizeTextType="uniform"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageButton
-                            android:id="@+id/btnFavorite8"
-                            style="@android:style/Widget.DeviceDefault.Light.ImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/descBtnFavs"
-                            android:elevation="3dp"
-                            android:outlineProvider="none"
-                            android:tint="@android:color/white"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_star_border_black_36dp" />
-
-                        <TextView
-                            android:id="@+id/lbl8"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="#26000000"
-                            android:padding="8dp"
-                            android:text="@string/senderPlaceholder"
-                            android:textAlignment="center"
-                            android:textColor="@android:color/white"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </TableRow>
         </TableLayout>
     </ScrollView>
 
