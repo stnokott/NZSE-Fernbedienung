@@ -17,3 +17,4 @@ app/src/main/.scannerwork/
 /.idea/sonarlint.xml
 /.idea/sonarlint-state.xml
 /.idea/sonarSettings.xml
+/.idea/sonarIssues.xml
