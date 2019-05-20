@@ -3,6 +3,9 @@ package com.example.nzse_prak0;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,17 +25,9 @@ public class Activity_ChooseChannel extends AppCompatActivity {
 
         TableLayout tl = findViewById(R.id.tableLayout);
         tileManager = new ChannelTileManager(tl);
-        //tileManager.addTile("Schnansch");
-
-        ConstraintLayout testLayout = findViewById(R.id.testLayout);
-        ChannelTile newTile = new ChannelTile(testLayout.getContext(), "Schnansch", "0", Color.RED);
-        ConstraintSet cset = new ConstraintSet();
-        cset.clone(testLayout);
-        cset.constrainWidth(newTile.getId(), ConstraintSet.MATCH_CONSTRAINT);
-        cset.connect(newTile.getId(), ConstraintSet.END, testLayout.getId(), ConstraintSet.END, 0);
-        cset.connect(newTile.getId(), ConstraintSet.BOTTOM, testLayout.getId(), ConstraintSet.BOTTOM, 0);
-        cset.applyTo(testLayout);
-        testLayout.addView(newTile);
+        tileManager.addTile("Tile 1");
+        tileManager.addTile("Tile 2");
+        tileManager.addTile("Tile 3");
 
         createListeners();
     }
