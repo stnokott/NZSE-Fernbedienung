@@ -13,13 +13,13 @@ import androidx.constraintlayout.widget.Guideline;
 
 import com.example.nzse_prak0.customviews.ChannelTile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelTileManager {
-    private int nextId = 0;
     private Context context;
     private TableLayout tl;
-    private List<ChannelTile> tiles;
+    private List<ChannelTile> tiles = new ArrayList<>();
 
     public ChannelTileManager(TableLayout tl) {
         this.context = tl.getContext();
@@ -40,6 +40,7 @@ public class ChannelTileManager {
 
             Guideline gl = (Guideline) LayoutHelper.getChildrenByClass(cl, Guideline.class).get(0);
 
+            // links von Guideline
             cset.connect(newTile.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
             cset.connect(newTile.getId(), ConstraintSet.END, gl.getId(), ConstraintSet.START);
             cset.applyTo(cl);
@@ -53,36 +54,42 @@ public class ChannelTileManager {
 
             Guideline gl = (Guideline) LayoutHelper.getChildrenByClass(cl, Guideline.class).get(0);
 
+            // rechts von Guideline
             cset.connect(newTile.getId(), ConstraintSet.START, gl.getId(), ConstraintSet.START);
             cset.connect(newTile.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
             cset.applyTo(cl);
         }
+        tiles.add(newTile);
     }
 
     private ConstraintLayout addRow() {
         TableRow newTr = new TableRow(context);
-        TableLayout.LayoutParams newTrParams = new TableLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+        TableRow.LayoutParams newTrParams = new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.MATCH_PARENT
         );
         newTr.setLayoutParams(newTrParams);
 
         ConstraintLayout newCl = new ConstraintLayout(context);
-        TableLayout.LayoutParams newClParams = new TableLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+        TableRow.LayoutParams newClParams = new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT
         );
         newCl.setLayoutParams(newClParams);
 
         Guideline newGuideline = new Guideline(context);
+        newGuideline.setId(View.generateViewId());
         ConstraintLayout.LayoutParams newGuidelineParams = new ConstraintLayout.LayoutParams(
-                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         ); // vertical Guideline
+        newGuidelineParams.orientation = ConstraintLayout.LayoutParams.VERTICAL;
+        newGuidelineParams.guidePercent = 0.5f;
         newGuideline.setLayoutParams(newGuidelineParams);
 
         newCl.addView(newGuideline);
         newTr.addView(newCl);
+        tl.addView(newTr, 0); // TODO: index-Attribut entfernen
 
         return newCl;
     }

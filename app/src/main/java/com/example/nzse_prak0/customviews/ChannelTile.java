@@ -2,6 +2,7 @@ package com.example.nzse_prak0.customviews;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -12,12 +13,10 @@ import com.example.nzse_prak0.R;
 import com.example.nzse_prak0.helpers.Units;
 
 public class ChannelTile extends ConstraintLayout {
-    private TextView lblBg, lblTitle;
-    private ImageButton btnFav;
-
     public ChannelTile(Context context, String title, String bgNum, int bgColor) {
         super(context);
 
+        setId(View.generateViewId());
         initLayoutParams();
         createBackgroundLabel(bgNum);
         createTitleLabel(title);
@@ -28,9 +27,10 @@ public class ChannelTile extends ConstraintLayout {
     private void initLayoutParams() {
         // set ConstraintLayout Parameters
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                LayoutParams.MATCH_CONSTRAINT,
+                LayoutParams.WRAP_CONTENT,
                 LayoutParams.MATCH_CONSTRAINT
         );
+        // TODO: zu MATCH_CONSTRAINT ändern
         params.dimensionRatio = "1";
         int px = Units.dpToPx(8, getContext()); // margins
         params.setMargins(px, px, px, px);
@@ -38,7 +38,8 @@ public class ChannelTile extends ConstraintLayout {
     }
 
     private void createBackgroundLabel(String text) {
-        lblBg = new TextView(getContext());
+        TextView lblBg = new TextView(getContext());
+        lblBg.setId(View.generateViewId());
         lblBg.setText(text);
 
         // Layout
@@ -59,10 +60,13 @@ public class ChannelTile extends ConstraintLayout {
         lblBg.setAlpha(0.2f);
         lblBg.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         lblBg.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+
+        addView(lblBg);
     }
 
     private void createTitleLabel(String title) {
-        lblTitle = new TextView(getContext());
+        TextView lblTitle = new TextView(getContext());
+        lblTitle.setId(View.generateViewId());
         lblTitle.setText(title);
 
         // Layout
@@ -85,10 +89,13 @@ public class ChannelTile extends ConstraintLayout {
         lblTitle.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         lblTitle.setTextColor(Color.WHITE);
         lblTitle.setBackgroundColor(0x26000000);
+
+        addView(lblTitle);
     }
 
     private void createFavButton() {
-        btnFav = new ImageButton(getContext());
+        ImageButton btnFav = new ImageButton(getContext());
+        btnFav.setId(View.generateViewId());
 
         // Layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
@@ -108,5 +115,7 @@ public class ChannelTile extends ConstraintLayout {
         btnFav.setElevation(Units.dpToPx(3, getContext()));
         btnFav.setOutlineProvider(null); // Schatten durch Elevation verhindern
         btnFav.setImageResource(R.drawable.ic_star_border_white_36dp);
+
+        addView(btnFav);
     }
 }
