@@ -21,6 +21,20 @@ public class ChannelTileManager {
     private TableLayout tl;
     private List<ChannelTile> tiles = new ArrayList<>();
 
+    private int[] colorList = {
+            Color.parseColor("#EF5350"),
+            Color.parseColor("#AB47BC"),
+            Color.parseColor("#FFA726"),
+            Color.parseColor("#29B6F6"),
+            Color.parseColor("#26A69A"),
+            Color.parseColor("#D4E157"),
+            Color.parseColor("#EC407A"),
+            Color.parseColor("#66BB6A"),
+            Color.parseColor("#5C6BC0"),
+            Color.parseColor("#26C6DA")
+    };
+    private int nextIndex = 0;
+
     public ChannelTileManager(TableLayout tl) {
         this.context = tl.getContext();
         this.tl = tl;
@@ -28,10 +42,8 @@ public class ChannelTileManager {
 
     public void addTile(String title) {
         // TODO: TileRow-Klasse schreiben, die Guideline- und Tile-Attribute hat, um unsichere Aufrufe zu getChildrenByClass zu vermeiden
-        ChannelTile newTile = new ChannelTile(context, title, "0", Color.RED);
-        ConstraintSet cset = new ConstraintSet();
-        cset.connect(newTile.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-        cset.connect(newTile.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+        ChannelTile newTile = new ChannelTile(context, title, Integer.toString(nextIndex+1), colorList[nextIndex %colorList.length]);
+        nextIndex++;
 
         if (tiles.size() % 2 == 0 || tiles.isEmpty()) {
             // neue Reihe anlegen
@@ -40,10 +52,10 @@ public class ChannelTileManager {
 
             Guideline gl = (Guideline) LayoutHelper.getChildrenByClass(cl, Guideline.class).get(0);
 
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) newTile.getLayoutParams();
             // links von Guideline
-            cset.connect(newTile.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            cset.connect(newTile.getId(), ConstraintSet.END, gl.getId(), ConstraintSet.START);
-            cset.applyTo(cl);
+            params.startToStart = ConstraintSet.PARENT_ID;
+            params.endToStart = gl.getId();
         } else {
             // in bestehende Reihe einfügen
             List<View> tableRows = LayoutHelper.getChildrenByClass(tl, TableRow.class);
@@ -54,10 +66,10 @@ public class ChannelTileManager {
 
             Guideline gl = (Guideline) LayoutHelper.getChildrenByClass(cl, Guideline.class).get(0);
 
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) newTile.getLayoutParams();
             // rechts von Guideline
-            cset.connect(newTile.getId(), ConstraintSet.START, gl.getId(), ConstraintSet.START);
-            cset.connect(newTile.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            cset.applyTo(cl);
+            params.startToStart = gl.getId();
+            params.endToEnd = ConstraintSet.PARENT_ID;
         }
         tiles.add(newTile);
     }
@@ -89,7 +101,7 @@ public class ChannelTileManager {
 
         newCl.addView(newGuideline);
         newTr.addView(newCl);
-        tl.addView(newTr, 0); // TODO: index-Attribut entfernen
+        tl.addView(newTr);
 
         return newCl;
     }

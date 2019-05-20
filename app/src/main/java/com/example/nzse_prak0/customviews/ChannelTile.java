@@ -18,26 +18,27 @@ public class ChannelTile extends ConstraintLayout {
 
         setId(View.generateViewId());
         initLayoutParams();
-        createBackgroundLabel(bgNum);
-        createTitleLabel(title);
+        createBackgroundLabel(bgNum, bgColor);
         createFavButton();
+        createTitleLabel(title);
         setBackgroundColor(bgColor);
     }
 
     private void initLayoutParams() {
         // set ConstraintLayout Parameters
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                LayoutParams.WRAP_CONTENT,
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_CONSTRAINT,
                 LayoutParams.MATCH_CONSTRAINT
         );
-        // TODO: zu MATCH_CONSTRAINT ändern
+        params.bottomToBottom = ConstraintSet.PARENT_ID;
+        params.topToTop = ConstraintSet.PARENT_ID;
         params.dimensionRatio = "1";
         int px = Units.dpToPx(8, getContext()); // margins
         params.setMargins(px, px, px, px);
         setLayoutParams(params);
     }
 
-    private void createBackgroundLabel(String text) {
+    private void createBackgroundLabel(String text, int bgColor) {
         TextView lblBg = new TextView(getContext());
         lblBg.setId(View.generateViewId());
         lblBg.setText(text);
@@ -47,17 +48,17 @@ public class ChannelTile extends ConstraintLayout {
                 LayoutParams.MATCH_CONSTRAINT,
                 LayoutParams.MATCH_CONSTRAINT
         );
+        params.startToStart = ConstraintSet.PARENT_ID;
+        params.endToEnd = ConstraintSet.PARENT_ID;
+        params.topToTop = ConstraintSet.PARENT_ID;
+        params.bottomToBottom = ConstraintSet.PARENT_ID;
         lblBg.setLayoutParams(params);
 
-        ConstraintSet cset = new ConstraintSet();
-        cset.connect(lblBg.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-        cset.connect(lblBg.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-        cset.connect(lblBg.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        cset.connect(lblBg.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-        cset.applyTo(this);
-
         // Weitere Parameter
-        lblBg.setAlpha(0.2f);
+        float[] hsv = new float[3];
+        Color.colorToHSV(bgColor, hsv);
+        hsv[2] *= 0.8f; // abdunkeln
+        lblBg.setTextColor(Color.HSVToColor(hsv));
         lblBg.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         lblBg.setTextAlignment(TEXT_ALIGNMENT_CENTER);
 
@@ -74,13 +75,10 @@ public class ChannelTile extends ConstraintLayout {
                 LayoutParams.MATCH_CONSTRAINT,
                 LayoutParams.WRAP_CONTENT
         );
+        params.startToStart = ConstraintSet.PARENT_ID;
+        params.endToEnd = ConstraintSet.PARENT_ID;
+        params.bottomToBottom = ConstraintSet.PARENT_ID;
         lblTitle.setLayoutParams(params);
-
-        ConstraintSet cset = new ConstraintSet();
-        cset.connect(lblTitle.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-        cset.connect(lblTitle.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-        cset.connect(lblTitle.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-        cset.applyTo(this);
 
         int px = Units.dpToPx(8, getContext());
         lblTitle.setPadding(px, px, px, px);
@@ -102,19 +100,18 @@ public class ChannelTile extends ConstraintLayout {
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT
         );
+        params.endToEnd = ConstraintSet.PARENT_ID;
+        params.topToTop = ConstraintSet.PARENT_ID;
         int px = Units.dpToPx(8, getContext()); // margins
-        params.setMargins(px, px, px, px);
+        params.setMargins(0, px, px, 0);
         btnFav.setLayoutParams(params);
-
-        ConstraintSet cset = new ConstraintSet();
-        cset.connect(btnFav.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-        cset.connect(btnFav.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        cset.applyTo(this);
+        btnFav.setPadding(0, 0, 0, 0);
 
         // weitere Parameter
         btnFav.setElevation(Units.dpToPx(3, getContext()));
         btnFav.setOutlineProvider(null); // Schatten durch Elevation verhindern
         btnFav.setImageResource(R.drawable.ic_star_border_white_36dp);
+        btnFav.setBackground(null);
 
         addView(btnFav);
     }
