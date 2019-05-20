@@ -14,3 +14,6 @@
 /.idea/sonarlint/
 app/libs/
 app/src/main/.scannerwork/
+/.idea/sonarlint.xml
+/.idea/sonarlint-state.xml
+/.idea/sonarSettings.xml
