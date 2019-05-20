@@ -2,6 +2,7 @@ package com.example.nzse_prak0.customviews;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -13,6 +14,9 @@ import com.example.nzse_prak0.R;
 import com.example.nzse_prak0.helpers.Units;
 
 public class ChannelTile extends ConstraintLayout {
+    private ImageButton btnFav;
+    private boolean isFav = false;
+
     public ChannelTile(Context context, String title, String bgNum, int bgColor) {
         super(context);
 
@@ -110,9 +114,31 @@ public class ChannelTile extends ConstraintLayout {
         // weitere Parameter
         btnFav.setElevation(Units.dpToPx(3, getContext()));
         btnFav.setOutlineProvider(null); // Schatten durch Elevation verhindern
-        btnFav.setImageResource(R.drawable.ic_star_border_white_36dp);
+        btnFav.setImageResource(R.drawable.star_fill_white_anim);
         btnFav.setBackground(null);
 
+        // Listener
+        btnFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFavButton();
+            }
+        });
+
         addView(btnFav);
+        this.btnFav = btnFav;
+    }
+
+    public void toggleFavButton() {
+        if (isFav) {
+            btnFav.setImageResource(R.drawable.star_fill_reverse_white_anim);
+        } else {
+            btnFav.setImageResource(R.drawable.star_fill_white_anim);
+        }
+
+        Animatable animatable = (Animatable) btnFav.getDrawable();
+        animatable.start();
+
+        isFav = !isFav;
     }
 }

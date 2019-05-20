@@ -74,6 +74,10 @@ public class ChannelTileManager {
         tiles.add(newTile);
     }
 
+    public ChannelTile getTileAt(int index) {
+        return tiles.get(index);
+    }
+
     private ConstraintLayout addRow() {
         TableRow newTr = new TableRow(context);
         TableRow.LayoutParams newTrParams = new TableRow.LayoutParams(
