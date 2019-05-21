@@ -3,6 +3,5 @@
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
     <option name="projectKey" value="stnokott_NZSE-Fernbedienung" />
-    <option name="serverId" value="SonarCloud" />
   </component>
 </project>
