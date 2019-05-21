@@ -1,14 +1,27 @@
 package com.example.nzse_prak0.helpers;
 
-import android.view.LayoutInflater;
+import android.graphics.Color;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nzse_prak0.R;
+import com.example.nzse_prak0.customviews.ChannelTile;
 
 public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder> {
+    private int[] colorList = {
+            Color.parseColor("#EF5350"),
+            Color.parseColor("#AB47BC"),
+            Color.parseColor("#FFA726"),
+            Color.parseColor("#29B6F6"),
+            Color.parseColor("#26A69A"),
+            Color.parseColor("#D4E157"),
+            Color.parseColor("#EC407A"),
+            Color.parseColor("#66BB6A"),
+            Color.parseColor("#5C6BC0"),
+            Color.parseColor("#26C6DA")
+    };
+
     private String[] mDataset;
 
     // Provide a reference to the views for each data item
@@ -16,10 +29,14 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     // you provide access to all the views for a data item in a view holder
     public static class TileViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView textView;
-        public TileViewHolder(TextView v) {
-            super(v);
-            textView = v;
+        private ChannelTile channelTile;
+        public TileViewHolder(ChannelTile c) {
+            super(c);
+            channelTile = c;
+        }
+
+        public ChannelTile getChannelTile() {
+            return channelTile;
         }
     }
 
@@ -30,23 +47,23 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
 
     // Create new views (invoked by the layout manager)
     @Override
-    public TileViewHolder onCreateViewHolder(ViewGroup parent,
+    public @NonNull TileViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                              int viewType) {
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_text_view, parent, false);
-        ...
-        TileViewHolder vh = new TileViewHolder(v);
-        return vh;
+        ChannelTile c = new ChannelTile(parent.getContext(), "", "", Color.RED);
+
+        return new TileViewHolder(c);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(TileViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TileViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(mDataset[position]);
-
+        ChannelTile channelTile = holder.getChannelTile();
+        channelTile.setTitle(mDataset[position]);
+        channelTile.setBgNum(Integer.toString(position+1));
+        channelTile.setColor(colorList[position%colorList.length]);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

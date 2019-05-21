@@ -14,6 +14,8 @@ import com.example.nzse_prak0.R;
 import com.example.nzse_prak0.helpers.Units;
 
 public class ChannelTile extends ConstraintLayout {
+    private TextView lblTitle;
+    private TextView lblBg;
     private ImageButton btnFav;
     private boolean isFav = false;
 
@@ -28,24 +30,21 @@ public class ChannelTile extends ConstraintLayout {
         setBackgroundColor(bgColor);
     }
 
-    private void initLayoutParams() {
+    public void initLayoutParams() {
         // set ConstraintLayout Parameters
         LayoutParams params = new LayoutParams(
-                LayoutParams.MATCH_CONSTRAINT,
-                LayoutParams.MATCH_CONSTRAINT
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
         );
-        params.bottomToBottom = ConstraintSet.PARENT_ID;
-        params.topToTop = ConstraintSet.PARENT_ID;
-        params.dimensionRatio = "1";
         int px = Units.dpToPx(8, getContext()); // margins
         params.setMargins(px, px, px, px);
         setLayoutParams(params);
     }
 
     private void createBackgroundLabel(String text, int bgColor) {
-        TextView lblBg = new TextView(getContext());
-        lblBg.setId(View.generateViewId());
-        lblBg.setText(text);
+        TextView newlblBg = new TextView(getContext());
+        newlblBg.setId(View.generateViewId());
+        newlblBg.setText(text);
 
         // Layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
@@ -56,23 +55,24 @@ public class ChannelTile extends ConstraintLayout {
         params.endToEnd = ConstraintSet.PARENT_ID;
         params.topToTop = ConstraintSet.PARENT_ID;
         params.bottomToBottom = ConstraintSet.PARENT_ID;
-        lblBg.setLayoutParams(params);
+        newlblBg.setLayoutParams(params);
 
         // Weitere Parameter
         float[] hsv = new float[3];
         Color.colorToHSV(bgColor, hsv);
         hsv[2] *= 0.8f; // abdunkeln
-        lblBg.setTextColor(Color.HSVToColor(hsv));
-        lblBg.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
-        lblBg.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        newlblBg.setTextColor(Color.HSVToColor(hsv));
+        newlblBg.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+        newlblBg.setTextAlignment(TEXT_ALIGNMENT_CENTER);
 
-        addView(lblBg);
+        addView(newlblBg);
+        lblBg = newlblBg;
     }
 
     private void createTitleLabel(String title) {
-        TextView lblTitle = new TextView(getContext());
-        lblTitle.setId(View.generateViewId());
-        lblTitle.setText(title);
+        TextView newlblTitle = new TextView(getContext());
+        newlblTitle.setId(View.generateViewId());
+        newlblTitle.setText(title);
 
         // Layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
@@ -82,22 +82,23 @@ public class ChannelTile extends ConstraintLayout {
         params.startToStart = ConstraintSet.PARENT_ID;
         params.endToEnd = ConstraintSet.PARENT_ID;
         params.bottomToBottom = ConstraintSet.PARENT_ID;
-        lblTitle.setLayoutParams(params);
+        newlblTitle.setLayoutParams(params);
 
         int px = Units.dpToPx(8, getContext());
-        lblTitle.setPadding(px, px, px, px);
+        newlblTitle.setPadding(px, px, px, px);
 
         // Weitere Parameter
-        lblTitle.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-        lblTitle.setTextColor(Color.WHITE);
-        lblTitle.setBackgroundColor(0x26000000);
+        newlblTitle.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        newlblTitle.setTextColor(Color.WHITE);
+        newlblTitle.setBackgroundColor(0x26000000);
 
-        addView(lblTitle);
+        addView(newlblTitle);
+        lblTitle = newlblTitle;
     }
 
     private void createFavButton() {
-        ImageButton btnFav = new ImageButton(getContext());
-        btnFav.setId(View.generateViewId());
+        ImageButton newbtnFav = new ImageButton(getContext());
+        newbtnFav.setId(View.generateViewId());
 
         // Layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
@@ -108,25 +109,25 @@ public class ChannelTile extends ConstraintLayout {
         params.topToTop = ConstraintSet.PARENT_ID;
         int px = Units.dpToPx(8, getContext()); // margins
         params.setMargins(0, px, px, 0);
-        btnFav.setLayoutParams(params);
-        btnFav.setPadding(0, 0, 0, 0);
+        newbtnFav.setLayoutParams(params);
+        newbtnFav.setPadding(0, 0, 0, 0);
 
         // weitere Parameter
-        btnFav.setElevation(Units.dpToPx(3, getContext()));
-        btnFav.setOutlineProvider(null); // Schatten durch Elevation verhindern
-        btnFav.setImageResource(R.drawable.star_fill_white_anim);
-        btnFav.setBackground(null);
+        newbtnFav.setElevation(Units.dpToPx(3, getContext()));
+        newbtnFav.setOutlineProvider(null); // Schatten durch Elevation verhindern
+        newbtnFav.setImageResource(R.drawable.star_fill_white_anim);
+        newbtnFav.setBackground(null);
 
         // Listener
-        btnFav.setOnClickListener(new View.OnClickListener() {
+        newbtnFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleFavButton();
             }
         });
 
-        addView(btnFav);
-        this.btnFav = btnFav;
+        addView(newbtnFav);
+        btnFav = newbtnFav;
     }
 
     public void toggleFavButton() {
@@ -140,5 +141,27 @@ public class ChannelTile extends ConstraintLayout {
         animatable.start();
 
         isFav = !isFav;
+    }
+
+    public void setTitle(String t) {
+        lblTitle.setText(t);
+    }
+
+    public void setBgNum(String n) {
+        lblBg.setText(n);
+    }
+
+    public void setColor(int c) {
+        setBackgroundColor(c);
+        float[] hsv = new float[3];
+        Color.colorToHSV(c, hsv);
+        hsv[2] *= 0.85f;
+        lblBg.setTextColor(Color.HSVToColor(hsv));
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // quadratisch machen
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
     }
 }

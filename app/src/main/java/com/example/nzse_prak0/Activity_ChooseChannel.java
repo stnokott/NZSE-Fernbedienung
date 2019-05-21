@@ -7,11 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nzse_prak0.helpers.ChannelTileManager;
 import com.example.nzse_prak0.helpers.TileAdapter;
 
 public class Activity_ChooseChannel extends AppCompatActivity {
-    private ChannelTileManager tileManager;
     private GridLayoutManager gridLayoutManager;
 
     @Override
