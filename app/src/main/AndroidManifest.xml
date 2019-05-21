@@ -10,25 +10,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activity_ChooseFavorite"
+            android:name=".ActivityChooseFavorite"
             android:label="Favorit wählen">
         </activity>
         <activity
-            android:name=".Activity_ChooseChannel"
+            android:name=".ActivityChooseChannel"
             android:label="Kanal wählen"></activity>
         <activity
-            android:name=".Activity_Settings"
+            android:name=".ActivitySettings"
             android:label="Einstellungen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activity_SwitchedOn" />
+                android:value=".ActivitySwitchedOn" />
         </activity>
         <activity
-            android:name=".Activity_SwitchedOn"
+            android:name=".ActivitySwitchedOn"
             android:label="@string/titleMainOn"
             android:launchMode="singleTop" />
         <activity
-            android:name=".Activity_SwitchedOff"
+            android:name=".ActivitySwitchedOff"
             android:label="@string/titleMainOff"
             android:launchMode="singleTop">
             <intent-filter>

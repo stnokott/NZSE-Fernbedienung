@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nzse_prak0.helpers.TileAdapter;
 
-public class Activity_ChooseChannel extends AppCompatActivity {
+public class ActivityChooseChannel extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
 
     @Override

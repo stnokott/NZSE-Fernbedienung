@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Activity_ChooseFavorite extends AppCompatActivity {
+public class ActivityChooseFavorite extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
