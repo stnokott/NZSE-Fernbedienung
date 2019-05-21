@@ -1,3 +1,5 @@
+// TODO: Statt ConstraintLayout RecyclerView mit GridLayoutManager verwenden
+
 package com.example.nzse_prak0.customviews;
 
 import android.content.Context;
@@ -5,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -102,14 +105,20 @@ public class ChannelTile extends ConstraintLayout {
         // Layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT
+                LayoutParams.MATCH_CONSTRAINT
         );
         params.endToEnd = ConstraintSet.PARENT_ID;
         params.topToTop = ConstraintSet.PARENT_ID;
         int px = Units.dpToPx(8, getContext()); // margins
         params.setMargins(0, px, px, 0);
         btnFav.setLayoutParams(params);
+
         btnFav.setPadding(0, 0, 0, 0);
+        btnFav.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        // TODO: statt manueller Skalierung höherskaliertes Icon verwenden
+        px = Units.dpToPx(32, getContext());
+        btnFav.setMinimumHeight(px);
+        btnFav.setMinimumWidth(px);
 
         // weitere Parameter
         btnFav.setElevation(Units.dpToPx(3, getContext()));
