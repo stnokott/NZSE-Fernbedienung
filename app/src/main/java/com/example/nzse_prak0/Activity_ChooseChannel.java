@@ -1,16 +1,33 @@
 package com.example.nzse_prak0;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TableLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+
+import com.example.nzse_prak0.customviews.ChannelTile;
+import com.example.nzse_prak0.helpers.ChannelTileManager;
 
 public class Activity_ChooseChannel extends AppCompatActivity {
+    private ChannelTileManager tileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosechannel);
+
+        TableLayout tl = findViewById(R.id.tableLayout);
+        tileManager = new ChannelTileManager(tl);
+        tileManager.addTile("Tile 1");
+        tileManager.addTile("Tile 2");
+        tileManager.addTile("Tile 3");
 
         createListeners();
     }
