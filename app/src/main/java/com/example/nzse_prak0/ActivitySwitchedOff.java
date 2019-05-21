@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class Activity_SwitchedOff extends AppCompatActivity {
+public class ActivitySwitchedOff extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,8 @@ public class Activity_SwitchedOff extends AppCompatActivity {
         btnSwitchOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Activity_SwitchedOff.this, Activity_ChooseChannel.class));
-                finish(); // verhindert, dass man aus Activity_SwitchedOn per Back-Button zurück gehen kann
+                startActivity(new Intent(ActivitySwitchedOff.this, ActivityChooseChannel.class));
+                finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
             }
         });
     }

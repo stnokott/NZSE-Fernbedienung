@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.nzse_prak0.Activity_SwitchedOn">
+    tools:context="com.example.nzse_prak0.ActivitySwitchedOn">
 
     <item
         android:id="@+id/btnSettings"

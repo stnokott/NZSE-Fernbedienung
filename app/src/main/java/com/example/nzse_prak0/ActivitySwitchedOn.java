@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Activity_SwitchedOn extends AppCompatActivity {
+public class ActivitySwitchedOn extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class Activity_SwitchedOn extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.btnSettings) {
-            startActivity(new Intent(Activity_SwitchedOn.this, Activity_Settings.class));
+            startActivity(new Intent(ActivitySwitchedOn.this, ActivitySettings.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -63,7 +63,7 @@ public class Activity_SwitchedOn extends AppCompatActivity {
         btnSwitchOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Activity_SwitchedOn.this, Activity_SwitchedOff.class));
+                startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
             }
         });
 
@@ -71,7 +71,7 @@ public class Activity_SwitchedOn extends AppCompatActivity {
         btnChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Activity_SwitchedOn.this, Activity_ChooseChannel.class));
+                startActivity(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class));
             }
         });
     }
