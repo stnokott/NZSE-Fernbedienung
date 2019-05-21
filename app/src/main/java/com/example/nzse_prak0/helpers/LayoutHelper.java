@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class LayoutHelper {
+    private LayoutHelper() {}
+
     public static List<View> getChildrenByClass(ViewGroup v, Class c) {
         List<View> returnList = new ArrayList<>();
         int x = v.getChildCount();

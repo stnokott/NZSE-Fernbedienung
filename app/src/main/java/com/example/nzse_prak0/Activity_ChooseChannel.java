@@ -2,25 +2,31 @@ package com.example.nzse_prak0;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.TableLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nzse_prak0.helpers.ChannelTileManager;
+import com.example.nzse_prak0.helpers.TileAdapter;
 
 public class Activity_ChooseChannel extends AppCompatActivity {
-    private ChannelTileManager tileManager;
+    private GridLayoutManager gridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choosechannel);
+        //setContentView(R.layout.activity_choosechannel);
+        setContentView(R.layout.activity_choosechannel_recycle);
 
-        TableLayout tl = findViewById(R.id.tableLayout);
-        tileManager = new ChannelTileManager(tl);
-        tileManager.addTile("Tile 1");
-        tileManager.addTile("Tile 2");
-        tileManager.addTile("Tile 3");
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
+
+        gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        String[] tileNames = {"Pro 7", "Kabeleins", "RTL", "ARD"};
+        TileAdapter tileAdapter = new TileAdapter(tileNames);
+        recyclerView.setAdapter(tileAdapter);
 
         createListeners();
     }
