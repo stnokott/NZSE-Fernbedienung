@@ -63,7 +63,7 @@ public class ChannelTile extends ConstraintLayout {
         Color.colorToHSV(bgColor, hsv);
         hsv[2] *= 0.8f; // abdunkeln
         lblBg.setTextColor(Color.HSVToColor(hsv));
-        lblBg.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+        //lblBg.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         lblBg.setTextAlignment(TEXT_ALIGNMENT_CENTER);
 
         addView(lblBg);
