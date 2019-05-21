@@ -16,7 +16,7 @@ public class Activity_ChooseChannel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_choosechannel);
-        setContentView(R.layout.activity_choosechannel_recycle);
+        setContentView(R.layout.activity_choosechannel);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
