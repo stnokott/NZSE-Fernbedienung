@@ -1,5 +1,3 @@
-// TODO: Statt ConstraintLayout RecyclerView mit GridLayoutManager verwenden
-
 package com.example.nzse_prak0.customviews;
 
 import android.content.Context;
