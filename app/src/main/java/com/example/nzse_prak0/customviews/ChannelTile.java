@@ -112,8 +112,13 @@ public class ChannelTile extends ConstraintLayout {
         int px = Units.dpToPx(8, getContext()); // margins
         params.setMargins(0, px, px, 0);
         btnFav.setLayoutParams(params);
+
         btnFav.setPadding(0, 0, 0, 0);
         btnFav.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        // TODO: statt manueller Skalierung höherskaliertes Icon verwenden
+        px = Units.dpToPx(32, getContext());
+        btnFav.setMinimumHeight(px);
+        btnFav.setMinimumWidth(px);
 
         // weitere Parameter
         btnFav.setElevation(Units.dpToPx(3, getContext()));
