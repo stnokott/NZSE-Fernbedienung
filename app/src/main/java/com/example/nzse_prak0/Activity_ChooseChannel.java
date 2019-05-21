@@ -1,18 +1,11 @@
 package com.example.nzse_prak0;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
-import com.example.nzse_prak0.customviews.ChannelTile;
 import com.example.nzse_prak0.helpers.ChannelTileManager;
 
 public class Activity_ChooseChannel extends AppCompatActivity {
