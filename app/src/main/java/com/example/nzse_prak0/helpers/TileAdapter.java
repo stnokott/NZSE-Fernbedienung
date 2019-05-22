@@ -29,12 +29,15 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class TileViewHolder extends RecyclerView.ViewHolder {
+    // nicht static
+    public class TileViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         private ChannelTile channelTile;
         public TileViewHolder(ChannelTile c) {
             super(c);
             channelTile = c;
+            channelTile.setTag(this); // ViewHolder-Instanz als Tag, um von ChannelTile ViewHolder zu bekommen
+            channelTile.setOnClickListener(onItemClickListener);
         }
 
         public ChannelTile getChannelTile() {
