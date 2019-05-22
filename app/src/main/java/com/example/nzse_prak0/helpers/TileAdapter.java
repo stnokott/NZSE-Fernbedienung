@@ -1,6 +1,7 @@
 package com.example.nzse_prak0.helpers;
 
 import android.graphics.Color;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
             Color.parseColor("#26C6DA")
     };
 
+    private View.OnClickListener onItemClickListener;
     private String[] channelNames;
 
     // Provide a reference to the views for each data item
@@ -72,4 +74,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
         return channelNames.length;
     }
 
+    public void setOnItemClickListener(View.OnClickListener clickListener) {
+        this.onItemClickListener = clickListener;
+    }
 }
