@@ -20,7 +20,7 @@ public class ActivitySwitchedOff extends AppCompatActivity {
         btnSwitchOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivitySwitchedOff.this, ActivityChooseChannel.class));
+                startActivity(new Intent(ActivitySwitchedOff.this, ActivitySwitchedOn.class));
                 finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
             }
         });

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -74,5 +75,14 @@ public class ActivitySwitchedOn extends AppCompatActivity {
                 startActivity(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class));
             }
         });
+
+        ImageButton btnFavs = findViewById(R.id.btnFavs);
+        btnFavs.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(ActivitySwitchedOn.this, ActivityChooseFavorite.class));
+            }
+        });
+
     }
 }
