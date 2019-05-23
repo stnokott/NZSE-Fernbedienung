@@ -17,7 +17,7 @@ public class ActivityChooseChannel extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosechannel);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewChannel);
         recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
