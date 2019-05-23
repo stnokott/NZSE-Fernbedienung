@@ -159,6 +159,10 @@ public class ChannelTile extends ConstraintLayout {
         lblBg.setTextColor(Color.HSVToColor(hsv));
     }
 
+    public String getTitle() {
+        return lblTitle.getText().toString();
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // quadratisch machen
