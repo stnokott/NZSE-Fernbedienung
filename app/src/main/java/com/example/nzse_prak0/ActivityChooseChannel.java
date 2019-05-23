@@ -2,6 +2,8 @@ package com.example.nzse_prak0;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,7 +17,7 @@ public class ActivityChooseChannel extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosechannel);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewChannel);
         recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
@@ -25,7 +27,7 @@ public class ActivityChooseChannel extends AppCompatActivity {
         TileAdapter tileAdapter = new TileAdapter(tileNames);
         recyclerView.setAdapter(tileAdapter);
 
-        createListeners();
+        createListeners(tileAdapter);
     }
 
     @Override
@@ -35,7 +37,17 @@ public class ActivityChooseChannel extends AppCompatActivity {
         return true;
     }
 
-    private void createListeners() {
+    private void createListeners(TileAdapter tileAdapter) {
+        // Listener für Tiles
+        tileAdapter.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TileAdapter.TileViewHolder viewHolder = (TileAdapter.TileViewHolder) v.getTag();
 
+                String channelName = viewHolder.getChannelTile().getTitle();
+                Toast t = Toast.makeText(getApplicationContext(), channelName, Toast.LENGTH_SHORT);
+                t.show();
+            }
+        });
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.widget.TextViewCompat;
 
 import com.example.nzse_prak0.R;
 import com.example.nzse_prak0.helpers.Units;
@@ -62,7 +63,7 @@ public class ChannelTile extends ConstraintLayout {
         Color.colorToHSV(bgColor, hsv);
         hsv[2] *= 0.8f; // abdunkeln
         newlblBg.setTextColor(Color.HSVToColor(hsv));
-        newlblBg.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(newlblBg, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         newlblBg.setTextAlignment(TEXT_ALIGNMENT_CENTER);
 
         addView(newlblBg);
@@ -157,6 +158,10 @@ public class ChannelTile extends ConstraintLayout {
         Color.colorToHSV(c, hsv);
         hsv[2] *= 0.85f;
         lblBg.setTextColor(Color.HSVToColor(hsv));
+    }
+
+    public String getTitle() {
+        return lblTitle.getText().toString();
     }
 
     @Override
