@@ -1,9 +1,10 @@
 package com.example.nzse_prak0;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -49,8 +50,10 @@ public class ActivityChooseChannel extends AppCompatActivity {
                 TileAdapter.TileViewHolder viewHolder = (TileAdapter.TileViewHolder) v.getTag();
 
                 String channelName = viewHolder.getChannelTile().getTitle();
-                Toast t = Toast.makeText(getApplicationContext(), channelName, Toast.LENGTH_SHORT);
-                t.show();
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("program", channelName);
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             }
         });
     }

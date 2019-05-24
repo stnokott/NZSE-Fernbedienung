@@ -1,5 +1,6 @@
 package com.example.nzse_prak0;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,5 +85,27 @@ public class ActivitySwitchedOn extends AppCompatActivity {
             }
         });
 
+        ImageButton btnPip = findViewById(R.id.btnPip);
+        btnPip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class),  5);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 5) {
+            if(resultCode == Activity.RESULT_OK){
+                String channelName = data.getStringExtra("program");
+                Toast t = Toast.makeText(getApplicationContext(), channelName, Toast.LENGTH_SHORT);
+                t.show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast t = Toast.makeText(getApplicationContext(), "Kein Channel gewählt!", Toast.LENGTH_SHORT);
+                t.show();
+            }
+        }
     }
 }
