@@ -33,8 +33,6 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        initTileAdapter(recyclerView);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
@@ -42,7 +40,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         createListeners(tileAdapter);
     }
 
-    private void initTileAdapter(RecyclerView recyclerView) {
+    private void initTileAdapter() {
         List<Channel> channels;
 
         int favsOnly = getIntent().getIntExtra("favsOnly", 0);
@@ -61,7 +59,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
             */
         }
         tileAdapter = new TileAdapter(channels);
-        recyclerView.setAdapter(tileAdapter);
+        ((RecyclerView) findViewById(R.id.recyclerViewChannel)).setAdapter(tileAdapter);
     }
 
     @Override
@@ -94,7 +92,10 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
                 d.execute();
                 Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
                 t.show();
+
                 btnScanChannels.setEnabled(false);
+                findViewById(R.id.recyclerViewChannel).setEnabled(false);
+                findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
             }
         });
     }
@@ -109,6 +110,9 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
             Toast toast = Toast.makeText(getApplicationContext(), "Fehler beim Channel-Scan!", Toast.LENGTH_SHORT);
             toast.show();
         }
+
         findViewById(R.id.btnScanChannels).setEnabled(true);
+        findViewById(R.id.recyclerViewChannel).setEnabled(true);
+        findViewById(R.id.spinnerOverlay).setVisibility(View.INVISIBLE);
     }
 }
