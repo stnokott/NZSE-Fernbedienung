@@ -1,25 +1,14 @@
 package com.example.nzse_prak0;
 
 public class Channel {
-    private long frequency;
     private String channel;
-    private int quality;
     private String program;
     private String provider;
 
-    public Channel(String channel, String program){
+    public Channel(String channel, String program, String provider){
         this.setProgram(program);
         this.setChannel(channel);
-        setQuality(0);
-        setProvider("");
-    }
-
-    public long getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(long frequency) {
-        this.frequency = frequency;
+        setProvider(provider);
     }
 
     public String getChannel() {
@@ -28,14 +17,6 @@ public class Channel {
 
     public void setChannel(String channel) {
         this.channel = channel;
-    }
-
-    public int getQuality() {
-        return quality;
-    }
-
-    public void setQuality(int quality) {
-        this.quality = quality;
     }
 
     public String getProgram() {
