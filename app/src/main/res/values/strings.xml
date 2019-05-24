@@ -22,6 +22,7 @@
     <string name="descBtnPause">Pause Button</string>
 
     <string name="lblBtnChannels">Programme</string>
+    <string name="lblScanChannels">Scan</string>
     <string name="lblPlaying">Pro 7</string>
     <string name="lblCurrentChannel">Aktueller Sender</string>
     <string name="lblRatio">Seitenverhältnis</string>
