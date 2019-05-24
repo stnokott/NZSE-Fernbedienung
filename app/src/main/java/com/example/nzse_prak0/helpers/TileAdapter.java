@@ -83,4 +83,9 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     public void setOnItemClickListener(View.OnClickListener clickListener) {
         this.onItemClickListener = clickListener;
     }
+
+    public void setChannelList(List<Channel> channelList) {
+        this.channelList = channelList;
+        notifyDataSetChanged();
+    }
 }

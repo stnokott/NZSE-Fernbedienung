@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChannelManager {
 
@@ -31,6 +32,10 @@ public class ChannelManager {
 
     public Channel getChannelAt(int index) {
         return channelList.get(index);
+    }
+
+    public List<Channel> getChannels() {
+        return channelList;
     }
 }
 

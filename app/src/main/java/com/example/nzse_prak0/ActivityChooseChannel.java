@@ -87,6 +87,6 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
 
     @Override
     public void onChannelScanCompleted() {
-        tileAdapter.notifyDataSetChanged();
+        tileAdapter.setChannelList(channelManager.getChannels());
     }
 }
