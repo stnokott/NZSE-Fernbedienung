@@ -76,14 +76,15 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
             }
         });
 
-        Button btnScanChannels = findViewById(R.id.btnScanChannels);
+        final Button btnScanChannels = findViewById(R.id.btnScanChannels);
         btnScanChannels.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DownloadTask d = new DownloadTask(ActivityChooseChannel.this, channelManager);
                 d.execute();
-                Toast t = Toast.makeText(getApplicationContext(), "Scanning channels...", Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
                 t.show();
+                btnScanChannels.setEnabled(false);
             }
         });
     }
@@ -91,12 +92,13 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
     @Override
     public void onChannelScanCompleted(Boolean success) {
         if (success) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Channels scanned!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Kanäle gescannt!", Toast.LENGTH_SHORT);
             toast.show();
             tileAdapter.setChannelList(channelManager.getChannels());
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Fehler beim Channel-Scan!", Toast.LENGTH_SHORT);
             toast.show();
         }
+        findViewById(R.id.btnScanChannels).setEnabled(true);
     }
 }
