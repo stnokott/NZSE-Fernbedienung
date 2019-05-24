@@ -21,9 +21,6 @@ import java.util.List;
 public class ActivityChooseChannel extends AppCompatActivity implements OnChannelScanCompleted {
     ChannelManager channelManager = new ChannelManager();
 
-    private int lastPosition = 0;
-    private int maxPosition = 0;
-
     private TileAdapter tileAdapter;
 
     @Override
