@@ -36,5 +36,14 @@ public class ChannelManager {
     public List<Channel> getChannels() {
         return channelList;
     }
+
+    public List<Channel> getFavoriteChannels() {
+        List<Channel> returnList = new ArrayList<>();
+        for (Channel channel : channelList) {
+            if (channel.getIsFav())
+                returnList.add(channel);
+        }
+        return returnList;
+    }
 }
 

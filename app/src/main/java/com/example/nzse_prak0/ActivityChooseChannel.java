@@ -34,21 +34,35 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        Channel c1 = new Channel("8a", "Phoenix", "ARD");
-        Channel c2 = new Channel("8b", "Bayerisches FS", "ARD");
-        Channel c3 = new Channel("8c", "SWR Fernsehen RP", "ARD");
-        List<Channel> channels = new ArrayList<>();
-        channels.add(c1);
-        channels.add(c2);
-        channels.add(c3);
-        tileAdapter = new TileAdapter(channels);
-        recyclerView.setAdapter(tileAdapter);
+        initTileAdapter();
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
 
         createListeners(tileAdapter);
+    }
+
+    private void initTileAdapter() {
+        List<Channel> channels;
+
+        int favsOnly = getIntent().getIntExtra("favsOnly", 0);
+        if (favsOnly == 1) {
+            channels = channelManager.getFavoriteChannels();
+        } else {
+            channels = channelManager.getChannels();
+            /*
+            channels = new ArrayList<>();
+            Channel c1 = new Channel("8a", "Phoenix", "ARD");
+            Channel c2 = new Channel("8b", "Bayerisches FS", "ARD");
+            Channel c3 = new Channel("8c", "SWR Fernsehen RP", "ARD");
+            channels.add(c1);
+            channels.add(c2);
+            channels.add(c3);
+            */
+        }
+        tileAdapter = new TileAdapter(channels);
+        recyclerView.setAdapter(tileAdapter);
     }
 
     @Override

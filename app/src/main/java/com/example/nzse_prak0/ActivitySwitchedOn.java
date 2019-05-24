@@ -66,7 +66,9 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         btnChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), 1);
+                Intent selectChannelIntent = new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class);
+                selectChannelIntent.putExtra("favsOnly", 0);
+                startActivityForResult(selectChannelIntent, 1);
             }
         });
 
@@ -74,7 +76,9 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         btnFavs.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseFavorite.class), 1);
+                Intent selectChannelIntent = new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class);
+                selectChannelIntent.putExtra("favsOnly", 1);
+                startActivityForResult(selectChannelIntent, 1);
             }
         });
 
