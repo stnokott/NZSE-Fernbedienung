@@ -28,5 +28,9 @@ public class ChannelManager {
             }
         }
     }
+
+    public Channel getChannelAt(int index) {
+        return channelList.get(index);
+    }
 }
 
