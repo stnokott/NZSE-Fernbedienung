@@ -51,7 +51,7 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
 
         try {
             channelManager.parseChannels(jsonObj);
-            http.sendHttp("channelMain="+ channelManager.getChannelAt(0));
+            http.sendHttp("channelMain="+ channelManager.getChannelAt(0).getChannel());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
