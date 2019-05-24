@@ -1,6 +1,7 @@
 package com.example.nzse_prak0;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,12 +20,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityChooseChannel extends AppCompatActivity {
 
-    protected HttpRequest http = new HttpRequest("172.16.201.100", 5000, true);
+    protected HttpRequest http = new HttpRequest("172.16.201.122:80", 5000, true);
 
     ChannelManager channelManager = new ChannelManager();
     ArrayList<Channel> listChannel;
@@ -34,6 +35,34 @@ public class ActivityChooseChannel extends AppCompatActivity {
 
     // Channels
     JSONObject jsonObject;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_choosechannel);
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewChannel);
+        recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        Channel c1 = new Channel("8a", "Phoenix", "ARD");
+        Channel c2 = new Channel("8b", "Bayerisches FS", "ARD");
+        Channel c3 = new Channel("8c", "SWR Fernsehen RP", "ARD");
+        List<Channel> channels = new ArrayList<>();
+        channels.add(c1);
+        channels.add(c2);
+        channels.add(c3);
+        TileAdapter tileAdapter = new TileAdapter(channels);
+        recyclerView.setAdapter(tileAdapter);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setElevation(0);
+        }
+
+        createListeners(tileAdapter);
+    }
 
 
     private class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
@@ -78,48 +107,14 @@ public class ActivityChooseChannel extends AppCompatActivity {
             channelManager.parseChannels(jsonObj);
             maxPosition = channelManager.channelList.size();
             http.sendHttp("channelMain="+ channelManager.channelList.get(lastPosition));
+            Context context;
+            CharSequence text;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choosechannel);
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewChannel);
-        recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        Button btnScanChannels = findViewById(R.id.btnScanChannels);
-        btnScanChannels.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                new DownloadTask().execute();
-            }
-        });
-
-        Channel c1 = new Channel("8a", "Phoenix", "ARD");
-        Channel c2 = new Channel("8b", "Bayerisches FS", "ARD");
-        Channel c3 = new Channel("8c", "SWR Fernsehen RP", "ARD");
-        List<Channel> channels = new ArrayList<>();
-        channels.add(c1);
-        channels.add(c2);
-        channels.add(c3);
-        TileAdapter tileAdapter = new TileAdapter(channels);
-        recyclerView.setAdapter(tileAdapter);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setElevation(0);
-        }
-
-        createListeners(tileAdapter);
     }
 
     @Override
@@ -141,6 +136,14 @@ public class ActivityChooseChannel extends AppCompatActivity {
                 returnIntent.putExtra("program", channelName);
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
+            }
+        });
+
+        Button btnScanChannels = findViewById(R.id.btnScanChannels);
+        btnScanChannels.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                new DownloadTask().execute();
             }
         });
     }
