@@ -11,23 +11,25 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.widget.TextViewCompat;
 
+import com.example.nzse_prak0.Channel;
 import com.example.nzse_prak0.R;
 import com.example.nzse_prak0.helpers.Units;
 
 public class ChannelTile extends ConstraintLayout {
+    private Channel channelInstance;
     private TextView lblTitle;
     private TextView lblBg;
     private ImageButton btnFav;
     private boolean isFav = false;
 
-    public ChannelTile(Context context, String title, String bgNum, int bgColor) {
+    public ChannelTile(Context context, String bgNum, int bgColor) {
         super(context);
 
         setId(View.generateViewId());
         initLayoutParams();
         createBackgroundLabel(bgNum, bgColor);
         createFavButton();
-        createTitleLabel(title);
+        createTitleLabel();
         setBackgroundColor(bgColor);
     }
 
@@ -70,10 +72,9 @@ public class ChannelTile extends ConstraintLayout {
         lblBg = newlblBg;
     }
 
-    private void createTitleLabel(String title) {
+    private void createTitleLabel() {
         TextView newlblTitle = new TextView(getContext());
         newlblTitle.setId(View.generateViewId());
-        newlblTitle.setText(title);
 
         // Layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
@@ -160,8 +161,12 @@ public class ChannelTile extends ConstraintLayout {
         lblBg.setTextColor(Color.HSVToColor(hsv));
     }
 
-    public String getTitle() {
-        return lblTitle.getText().toString();
+    public Channel getChannelInstance() {
+        return channelInstance;
+    }
+    public void setChannelInstance(Channel channelInstance) {
+        this.channelInstance = channelInstance;
+        lblTitle.setText(channelInstance.getProgram());
     }
 
     @Override

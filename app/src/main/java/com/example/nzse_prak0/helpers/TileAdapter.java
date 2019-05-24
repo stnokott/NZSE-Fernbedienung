@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nzse_prak0.Channel;
 import com.example.nzse_prak0.customviews.ChannelTile;
+
+import java.util.List;
 
 public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder> {
     private int[] colorList = {
@@ -24,7 +27,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     };
 
     private View.OnClickListener onItemClickListener;
-    private String[] channelNames;
+    private List<Channel> channelList;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -46,8 +49,8 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public TileAdapter(String[] myDataset) {
-        channelNames = myDataset;
+    public TileAdapter(List<Channel> channelList) {
+        this.channelList = channelList;
     }
 
     // Create new views (invoked by the layout manager)
@@ -55,7 +58,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     public @NonNull TileViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                              int viewType) {
         // create a new view
-        ChannelTile c = new ChannelTile(parent.getContext(), "", "", Color.RED);
+        ChannelTile c = new ChannelTile(parent.getContext(), "", Color.RED);
 
         return new TileViewHolder(c);
     }
@@ -66,7 +69,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ChannelTile channelTile = holder.getChannelTile();
-        channelTile.setTitle(channelNames[position]);
+        channelTile.setChannelInstance(channelList.get(position));
         channelTile.setBgNum(Integer.toString(position+1));
         channelTile.setColor(colorList[position%colorList.length]);
     }
@@ -74,7 +77,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return channelNames.length;
+        return channelList.size();
     }
 
     public void setOnItemClickListener(View.OnClickListener clickListener) {

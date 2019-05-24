@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class ChannelManager {
 
     public String response;
-
     protected ArrayList<Channel> channelList = new ArrayList<>();
 
     public void parseChannels(JSONObject json) throws JSONException {

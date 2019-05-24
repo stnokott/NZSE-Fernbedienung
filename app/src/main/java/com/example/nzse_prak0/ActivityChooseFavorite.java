@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nzse_prak0.helpers.TileAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ActivityChooseFavorite extends AppCompatActivity {
 
     @Override
@@ -24,8 +27,12 @@ public class ActivityChooseFavorite extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        String[] tileNames = {"ZDF", "BR", "Super RTL"};
-        TileAdapter tileAdapter = new TileAdapter(tileNames);
+        Channel c1 = new Channel("22a", "ZDF", "ZDFmobil");
+        Channel c2 = new Channel("22b", "3sat", "ZDFmobil");
+        List<Channel> channels = new ArrayList<>();
+        channels.add(c1);
+        channels.add(c2);
+        TileAdapter tileAdapter = new TileAdapter(channels);
         recyclerView.setAdapter(tileAdapter);
 
         createListeners(tileAdapter);
@@ -38,7 +45,7 @@ public class ActivityChooseFavorite extends AppCompatActivity {
             public void onClick(View v) {
                 TileAdapter.TileViewHolder viewHolder = (TileAdapter.TileViewHolder) v.getTag();
 
-                String channelName = viewHolder.getChannelTile().getTitle();
+                String channelName = viewHolder.getChannelTile().getChannelInstance().getProgram();
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("program", channelName);
                 setResult(Activity.RESULT_OK, returnIntent);

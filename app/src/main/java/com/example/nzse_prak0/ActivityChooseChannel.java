@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nzse_prak0.helpers.TileAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ActivityChooseChannel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +27,14 @@ public class ActivityChooseChannel extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        String[] tileNames = {"Pro 7", "Kabeleins", "RTL", "ARD"};
-        TileAdapter tileAdapter = new TileAdapter(tileNames);
+        Channel c1 = new Channel("8a", "Phoenix", "ARD");
+        Channel c2 = new Channel("8b", "Bayerisches FS", "ARD");
+        Channel c3 = new Channel("8c", "SWR Fernsehen RP", "ARD");
+        List<Channel> channels = new ArrayList<>();
+        channels.add(c1);
+        channels.add(c2);
+        channels.add(c3);
+        TileAdapter tileAdapter = new TileAdapter(channels);
         recyclerView.setAdapter(tileAdapter);
 
         if (getSupportActionBar() != null) {
@@ -49,7 +58,7 @@ public class ActivityChooseChannel extends AppCompatActivity {
             public void onClick(View v) {
                 TileAdapter.TileViewHolder viewHolder = (TileAdapter.TileViewHolder) v.getTag();
 
-                String channelName = viewHolder.getChannelTile().getTitle();
+                String channelName = viewHolder.getChannelTile().getChannelInstance().getProgram();
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("program", channelName);
                 setResult(Activity.RESULT_OK, returnIntent);
