@@ -1,8 +1,6 @@
 package com.example.nzse_prak0.helpers;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.example.nzse_prak0.ChannelManager;
 import com.example.nzse_prak0.HttpRequest;
@@ -15,13 +13,11 @@ import java.io.IOException;
 
 public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     private ChannelManager channelManager;
-    private Context context;
     private HttpRequest http = new HttpRequest("172.16.201.122", 5000, true);
 
     private OnChannelScanCompleted listener;
 
-    public DownloadTask(Context context, OnChannelScanCompleted listener, ChannelManager channelManager) {
-        this.context = context;
+    public DownloadTask(OnChannelScanCompleted listener, ChannelManager channelManager) {
         this.listener = listener;
         this.channelManager = channelManager;
     }
@@ -43,17 +39,12 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObj) {
-        scanChannels(jsonObj);
-        Toast toast = Toast.makeText(context, "Channels scanned!", Toast.LENGTH_SHORT);
-        toast.show();
-        listener.onChannelScanCompleted();
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        Toast toast = Toast.makeText(context, "Scanning channels...", Toast.LENGTH_SHORT);
-        toast.show();
+        if (jsonObj == null) {
+            listener.onChannelScanCompleted(false);
+        } else {
+            scanChannels(jsonObj);
+            listener.onChannelScanCompleted(true);
+        }
     }
 
     public void scanChannels(JSONObject jsonObj){
@@ -61,8 +52,6 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
         try {
             channelManager.parseChannels(jsonObj);
             http.sendHttp("channelMain="+ channelManager.getChannelAt(0));
-            Context context;
-            CharSequence text;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

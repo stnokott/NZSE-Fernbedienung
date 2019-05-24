@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -79,14 +80,23 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         btnScanChannels.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                DownloadTask d = new DownloadTask(getApplicationContext(), ActivityChooseChannel.this, channelManager);
+                DownloadTask d = new DownloadTask(ActivityChooseChannel.this, channelManager);
                 d.execute();
+                Toast t = Toast.makeText(getApplicationContext(), "Scanning channels...", Toast.LENGTH_SHORT);
+                t.show();
             }
         });
     }
 
     @Override
-    public void onChannelScanCompleted() {
-        tileAdapter.setChannelList(channelManager.getChannels());
+    public void onChannelScanCompleted(Boolean success) {
+        if (success) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Channels scanned!", Toast.LENGTH_SHORT);
+            toast.show();
+            tileAdapter.setChannelList(channelManager.getChannels());
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Fehler beim Channel-Scan!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }
