@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.TileAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityChooseChannel extends AppCompatActivity implements OnChannelScanCompleted {
@@ -34,7 +33,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        initTileAdapter();
+        initTileAdapter(recyclerView);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
@@ -43,7 +42,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         createListeners(tileAdapter);
     }
 
-    private void initTileAdapter() {
+    private void initTileAdapter(RecyclerView recyclerView) {
         List<Channel> channels;
 
         int favsOnly = getIntent().getIntExtra("favsOnly", 0);
