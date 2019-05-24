@@ -16,7 +16,7 @@ public class ChannelManager {
     public void parseChannels(JSONObject json) throws JSONException {
 
         if (json.has("channels")) {              // Überprüfe ob "channels" vorhanden ist
-
+            channelList.clear();
             JSONArray channels = json.getJSONArray("channels");
             response = json.getString("status");
 

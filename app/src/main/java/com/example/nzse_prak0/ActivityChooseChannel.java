@@ -71,8 +71,6 @@ public class ActivityChooseChannel extends AppCompatActivity {
         protected JSONObject doInBackground(Void... params){
             // resolving request and do not interrupt UI
 
-            // Asynchron Task for new ChannelManager
-            ChannelManager result = new ChannelManager();
             try {
                 jsonObject= http.sendHttp("scanChannels=");
             } catch (IOException e) {
