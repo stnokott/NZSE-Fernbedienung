@@ -27,6 +27,10 @@ public class ActivityChooseChannel extends AppCompatActivity {
         TileAdapter tileAdapter = new TileAdapter(tileNames);
         recyclerView.setAdapter(tileAdapter);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setElevation(0);
+        }
+
         createListeners(tileAdapter);
     }
 
