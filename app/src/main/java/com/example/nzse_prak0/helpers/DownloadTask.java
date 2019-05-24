@@ -15,7 +15,7 @@ import java.io.IOException;
 public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     private ChannelManager channelManager;
     private Context context;
-    private HttpRequest http = new HttpRequest("172.16.201.122:80", 5000, true);
+    private HttpRequest http = new HttpRequest("172.16.201.122", 5000, true);
 
     public DownloadTask(Context context, ChannelManager channelManager) {
         this.context = context;
@@ -39,6 +39,7 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObj) {
+        System.out.println(getStatus());
         scanChannels(jsonObj);
         Toast toast = Toast.makeText(context, "Channels scanned!", Toast.LENGTH_SHORT);
         toast.show();
