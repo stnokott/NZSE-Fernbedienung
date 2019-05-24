@@ -13,7 +13,6 @@ public class ActivitySwitchedOff extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_main_off);
 
         final FloatingActionButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
@@ -24,12 +23,6 @@ public class ActivitySwitchedOff extends AppCompatActivity {
                 finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
             }
         });
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     @Override

@@ -18,19 +18,12 @@ public class ActivitySwitchedOn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_main_on);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
 
         createListeners();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     @Override
@@ -73,7 +66,7 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         btnChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class));
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), 1);
             }
         });
 
@@ -81,7 +74,7 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         btnFavs.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                startActivity(new Intent(ActivitySwitchedOn.this, ActivityChooseFavorite.class));
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseFavorite.class), 1);
             }
         });
 
@@ -89,21 +82,36 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         btnPip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class),  5);
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class),  3);
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 5) {
+        /*
+            requestCode:
+            1 = Channel-Auswahl
+            3 = PiP-Auswahl
+         */
+        if (requestCode == 3) {
             if(resultCode == Activity.RESULT_OK){
                 String channelName = data.getStringExtra("program");
-                Toast t = Toast.makeText(getApplicationContext(), channelName, Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(getApplicationContext(), "Kanal "+channelName+" für PiP ausgewählt", Toast.LENGTH_SHORT);
                 t.show();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast t = Toast.makeText(getApplicationContext(), "Kein Channel gewählt!", Toast.LENGTH_SHORT);
+                t.show();
+            }
+        } else if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String channelName = data.getStringExtra("program");
+                Toast t = Toast.makeText(getApplicationContext(), "Kanal "+channelName+" als Kanal ausgewählt", Toast.LENGTH_SHORT);
+                t.show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast t = Toast.makeText(getApplicationContext(), "Kein Kanal gewählt!", Toast.LENGTH_SHORT);
                 t.show();
             }
         }
