@@ -17,11 +17,13 @@ import com.example.nzse_prak0.helpers.TileAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityChooseChannel extends AppCompatActivity {
+public class ActivityChooseChannel extends AppCompatActivity implements OnChannelScanCompleted {
     ChannelManager channelManager = new ChannelManager();
 
     private int lastPosition = 0;
     private int maxPosition = 0;
+
+    private TileAdapter tileAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class ActivityChooseChannel extends AppCompatActivity {
         channels.add(c1);
         channels.add(c2);
         channels.add(c3);
-        TileAdapter tileAdapter = new TileAdapter(channels);
+        tileAdapter = new TileAdapter(channels);
         recyclerView.setAdapter(tileAdapter);
 
         if (getSupportActionBar() != null) {
@@ -77,9 +79,14 @@ public class ActivityChooseChannel extends AppCompatActivity {
         btnScanChannels.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                DownloadTask d = new DownloadTask(getApplicationContext(), channelManager);
+                DownloadTask d = new DownloadTask(getApplicationContext(), ActivityChooseChannel.this, channelManager);
                 d.execute();
             }
         });
+    }
+
+    @Override
+    public void onChannelScanCompleted() {
+        tileAdapter.notifyDataSetChanged();
     }
 }

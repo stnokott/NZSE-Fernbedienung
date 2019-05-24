@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.nzse_prak0.ChannelManager;
 import com.example.nzse_prak0.HttpRequest;
+import com.example.nzse_prak0.OnChannelScanCompleted;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,8 +18,11 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     private Context context;
     private HttpRequest http = new HttpRequest("172.16.201.122", 5000, true);
 
-    public DownloadTask(Context context, ChannelManager channelManager) {
+    private OnChannelScanCompleted listener;
+
+    public DownloadTask(Context context, OnChannelScanCompleted listener, ChannelManager channelManager) {
         this.context = context;
+        this.listener = listener;
         this.channelManager = channelManager;
     }
 
@@ -39,10 +43,10 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObj) {
-        System.out.println(getStatus());
         scanChannels(jsonObj);
         Toast toast = Toast.makeText(context, "Channels scanned!", Toast.LENGTH_SHORT);
         toast.show();
+        listener.onChannelScanCompleted();
     }
 
     @Override
