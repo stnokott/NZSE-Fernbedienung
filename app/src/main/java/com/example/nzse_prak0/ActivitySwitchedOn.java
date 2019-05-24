@@ -1,5 +1,6 @@
 package com.example.nzse_prak0;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,19 +18,12 @@ public class ActivitySwitchedOn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_main_on);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
 
         createListeners();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     @Override
@@ -72,7 +66,7 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         btnChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class));
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), 1);
             }
         });
 
@@ -80,9 +74,46 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         btnFavs.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                startActivity(new Intent(ActivitySwitchedOn.this, ActivityChooseFavorite.class));
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseFavorite.class), 1);
             }
         });
 
+        ImageButton btnPip = findViewById(R.id.btnPip);
+        btnPip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class),  3);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*
+            requestCode:
+            1 = Channel-Auswahl
+            3 = PiP-Auswahl
+         */
+        if (requestCode == 3) {
+            if(resultCode == Activity.RESULT_OK){
+                String channelName = data.getStringExtra("program");
+                Toast t = Toast.makeText(getApplicationContext(), "Kanal "+channelName+" für PiP ausgewählt", Toast.LENGTH_SHORT);
+                t.show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast t = Toast.makeText(getApplicationContext(), "Kein Channel gewählt!", Toast.LENGTH_SHORT);
+                t.show();
+            }
+        } else if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String channelName = data.getStringExtra("program");
+                Toast t = Toast.makeText(getApplicationContext(), "Kanal "+channelName+" als Kanal ausgewählt", Toast.LENGTH_SHORT);
+                t.show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast t = Toast.makeText(getApplicationContext(), "Kein Kanal gewählt!", Toast.LENGTH_SHORT);
+                t.show();
+            }
+        }
     }
 }
