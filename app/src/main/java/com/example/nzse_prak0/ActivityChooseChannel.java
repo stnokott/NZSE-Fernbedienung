@@ -21,9 +21,6 @@ import java.util.List;
 public class ActivityChooseChannel extends AppCompatActivity implements OnChannelScanCompleted {
     ChannelManager channelManager = new ChannelManager();
 
-    private int lastPosition = 0;
-    private int maxPosition = 0;
-
     private TileAdapter tileAdapter;
 
     @Override
@@ -37,21 +34,35 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        Channel c1 = new Channel("8a", "Phoenix", "ARD");
-        Channel c2 = new Channel("8b", "Bayerisches FS", "ARD");
-        Channel c3 = new Channel("8c", "SWR Fernsehen RP", "ARD");
-        List<Channel> channels = new ArrayList<>();
-        channels.add(c1);
-        channels.add(c2);
-        channels.add(c3);
-        tileAdapter = new TileAdapter(channels);
-        recyclerView.setAdapter(tileAdapter);
+        initTileAdapter();
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
 
         createListeners(tileAdapter);
+    }
+
+    private void initTileAdapter() {
+        List<Channel> channels = new ArrayList<>();
+
+        int favsOnly = getIntent().getIntExtra("favsOnly", 0);
+        if (favsOnly == 1) {
+            channels.addAll(channelManager.getFavoriteChannels());
+        } else {
+            channels.addAll(channelManager.getChannels());
+            /*
+            channels = new ArrayList<>();
+            Channel c1 = new Channel("8a", "Phoenix", "ARD");
+            Channel c2 = new Channel("8b", "Bayerisches FS", "ARD");
+            Channel c3 = new Channel("8c", "SWR Fernsehen RP", "ARD");
+            channels.add(c1);
+            channels.add(c2);
+            channels.add(c3);
+            */
+        }
+        tileAdapter = new TileAdapter(channels);
+        ((RecyclerView) findViewById(R.id.recyclerViewChannel)).setAdapter(tileAdapter);
     }
 
     @Override
@@ -76,14 +87,18 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
             }
         });
 
-        Button btnScanChannels = findViewById(R.id.btnScanChannels);
+        final Button btnScanChannels = findViewById(R.id.btnScanChannels);
         btnScanChannels.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DownloadTask d = new DownloadTask(ActivityChooseChannel.this, channelManager);
                 d.execute();
-                Toast t = Toast.makeText(getApplicationContext(), "Scanning channels...", Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
                 t.show();
+
+                btnScanChannels.setEnabled(false);
+                //findViewById(R.id.recyclerViewChannel).setEnabled(false);
+                findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
             }
         });
     }
@@ -91,12 +106,16 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
     @Override
     public void onChannelScanCompleted(Boolean success) {
         if (success) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Channels scanned!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Kanäle gescannt!", Toast.LENGTH_SHORT);
             toast.show();
             tileAdapter.setChannelList(channelManager.getChannels());
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Fehler beim Channel-Scan!", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+        findViewById(R.id.btnScanChannels).setEnabled(true);
+        //findViewById(R.id.recyclerViewChannel).setEnabled(true);
+        findViewById(R.id.spinnerOverlay).setVisibility(View.INVISIBLE);
     }
 }

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     private ChannelManager channelManager;
-    private HttpRequest http = new HttpRequest("172.16.201.122", 5000, true);
+    private HttpRequest http = new HttpRequest("192.168.0.104", 5000, true);
 
     private OnChannelScanCompleted listener;
 

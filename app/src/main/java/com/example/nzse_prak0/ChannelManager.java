@@ -12,10 +12,9 @@ import java.util.List;
 public class ChannelManager {
 
     public String response;
-    protected ArrayList<Channel> channelList = new ArrayList<>();
+    private ArrayList<Channel> channelList = new ArrayList<>();
 
     public void parseChannels(JSONObject json) throws JSONException {
-
         if (json.has("channels")) {              // Überprüfe ob "channels" vorhanden ist
             channelList.clear();
             JSONArray channels = json.getJSONArray("channels");
@@ -36,6 +35,15 @@ public class ChannelManager {
 
     public List<Channel> getChannels() {
         return channelList;
+    }
+
+    public List<Channel> getFavoriteChannels() {
+        List<Channel> returnList = new ArrayList<>();
+        for (Channel channel : channelList) {
+            if (channel.getIsFav())
+                returnList.add(channel);
+        }
+        return returnList;
     }
 }
 

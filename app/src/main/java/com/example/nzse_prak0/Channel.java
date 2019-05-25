@@ -4,11 +4,13 @@ public class Channel {
     private String channel;
     private String program;
     private String provider;
+    private Boolean isFav;
 
     public Channel(String channel, String program, String provider){
         this.setProgram(program);
         this.setChannel(channel);
         setProvider(provider);
+        isFav = false;
     }
 
     public String getChannel() {
@@ -34,4 +36,8 @@ public class Channel {
     public void setProvider(String provider) {
         this.provider = provider;
     }
+
+    public Boolean getIsFav() { return isFav; }
+
+    public void setIsFav(Boolean isFav) { this.isFav = isFav; }
 }

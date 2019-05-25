@@ -20,7 +20,6 @@ public class ChannelTile extends ConstraintLayout {
     private TextView lblTitle;
     private TextView lblBg;
     private ImageButton btnFav;
-    private boolean isFav = false;
 
     public ChannelTile(Context context, String bgNum, int bgColor) {
         super(context);
@@ -133,20 +132,21 @@ public class ChannelTile extends ConstraintLayout {
     }
 
     public void toggleFavButton() {
+        Boolean isFav = getChannelInstance().getIsFav();
+        updateFavStatus(isFav);
+
+        Animatable animatable = (Animatable) btnFav.getDrawable();
+        animatable.start();
+
+        getChannelInstance().setIsFav(!isFav);
+    }
+
+    public void updateFavStatus(Boolean isFav) {
         if (isFav) {
             btnFav.setImageResource(R.drawable.star_fill_reverse_white_anim);
         } else {
             btnFav.setImageResource(R.drawable.star_fill_white_anim);
         }
-
-        Animatable animatable = (Animatable) btnFav.getDrawable();
-        animatable.start();
-
-        isFav = !isFav;
-    }
-
-    public void setTitle(String t) {
-        lblTitle.setText(t);
     }
 
     public void setBgNum(String n) {
@@ -164,9 +164,12 @@ public class ChannelTile extends ConstraintLayout {
     public Channel getChannelInstance() {
         return channelInstance;
     }
+
     public void setChannelInstance(Channel channelInstance) {
         this.channelInstance = channelInstance;
         lblTitle.setText(channelInstance.getProgram());
+        updateFavStatus(channelInstance.getIsFav());
+
     }
 
     @Override
