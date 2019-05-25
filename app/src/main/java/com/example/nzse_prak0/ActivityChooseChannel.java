@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.TileAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityChooseChannel extends AppCompatActivity implements OnChannelScanCompleted {
@@ -33,6 +34,8 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
+        initTileAdapter();
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
@@ -41,13 +44,13 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
     }
 
     private void initTileAdapter() {
-        List<Channel> channels;
+        List<Channel> channels = new ArrayList<>();
 
         int favsOnly = getIntent().getIntExtra("favsOnly", 0);
         if (favsOnly == 1) {
-            channels = channelManager.getFavoriteChannels();
+            channels.addAll(channelManager.getFavoriteChannels());
         } else {
-            channels = channelManager.getChannels();
+            channels.addAll(channelManager.getChannels());
             /*
             channels = new ArrayList<>();
             Channel c1 = new Channel("8a", "Phoenix", "ARD");
@@ -94,7 +97,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
                 t.show();
 
                 btnScanChannels.setEnabled(false);
-                findViewById(R.id.recyclerViewChannel).setEnabled(false);
+                //findViewById(R.id.recyclerViewChannel).setEnabled(false);
                 findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
             }
         });
@@ -112,7 +115,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         }
 
         findViewById(R.id.btnScanChannels).setEnabled(true);
-        findViewById(R.id.recyclerViewChannel).setEnabled(true);
+        //findViewById(R.id.recyclerViewChannel).setEnabled(true);
         findViewById(R.id.spinnerOverlay).setVisibility(View.INVISIBLE);
     }
 }
