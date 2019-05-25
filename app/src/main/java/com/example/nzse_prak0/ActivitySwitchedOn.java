@@ -13,7 +13,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.nzse_prak0.helpers.DownloadTask;
+
 public class ActivitySwitchedOn extends AppCompatActivity {
+    public static final ChannelManager channelManager = new ChannelManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +113,9 @@ public class ActivitySwitchedOn extends AppCompatActivity {
             }
         } else if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                String channelName = data.getStringExtra("program");
-                Toast t = Toast.makeText(getApplicationContext(), "Kanal "+channelName+" als Kanal ausgewählt", Toast.LENGTH_SHORT);
-                t.show();
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast t = Toast.makeText(getApplicationContext(), "Kein Kanal gewählt!", Toast.LENGTH_SHORT);
-                t.show();
+                String channel = data.getStringExtra("channel");
+                DownloadTask d = new DownloadTask(null, "channelMain="+channel);
+                d.execute();
             }
         }
     }
