@@ -22,7 +22,7 @@ import java.util.List;
 public class ChannelManager {
     private static final String JSON_FILENAME_CHANNELS = "channels.json";
 
-    public String response;
+    private String response;
     private ArrayList<Channel> channelList = new ArrayList<>();
 
     public void parseJSON(JSONObject json) throws JSONException {
@@ -113,6 +113,10 @@ public class ChannelManager {
                 returnList.add(channel);
         }
         return returnList;
+    }
+
+    public String getResponse() {
+        return response;
     }
 }
 
