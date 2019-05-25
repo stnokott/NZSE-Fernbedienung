@@ -130,12 +130,12 @@ public class HttpRequest {
     private JSONObject readHttpResponseBody(InputStream in)
             throws IOException, JSONException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        String result = "";
+        StringBuilder result = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
-            result += line;
+            result.append(line);
         }
-        JSONObject httpResponse = new JSONObject(result);
+        JSONObject httpResponse = new JSONObject(result.toString());
         String httpStatus = httpResponse.getString("status");
         if (!httpStatus.equals("ok"))
             throw new IOException("TV returns status=" + httpStatus);
