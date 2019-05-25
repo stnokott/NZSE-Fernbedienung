@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
+    // TODO: IP in Einstellungen verschieben
     private HttpRequest http = new HttpRequest("192.168.0.104", 5000, true);
     private String command;
 
@@ -28,10 +29,7 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
         try {
             JSONObject jsonObject = http.sendHttp(this.command);
             return jsonObject;
-        } catch (IOException e) {
-            Log.e("doInBackground", e.getMessage());
-            return null;
-        } catch (JSONException e) {
+        } catch (IOException |JSONException e) {
             Log.e("doInBackground", e.getMessage());
             return null;
         }
