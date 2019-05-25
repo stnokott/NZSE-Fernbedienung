@@ -7,10 +7,14 @@ public class Channel {
     private Boolean isFav;
 
     public Channel(String channel, String program, String provider){
+        this(channel, program, provider, false);
+    }
+
+    public Channel(String channel, String program, String provider, Boolean isFav) {
         this.setProgram(program);
         this.setChannel(channel);
-        setProvider(provider);
-        isFav = false;
+        this.provider = provider;
+        this.isFav = isFav;
     }
 
     public String getChannel() {

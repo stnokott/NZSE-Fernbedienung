@@ -1,6 +1,7 @@
 package com.example.nzse_prak0.helpers;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.nzse_prak0.HttpRequest;
 import com.example.nzse_prak0.OnChannelScanCompleted;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
+    // TODO: IP in Einstellungen verschieben
     private HttpRequest http = new HttpRequest("192.168.0.104", 5000, true);
     private String command;
 
@@ -27,11 +29,8 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
         try {
             JSONObject jsonObject = http.sendHttp(this.command);
             return jsonObject;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (IOException |JSONException e) {
+            Log.e("doInBackground", e.getMessage());
             return null;
         }
     }
