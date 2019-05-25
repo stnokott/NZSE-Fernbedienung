@@ -1,6 +1,7 @@
 package com.example.nzse_prak0.helpers;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.nzse_prak0.HttpRequest;
 import com.example.nzse_prak0.OnChannelScanCompleted;
@@ -28,10 +29,10 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
             JSONObject jsonObject = http.sendHttp(this.command);
             return jsonObject;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("doInBackground", e.getMessage());
             return null;
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("doInBackground", e.getMessage());
             return null;
         }
     }
