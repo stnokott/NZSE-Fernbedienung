@@ -26,6 +26,8 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
 
+        channelManager.loadFromJSON(getApplicationContext());
+
         createListeners();
     }
 
@@ -101,6 +103,11 @@ public class ActivitySwitchedOn extends AppCompatActivity {
             1 = Channel-Auswahl
             3 = PiP-Auswahl
          */
+        if (requestCode == 3 || requestCode == 1) {
+            // TODO: Öfter prüfen? Performance-Probleme?
+            ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
+        }
+
         if (requestCode == 3) {
             if(resultCode == Activity.RESULT_OK){
                 String channelName = data.getStringExtra("program");

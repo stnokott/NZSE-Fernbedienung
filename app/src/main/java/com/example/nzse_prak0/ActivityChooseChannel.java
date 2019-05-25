@@ -112,7 +112,8 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
             Toast toast = Toast.makeText(getApplicationContext(), "Kanäle gescannt!", Toast.LENGTH_SHORT);
             toast.show();
             try {
-                ActivitySwitchedOn.channelManager.parseChannels(jsonObj);
+                ActivitySwitchedOn.channelManager.parseJSON(jsonObj);
+                ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
                 tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getChannels());
             } catch (JSONException e) {
                 e.printStackTrace();
