@@ -41,8 +41,7 @@ public class ChannelManager {
     }
 
     public void saveToJSON(Context context) {
-        try {
-            OutputStream output = context.getApplicationContext().openFileOutput(JSON_FILENAME_CHANNELS, Context.MODE_PRIVATE);
+        try (OutputStream output = context.getApplicationContext().openFileOutput(JSON_FILENAME_CHANNELS, Context.MODE_PRIVATE)) {
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
             writer.setIndent("  ");
             writer.beginArray();
@@ -56,7 +55,6 @@ public class ChannelManager {
             }
             writer.endArray();
             writer.close();
-            output.close();
             Toast.makeText(context.getApplicationContext(), "JSON gespeichert!", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e("saveToJSON", e.getMessage());
@@ -64,8 +62,7 @@ public class ChannelManager {
     }
 
     public void loadFromJSON(Context context) {
-        try {
-            InputStream input = context.getApplicationContext().openFileInput(JSON_FILENAME_CHANNELS);
+        try (InputStream input = context.getApplicationContext().openFileInput(JSON_FILENAME_CHANNELS)) {
             JsonReader reader = new JsonReader(new InputStreamReader(input, StandardCharsets.UTF_8));
 
             channelList.clear();
