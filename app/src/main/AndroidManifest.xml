@@ -12,10 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ActivityChooseFavorite"
-            android:label="Favorit wählen">
-        </activity>
-        <activity
             android:name=".ActivityChooseChannel"
             android:label="Kanal wählen"></activity>
         <activity
