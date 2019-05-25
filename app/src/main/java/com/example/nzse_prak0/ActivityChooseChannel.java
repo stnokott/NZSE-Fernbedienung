@@ -3,6 +3,7 @@ package com.example.nzse_prak0;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -116,7 +117,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
                 ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
                 tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getChannels());
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.e("onChannelScanCompleted", e.getMessage());
             }
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Fehler beim Channel-Scan!", Toast.LENGTH_SHORT);
