@@ -25,6 +25,11 @@ public class ChannelManager {
     private String response;
     private ArrayList<Channel> channelList = new ArrayList<>();
 
+    private static final String JSON_KEY_CHANNEL = "channel";
+    private static final String JSON_KEY_PROGRAM = "program";
+    private static final String JSON_KEY_PROVIDER = "provider";
+    private static final String JSON_KEY_FAVORITE = "isFav";
+
     public void parseJSON(JSONObject json) throws JSONException {
         if (json.has("channels")) {              // Überprüfe ob "channels" vorhanden ist
             channelList.clear();
@@ -33,7 +38,7 @@ public class ChannelManager {
 
             for (int i = 0; i < channels.length(); i++) {
                 JSONObject channel = channels.getJSONObject(i);
-                Channel newChannel = new Channel(channel.getString("channel"), channel.getString("program"), channel.getString("provider"));
+                Channel newChannel = new Channel(channel.getString(JSON_KEY_CHANNEL), channel.getString(JSON_KEY_PROGRAM), channel.getString(JSON_KEY_PROVIDER));
                 this.channelList.add(newChannel);
                 Log.d(newChannel.getProgram(), "Program");
             }
@@ -77,16 +82,16 @@ public class ChannelManager {
                 while (reader.hasNext()) {
                     String name = reader.nextName();
                     switch(name) {
-                        case "channel":
+                        case JSON_KEY_CHANNEL:
                             channel = reader.nextString();
                             break;
-                        case "program":
+                        case JSON_KEY_PROGRAM:
                             program = reader.nextString();
                             break;
-                        case "provider":
+                        case JSON_KEY_PROVIDER:
                             provider = reader.nextString();
                             break;
-                        case "isFav":
+                        case JSON_KEY_FAVORITE:
                             isFav = reader.nextBoolean();
                             break;
                         default:
