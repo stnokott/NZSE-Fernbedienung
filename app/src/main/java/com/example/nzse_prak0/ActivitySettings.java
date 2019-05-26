@@ -5,21 +5,29 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-public class ActivitySettings extends AppCompatActivity {
+import com.example.nzse_prak0.helpers.DownloadTask;
+import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+
+import org.json.JSONObject;
+
+public class ActivitySettings extends AppCompatActivity implements OnDownloadTaskCompleted {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        /*
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        */
+        createListeners();
 
         loadSettings();
     }
@@ -45,6 +53,46 @@ public class ActivitySettings extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createListeners() {
+        Button btnTestConnection = findViewById(R.id.btnTestConnection);
+        btnTestConnection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText txtIP = findViewById(R.id.txtIP);
+                String ip = txtIP.getText().toString();
+                DownloadTask d = new DownloadTask("", getApplicationContext(), ActivitySettings.this, ip);
+                d.execute();
+
+                v.setEnabled(false); // Button deaktivieren
+                // Progress-Indicator zeigen
+                ProgressBar progressTestConnection = findViewById(R.id.progressTestConnection);
+                progressTestConnection.setVisibility(View.VISIBLE);
+                txtIP.clearFocus(); // EditText defokussieren
+                // Tastatur verstecken
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(txtIP.getWindowToken(), 0);
+            }
+        });
+    }
+
+    @Override
+    public void onDownloadTaskCompleted(Boolean success, JSONObject json) {
+        // BUtton aktivieren
+        Button btnTestConnection = findViewById(R.id.btnTestConnection);
+        btnTestConnection.setEnabled(true);
+        // EditText defokussieren
+        ProgressBar progressTestConnection = findViewById(R.id.progressTestConnection);
+        progressTestConnection.setVisibility(View.INVISIBLE);
+
+        if (success) {
+            btnTestConnection.setBackgroundTintList(ContextCompat.getColorStateList(ActivitySettings.this, R.color.colorValid));
+            Toast.makeText(getApplicationContext(), "Verbindung erfolgreich!", Toast.LENGTH_SHORT).show();
+        } else {
+            btnTestConnection.setBackgroundTintList(ContextCompat.getColorStateList(ActivitySettings.this, R.color.colorInvalid));
+            Toast.makeText(getApplicationContext(), "Verbindung fehlgeschlagen!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void saveSettings() {

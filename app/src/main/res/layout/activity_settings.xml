@@ -34,7 +34,7 @@
                     android:id="@+id/lblRatio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_aspect_ratio_black_24dp"
+                    android:drawableStart="@drawable/ic_aspect_ratio_black_24dp"
                     android:drawablePadding="8dp"
                     android:labelFor="@id/selectRatio"
                     android:text="@string/lblRatio"
@@ -65,23 +65,58 @@
                     android:id="@+id/lblIP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_tv_black_24dp"
+                    android:drawableStart="@drawable/ic_tv_black_24dp"
                     android:drawablePadding="8dp"
                     android:labelFor="@id/selectRatio"
                     android:text="@string/lblIP"
                     android:textSize="@dimen/control_label_fontsize" />
 
-                <EditText
-                    android:id="@+id/txtIP"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:digits="0123456789."
-                    android:drawablePadding="8dp"
-                    android:ems="10"
-                    android:hint="@string/preferences_ip_default"
-                    android:inputType="number"
-                    android:selectAllOnFocus="true"
-                    android:singleLine="true" />
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/txtIP"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789."
+                        android:drawablePadding="8dp"
+                        android:ems="10"
+                        android:hint="@string/preferences_ip_default"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btnTestConnection"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/btnTestConnection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblBtnTestConnection"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/progressTestConnection"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="3dp"
+                        android:indeterminate="true"
+                        android:outlineProvider="none"
+                        android:scaleX=".8"
+                        android:scaleY=".8"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/btnTestConnection"
+                        app:layout_constraintStart_toStartOf="@+id/btnTestConnection"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 

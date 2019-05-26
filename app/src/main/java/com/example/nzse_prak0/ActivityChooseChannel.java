@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.DownloadTask;
-import com.example.nzse_prak0.helpers.OnChannelScanCompleted;
+import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.example.nzse_prak0.helpers.TileAdapter;
 
 import org.json.JSONException;
@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityChooseChannel extends AppCompatActivity implements OnChannelScanCompleted {
+public class ActivityChooseChannel extends AppCompatActivity implements OnDownloadTaskCompleted {
     private TileAdapter tileAdapter;
 
     @Override
@@ -110,7 +110,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
     }
 
     @Override
-    public void onChannelScanCompleted(Boolean success, JSONObject jsonObj) {
+    public void onDownloadTaskCompleted(Boolean success, JSONObject jsonObj) {
         if (success) {
             Toast toast = Toast.makeText(getApplicationContext(), "Kanäle gescannt!", Toast.LENGTH_SHORT);
             toast.show();
@@ -119,7 +119,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
                 ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
                 tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getChannels());
             } catch (JSONException e) {
-                Log.e("onChannelScanCompleted", e.getMessage());
+                Log.e("onDownloadTaskCompleted", e.getMessage());
             }
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Fehler beim Channel-Scan!", Toast.LENGTH_SHORT);

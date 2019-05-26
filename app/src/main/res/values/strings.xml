@@ -31,6 +31,7 @@
     <string name="lblBtnSearch">Suche</string>
     <string name="lblBtnSettings">Einstellungen</string>
     <string name="lblBtnSaveSettings">Speichern</string>
+    <string name="lblBtnTestConnection">Test</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>

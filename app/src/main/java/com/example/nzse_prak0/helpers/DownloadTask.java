@@ -16,12 +16,16 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     private HttpRequest http;
     private String command;
 
-    private OnChannelScanCompleted listener;
+    private OnDownloadTaskCompleted listener;
 
-    public DownloadTask(String command, Context c, OnChannelScanCompleted listener) {
+    public DownloadTask(String command, Context c, OnDownloadTaskCompleted listener) {
+        this(command, c, listener, ActivitySettings.getIP(c));
+    }
+
+    public DownloadTask(String command, Context c, OnDownloadTaskCompleted listener, String ip) {
         this.listener = listener;
         this.command = command;
-        http = new HttpRequest(ActivitySettings.getIP(c), 5000, true);
+        http = new HttpRequest(ip, 5000, true);
     }
 
     @Override
@@ -40,10 +44,10 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     protected void onPostExecute(JSONObject jsonObj) {
         if (jsonObj == null) {
             if (listener != null)
-                listener.onChannelScanCompleted(false, null);
+                listener.onDownloadTaskCompleted(false, null);
         } else {
             if (listener != null)
-                listener.onChannelScanCompleted(true, jsonObj);
+                listener.onDownloadTaskCompleted(true, jsonObj);
         }
     }
 }
