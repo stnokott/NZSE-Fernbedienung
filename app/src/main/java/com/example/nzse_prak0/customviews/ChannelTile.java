@@ -11,8 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.widget.TextViewCompat;
 
-import com.example.nzse_prak0.Channel;
 import com.example.nzse_prak0.R;
+import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.Units;
 
 public class ChannelTile extends ConstraintLayout {

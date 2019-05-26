@@ -3,9 +3,6 @@ package com.example.nzse_prak0.helpers;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.nzse_prak0.HttpRequest;
-import com.example.nzse_prak0.OnChannelScanCompleted;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

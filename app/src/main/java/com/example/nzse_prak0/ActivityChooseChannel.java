@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.DownloadTask;
+import com.example.nzse_prak0.helpers.OnChannelScanCompleted;
 import com.example.nzse_prak0.helpers.TileAdapter;
 
 import org.json.JSONException;

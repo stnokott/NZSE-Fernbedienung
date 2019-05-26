@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nzse_prak0.Channel;
 import com.example.nzse_prak0.customviews.ChannelTile;
 
 import java.util.List;

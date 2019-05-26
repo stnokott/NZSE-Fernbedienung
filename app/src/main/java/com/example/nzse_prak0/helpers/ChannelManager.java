@@ -1,4 +1,4 @@
-package com.example.nzse_prak0;
+package com.example.nzse_prak0.helpers;
 
 import android.content.Context;
 import android.util.JsonReader;

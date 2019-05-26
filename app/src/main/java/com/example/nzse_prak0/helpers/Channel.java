@@ -1,4 +1,4 @@
-package com.example.nzse_prak0;
+package com.example.nzse_prak0.helpers;
 
 public class Channel {
     private String channel;

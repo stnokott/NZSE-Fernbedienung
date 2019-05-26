@@ -1,4 +1,4 @@
-package com.example.nzse_prak0;
+package com.example.nzse_prak0.helpers;
 
 //package de.h_da.fbi.kreling.tvremotecontrol2;
 
