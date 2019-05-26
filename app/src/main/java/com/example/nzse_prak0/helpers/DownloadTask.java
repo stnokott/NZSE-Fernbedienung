@@ -14,16 +14,18 @@ import java.io.IOException;
 public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     private HttpRequest http;
     private String command;
+    private int requestCode;
 
     private OnDownloadTaskCompleted listener;
 
-    public DownloadTask(String command, Context c, OnDownloadTaskCompleted listener) {
-        this(command, c, listener, ActivitySettings.getIP(c));
+    public DownloadTask(String command, int requestCode, Context c, OnDownloadTaskCompleted listener) {
+        this(command, requestCode, c, listener, ActivitySettings.getIP(c));
     }
 
-    public DownloadTask(String command, Context c, OnDownloadTaskCompleted listener, String ip) {
+    public DownloadTask(String command, int requestCode, Context c, OnDownloadTaskCompleted listener, String ip) {
         this.listener = listener;
         this.command = command;
+        this.requestCode = requestCode;
         http = new HttpRequest(ip, 5000, true);
     }
 
@@ -43,10 +45,10 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     protected void onPostExecute(JSONObject jsonObj) {
         if (jsonObj == null) {
             if (listener != null)
-                listener.onDownloadTaskCompleted(false, null);
+                listener.onDownloadTaskCompleted(requestCode, false, null);
         } else {
             if (listener != null)
-                listener.onDownloadTaskCompleted(true, jsonObj);
+                listener.onDownloadTaskCompleted(requestCode, true, jsonObj);
         }
     }
 }
