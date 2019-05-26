@@ -19,10 +19,10 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     private OnDownloadTaskCompleted listener;
 
     public DownloadTask(String command, int requestCode, Context c, OnDownloadTaskCompleted listener) {
-        this(command, requestCode, c, listener, ActivitySettings.getIP(c));
+        this(command, requestCode, listener, ActivitySettings.getIP(c));
     }
 
-    public DownloadTask(String command, int requestCode, Context c, OnDownloadTaskCompleted listener, String ip) {
+    public DownloadTask(String command, int requestCode, OnDownloadTaskCompleted listener, String ip) {
         this.listener = listener;
         this.command = command;
         this.requestCode = requestCode;

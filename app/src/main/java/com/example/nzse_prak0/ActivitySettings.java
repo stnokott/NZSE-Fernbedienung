@@ -63,7 +63,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
             public void onClick(View v) {
                 EditText txtIP = findViewById(R.id.txtIP);
                 String ip = txtIP.getText().toString();
-                DownloadTask d = new DownloadTask("", 2, getApplicationContext(), ActivitySettings.this, ip);
+                DownloadTask d = new DownloadTask("", 2, ActivitySettings.this, ip);
                 d.execute();
 
                 v.setEnabled(false); // Button deaktivieren

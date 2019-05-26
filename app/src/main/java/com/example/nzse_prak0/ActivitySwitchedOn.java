@@ -173,7 +173,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             Drawable d = Drawable.createFromStream(ims, null);
             imgCurrentChannel.setImageDrawable(d);
         } catch (IOException e) {
-            Log.e("setCurrentPlayingChannel", e.getMessage().toString());
+            Log.e("setCurrentPlayingChannel", e.getMessage());
         }
 
         curPlayingChannel = channel;
