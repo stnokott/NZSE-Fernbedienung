@@ -2,17 +2,20 @@ package com.example.nzse_prak0;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.ChannelManager;
 import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
@@ -21,6 +24,7 @@ import org.json.JSONObject;
 
 public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
     public static final ChannelManager channelManager = new ChannelManager();
+    private Channel curPlayingChannel = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +103,43 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                 startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class),  3);
             }
         });
+
+        ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
+        btnPlayingFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFavButton();
+            }
+        });
+    }
+
+    public void toggleFavButton() {
+        ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
+
+        Boolean isFav = curPlayingChannel.getIsFav();
+        updateFavStatus(isFav);
+
+        Animatable animatable = (Animatable) btnPlayingFavorite.getDrawable();
+        animatable.start();
+
+        curPlayingChannel.setIsFav(!isFav);
+    }
+
+    public void updateFavStatus(Boolean isFav) {
+        ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
+        if (isFav) {
+            btnPlayingFavorite.setImageResource(R.drawable.star_fill_reverse_white_anim);
+        } else {
+            btnPlayingFavorite.setImageResource(R.drawable.star_fill_white_anim);
+        }
+    }
+
+    public void setCurrentPlayingChannel(Channel channel) {
+        TextView lblPlaying = findViewById(R.id.lblPlaying);
+        lblPlaying.setText(channel.getProgram());
+        updateFavStatus(channel.getIsFav());
+
+        curPlayingChannel = channel;
     }
 
     @Override
@@ -112,24 +153,25 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             // für Favoriten-Speicherung
             // TODO: Öfter prüfen? Performance-Probleme?
             ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
+
+            // Daten von aktuellem Main-Channel anzeigen
+
+            int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
+            Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
+            setCurrentPlayingChannel(channelInstance);
         }
 
-        if (requestCode == 3) {
-            if(resultCode == Activity.RESULT_OK){
-                String channelName = data.getStringExtra("program");
-                Toast t = Toast.makeText(getApplicationContext(), "Kanal "+channelName+" für PiP ausgewählt", Toast.LENGTH_SHORT);
-                t.show();
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast t = Toast.makeText(getApplicationContext(), "Kein Channel gewählt!", Toast.LENGTH_SHORT);
-                t.show();
-            }
-        } else if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                String channel = data.getStringExtra("channel");
-                DownloadTask d = new DownloadTask("channelMain=" + channel, 1, getApplicationContext(), null);
-                d.execute();
-            }
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
+            Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
+            DownloadTask d = new DownloadTask("channelMain=" + channelInstance.getChannel(), 1, getApplicationContext(), null);
+            d.execute();
+            setCurrentPlayingChannel(channelInstance);
+        } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
+            int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
+            Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
+            Toast t = Toast.makeText(getApplicationContext(), "Kanal " + channelInstance.getProgram() + " für PiP ausgewählt", Toast.LENGTH_SHORT);
+            t.show();
         }
     }
 
@@ -141,8 +183,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
          */
         switch (requestCode) {
             case 9:
+                // Power-Button
                 if (success)
                     startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
+                // Platz für weitere Responses
         }
     }
 }

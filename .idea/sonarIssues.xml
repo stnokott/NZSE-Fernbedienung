@@ -8,6 +8,26 @@
             <set />
           </value>
         </entry>
+        <entry key="/a.dummy">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/.gitignore">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/nzse_prak0/ActivityChooseChannel.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/nzse_prak0/customviews/ChannelTile.java">
+          <value>
+            <set />
+          </value>
+        </entry>
       </map>
     </option>
   </component>

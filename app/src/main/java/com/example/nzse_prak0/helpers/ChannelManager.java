@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelManager {
+    // TODO: Kanäle mit gleichem Namen (aber unterschiedlicher Frequenz) filtern
     private static final String JSON_FILENAME_CHANNELS = "channels.json";
 
     private String response;
@@ -55,7 +55,7 @@ public class ChannelManager {
             }
             writer.endArray();
             writer.close();
-            Toast.makeText(context.getApplicationContext(), "JSON gespeichert!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context.getApplicationContext(), "JSON gespeichert!", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e("saveToJSON", e.getMessage());
         }
@@ -104,6 +104,10 @@ public class ChannelManager {
 
     public List<Channel> getChannels() {
         return channelList;
+    }
+
+    public Channel getChannelAt(int index) {
+        return channelList.get(index);
     }
 
     public List<Channel> getFavoriteChannels() {

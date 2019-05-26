@@ -12,6 +12,7 @@
     <string name="login_failed">"Login failed"</string>
 
     <string name="descBtnSettings">Settings Button</string>
+    <string name="descCurrentChannel">Aktueller Kanal</string>
     <string name="descBtnPower">Power Button</string>
     <string name="descBtnFavs">Favorites Button</string>
     <string name="descImgTV">TV Image</string>
@@ -44,4 +45,5 @@
     <string name="preferences_ratiopos_key">ratio</string>
     <string name="preferences_ip_key">ip</string>
 
+    <string name="intentExtra_channelAdapterPosition_key">channelInstance</string>
 </resources>

@@ -83,11 +83,8 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             public void onClick(View v) {
                 TileAdapter.TileViewHolder viewHolder = (TileAdapter.TileViewHolder) v.getTag();
 
-                String channelName = viewHolder.getChannelTile().getChannelInstance().getProgram();
-                String channel = viewHolder.getChannelTile().getChannelInstance().getChannel();
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("program", channelName);
-                returnIntent.putExtra("channel", channel);
+                returnIntent.putExtra(getString(R.string.intentExtra_channelAdapterPosition_key), viewHolder.getAdapterPosition());
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
