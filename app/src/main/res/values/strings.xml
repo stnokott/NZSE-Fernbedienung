@@ -26,9 +26,11 @@
     <string name="lblPlaying">Pro 7</string>
     <string name="lblCurrentChannel">Aktueller Sender</string>
     <string name="lblRatio">Seitenverhältnis</string>
+    <string name="lblIP">TV IP-Adresse</string>
     <string name="lblMisc">Beispieleinstellung</string>
     <string name="lblBtnSearch">Suche</string>
     <string name="lblBtnSettings">Einstellungen</string>
+    <string name="lblBtnSaveSettings">Speichern</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>
@@ -36,10 +38,8 @@
 
     <string name="senderPlaceholder">[SENDERNAME]</string>
 
-    <string-array name="ratios_array">
-        <item>16:9</item>
-        <item>16:10</item>
-        <item>4:3</item>
-    </string-array>
+    <string name="preferences_ip_default">192.168.0.104</string>
+    <string name="preferences_ratio_key">ratio</string>
+    <string name="preferences_ip_key">ip</string>
 
 </resources>
