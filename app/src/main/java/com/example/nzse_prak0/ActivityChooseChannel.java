@@ -97,7 +97,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnChanne
         btnScanChannels.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                DownloadTask d = new DownloadTask(ActivityChooseChannel.this, "scanChannels=");
+                DownloadTask d = new DownloadTask("scanChannels=", getApplicationContext(), ActivityChooseChannel.this);
                 d.execute();
                 Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
                 t.show();

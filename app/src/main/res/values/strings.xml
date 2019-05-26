@@ -38,8 +38,9 @@
 
     <string name="senderPlaceholder">[SENDERNAME]</string>
 
+    <string name="preferences_file_name">settings</string>
     <string name="preferences_ip_default">192.168.0.104</string>
-    <string name="preferences_ratio_key">ratio</string>
+    <string name="preferences_ratiopos_key">ratio</string>
     <string name="preferences_ip_key">ip</string>
 
 </resources>

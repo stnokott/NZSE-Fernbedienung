@@ -104,7 +104,8 @@ public class ActivitySwitchedOn extends AppCompatActivity {
             1 = Channel-Auswahl
             3 = PiP-Auswahl
          */
-        if (requestCode == 3 || requestCode == 1) {
+        if ((requestCode == 3 || requestCode == 1) && resultCode == Activity.RESULT_OK) {
+            // für Favoriten-Speicherung
             // TODO: Öfter prüfen? Performance-Probleme?
             ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
         }
@@ -122,7 +123,7 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         } else if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 String channel = data.getStringExtra("channel");
-                DownloadTask d = new DownloadTask(null, "channelMain="+channel);
+                DownloadTask d = new DownloadTask("channelMain=" + channel, getApplicationContext(), null);
                 d.execute();
             }
         }
