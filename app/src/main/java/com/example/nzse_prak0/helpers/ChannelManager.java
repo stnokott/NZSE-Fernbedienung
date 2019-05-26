@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +54,7 @@ public class ChannelManager {
             }
             writer.endArray();
             writer.close();
-            Toast.makeText(context.getApplicationContext(), "JSON gespeichert!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context.getApplicationContext(), "JSON gespeichert!", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e("saveToJSON", e.getMessage());
         }
