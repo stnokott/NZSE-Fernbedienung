@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +24,16 @@ import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+
 public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
     public static final ChannelManager channelManager = new ChannelManager();
     private Channel curPlayingChannel = null;
+
+    private static final String CHANNEL_ICON_FILENAMES_DICT_FILE = "filenames.json";
+    private HashMap<String, String> channelIconFilenames = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +44,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
 
         channelManager.loadFromJSON(getApplicationContext());
+        loadIconFilenamesFromJSON();
 
         createListeners();
     }
@@ -123,6 +133,23 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         animatable.start();
 
         curPlayingChannel.setIsFav(!isFav);
+    }
+
+    public void loadIconFilenamesFromJSON() {
+        try {
+            JsonReader reader = new JsonReader(new InputStreamReader(getAssets().open(CHANNEL_ICON_FILENAMES_DICT_FILE)));
+            channelIconFilenames.clear();
+            reader.beginObject();
+            while (reader.hasNext()) {
+                String key = reader.nextName();
+                String value = reader.nextString();
+                channelIconFilenames.put(key, value);
+            }
+            reader.endObject();
+            reader.close();
+        } catch (IOException e) {
+            Log.e("saveToJSON", e.getMessage());
+        }
     }
 
     public void updateFavStatus(Boolean isFav) {
