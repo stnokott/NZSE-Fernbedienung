@@ -134,6 +134,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
+    public void setCurrentPlayingChannel(Channel channel) {
+        TextView lblPlaying = findViewById(R.id.lblPlaying);
+        lblPlaying.setText(channel.getProgram());
+        updateFavStatus(channel.getIsFav());
+
+        curPlayingChannel = channel;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         /*
@@ -147,14 +155,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
 
             // Daten von aktuellem Main-Channel anzeigen
-            TextView lblPlaying = findViewById(R.id.lblPlaying);
+
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
-
-            lblPlaying.setText(channelInstance.getProgram());
-            updateFavStatus(channelInstance.getIsFav());
-
-            curPlayingChannel = channelInstance;
+            setCurrentPlayingChannel(channelInstance);
         }
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
@@ -162,6 +166,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
             DownloadTask d = new DownloadTask("channelMain=" + channelInstance.getChannel(), 1, getApplicationContext(), null);
             d.execute();
+            setCurrentPlayingChannel(channelInstance);
         } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
@@ -178,6 +183,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
          */
         switch (requestCode) {
             case 9:
+                // Power-Button
                 if (success)
                     startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
                 // Platz für weitere Responses

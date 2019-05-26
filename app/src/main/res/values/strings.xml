@@ -12,6 +12,7 @@
     <string name="login_failed">"Login failed"</string>
 
     <string name="descBtnSettings">Settings Button</string>
+    <string name="descCurrentChannel">Aktueller Kanal</string>
     <string name="descBtnPower">Power Button</string>
     <string name="descBtnFavs">Favorites Button</string>
     <string name="descImgTV">TV Image</string>
