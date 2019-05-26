@@ -34,7 +34,7 @@ public final class ViewHelper {
         wrappedDrawable.setColorFilter(c, PorterDuff.Mode.DST);
     }
 
-    public static void removeBackgroundTint(View v) {
+    public static void clearBackgroundTint(View v) {
         Drawable wrappedDrawable = DrawableCompat.wrap(v.getBackground());
         wrappedDrawable.clearColorFilter();
     }
