@@ -242,13 +242,12 @@
                 android:id="@+id/imgCurrentChannel"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:alpha="0.15"
+                android:alpha="0.1"
                 android:contentDescription="@string/descCurrentChannel"
                 app:layout_constraintBottom_toBottomOf="@+id/lblPlaying"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lblPlaying"
-                app:srcCompat="@drawable/ic_prosieben_logo" />
+                app:layout_constraintTop_toTopOf="@+id/lblPlaying" />
 
             <TextView
                 android:id="@+id/lblPlaying"
@@ -259,7 +258,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:text="@string/lblPlaying"
+                android:text="@string/lblPlayingPlaceholder"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="42sp"

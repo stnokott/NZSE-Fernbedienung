@@ -38,7 +38,7 @@
     <string name="titleMainOn">Fernseher bedienen</string>
     <string name="titleChooseChannel">Kanal wählen</string>
 
-    <string name="senderPlaceholder">[SENDERNAME]</string>
+    <string name="lblPlayingPlaceholder">Kein Kanal gewählt</string>
 
     <string name="preferences_file_name">settings</string>
     <string name="preferences_ip_default">192.168.0.104</string>

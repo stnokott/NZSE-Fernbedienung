@@ -121,7 +121,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnPlayingFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleFavButton();
+                if (curPlayingChannel != null)
+                    toggleFavButton();
             }
         });
     }
