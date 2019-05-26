@@ -26,6 +26,7 @@
     <string name="lblPlaying">Pro 7</string>
     <string name="lblCurrentChannel">Aktueller Sender</string>
     <string name="lblRatio">Seitenverhältnis</string>
+    <string name="lblIP">TV IP-Adresse</string>
     <string name="lblMisc">Beispieleinstellung</string>
     <string name="lblBtnSearch">Suche</string>
     <string name="lblBtnSettings">Einstellungen</string>
