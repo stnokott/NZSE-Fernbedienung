@@ -27,6 +27,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
 
     private View.OnClickListener onItemClickListener;
     private List<Channel> channelList;
+    private RecyclerView mRecyclerView;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -79,6 +80,12 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
         return channelList.size();
     }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mRecyclerView = recyclerView;
+    }
+
     public void setOnItemClickListener(View.OnClickListener clickListener) {
         this.onItemClickListener = clickListener;
     }
@@ -88,5 +95,6 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
         this.channelList.clear();
         this.channelList.addAll(channelList);
         notifyDataSetChanged();
+        mRecyclerView.scheduleLayoutAnimation();
     }
 }
