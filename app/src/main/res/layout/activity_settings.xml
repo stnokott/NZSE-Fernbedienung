@@ -19,14 +19,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/control_padding_material"
+            android:paddingRight="@dimen/control_padding_material">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/control_padding_material"
-                android:paddingRight="@dimen/control_padding_material">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/lblRatio"
@@ -55,28 +57,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/control_padding_material"
-                android:paddingRight="@dimen/control_padding_material">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/lblMisc"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/lblIP"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:labelFor="@id/selectRatio"
-                    android:text="@string/lblMisc"
+                    android:text="@string/lblIP"
                     android:textSize="@dimen/control_label_fontsize" />
 
-                <Switch
-                    android:id="@+id/toggleMisc"
-                    style="@android:style/Widget.Material.Light.CompoundButton.Switch"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/txtIP"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:switchMinWidth="32dp"
-                    tools:checked="true" />
+                    android:digits="0123456789."
+                    android:drawableLeft="@drawable/ic_tv_black_24dp"
+                    android:drawablePadding="8dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    tools:text="192.168.0.104" />
+
             </LinearLayout>
 
             <View
