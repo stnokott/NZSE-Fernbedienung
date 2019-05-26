@@ -33,8 +33,7 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
     protected JSONObject doInBackground(Void... params){
         // resolving request and do not interrupt UI
         try {
-            JSONObject jsonObject = http.sendHttp(this.command);
-            return jsonObject;
+            return http.sendHttp(this.command);
         } catch (IOException |JSONException e) {
             Log.e("doInBackground", e.getMessage());
             return null;
