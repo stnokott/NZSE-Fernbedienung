@@ -2,8 +2,8 @@
 <project version="4">
   <component name="projectSettings">
     <option name="alternativeWorkingDirPath" value="" />
-    <option name="localAnalysisScripName" value="SonarCloud Analysis" />
-    <option name="serverName" value="SonarQube Server" />
+    <option name="localAnalysisScripName" value="&lt;NO LOCAL ANALYSIS&gt;" />
+    <option name="serverName" value="SonarCloud Server" />
     <option name="useAlternativeWorkingDir" value="false" />
     <option name="workingDirSelection" value="&lt;PROJECT&gt;" />
   </component>
