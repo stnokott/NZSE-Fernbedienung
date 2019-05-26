@@ -3,16 +3,18 @@ package com.example.nzse_prak0;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.nzse_prak0.helpers.DownloadTask;
+import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONObject;
 
 
-public class ActivitySwitchedOff extends AppCompatActivity {
-
-
+public class ActivitySwitchedOff extends AppCompatActivity implements OnDownloadTaskCompleted {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +24,20 @@ public class ActivitySwitchedOff extends AppCompatActivity {
         btnSwitchOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivitySwitchedOff.this, ActivitySwitchedOn.class));
-                finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
+                DownloadTask d = new DownloadTask("standby=0", getApplicationContext(), ActivitySwitchedOff.this);
+                d.execute();
             }
         });
+    }
+
+    @Override
+    public void onDownloadTaskCompleted(Boolean success, JSONObject json) {
+        if (success) {
+            startActivity(new Intent(ActivitySwitchedOff.this, ActivitySwitchedOn.class));
+            finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
+        } else {
+            Toast.makeText(getApplicationContext(), "TV aktivieren fehlgeschlagen", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
