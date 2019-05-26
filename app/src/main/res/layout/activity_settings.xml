@@ -34,6 +34,8 @@
                     android:id="@+id/lblRatio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_aspect_ratio_black_24dp"
+                    android:drawablePadding="8dp"
                     android:labelFor="@id/selectRatio"
                     android:text="@string/lblRatio"
                     android:textSize="@dimen/control_label_fontsize" />
@@ -63,6 +65,8 @@
                     android:id="@+id/lblIP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_tv_black_24dp"
+                    android:drawablePadding="8dp"
                     android:labelFor="@id/selectRatio"
                     android:text="@string/lblIP"
                     android:textSize="@dimen/control_label_fontsize" />
@@ -72,13 +76,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:digits="0123456789."
-                    android:drawableLeft="@drawable/ic_tv_black_24dp"
                     android:drawablePadding="8dp"
                     android:ems="10"
+                    android:hint="@string/preferences_ip_default"
                     android:inputType="number"
                     android:selectAllOnFocus="true"
-                    android:singleLine="true"
-                    tools:text="192.168.0.104" />
+                    android:singleLine="true" />
 
             </LinearLayout>
 
