@@ -140,8 +140,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     public void loadIconFilenamesFromJSON() {
-        try {
-            JsonReader reader = new JsonReader(new InputStreamReader(getAssets().open(CHANNEL_ICON_FILENAMES_DICT_FILE)));
+        try (JsonReader reader = new JsonReader(new InputStreamReader(getAssets().open(CHANNEL_ICON_FILENAMES_DICT_FILE)))) {
             channelIconFilenames.clear();
             reader.beginObject();
             while (reader.hasNext()) {
@@ -150,7 +149,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                 channelIconFilenames.put(key, value);
             }
             reader.endObject();
-            reader.close();
         } catch (IOException e) {
             Log.e("saveToJSON", e.getMessage());
         }
