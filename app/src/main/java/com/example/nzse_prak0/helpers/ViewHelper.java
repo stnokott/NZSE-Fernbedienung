@@ -1,13 +1,17 @@
 package com.example.nzse_prak0.helpers;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class LayoutHelper {
-    private LayoutHelper() {}
+public final class ViewHelper {
+    private ViewHelper() {}
 
     public static List<View> getChildrenByClass(ViewGroup v, Class c) {
         List<View> returnList = new ArrayList<>();
@@ -23,5 +27,10 @@ public final class LayoutHelper {
         }
 
         return returnList;
+    }
+
+    public static void setViewBackgroundTint(View v, int c) {
+        Drawable wrappedDrawable = DrawableCompat.wrap(v.getBackground());
+        wrappedDrawable.setColorFilter(c, PorterDuff.Mode.DST);
     }
 }
