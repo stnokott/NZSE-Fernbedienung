@@ -97,7 +97,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         btnScanChannels.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                DownloadTask d = new DownloadTask("scanChannels=", getApplicationContext(), ActivityChooseChannel.this);
+                DownloadTask d = new DownloadTask("scanChannels=", 1, getApplicationContext(), ActivityChooseChannel.this);
                 d.execute();
                 Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
                 t.show();
@@ -110,7 +110,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     }
 
     @Override
-    public void onDownloadTaskCompleted(Boolean success, JSONObject jsonObj) {
+    public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
         if (success) {
             Toast toast = Toast.makeText(getApplicationContext(), "Kanäle gescannt!", Toast.LENGTH_SHORT);
             toast.show();

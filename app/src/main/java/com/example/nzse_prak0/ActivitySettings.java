@@ -63,7 +63,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
             public void onClick(View v) {
                 EditText txtIP = findViewById(R.id.txtIP);
                 String ip = txtIP.getText().toString();
-                DownloadTask d = new DownloadTask("", getApplicationContext(), ActivitySettings.this, ip);
+                DownloadTask d = new DownloadTask("", 2, getApplicationContext(), ActivitySettings.this, ip);
                 d.execute();
 
                 v.setEnabled(false); // Button deaktivieren
@@ -79,7 +79,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
     }
 
     @Override
-    public void onDownloadTaskCompleted(Boolean success, JSONObject json) {
+    public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject json) {
         // BUtton aktivieren
         final Button btnTestConnection = findViewById(R.id.btnTestConnection);
         btnTestConnection.setEnabled(true);

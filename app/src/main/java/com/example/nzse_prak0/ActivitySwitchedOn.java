@@ -15,8 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nzse_prak0.helpers.ChannelManager;
 import com.example.nzse_prak0.helpers.DownloadTask;
+import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 
-public class ActivitySwitchedOn extends AppCompatActivity {
+import org.json.JSONObject;
+
+public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
     public static final ChannelManager channelManager = new ChannelManager();
 
     @Override
@@ -64,7 +67,8 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         btnSwitchOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
+                DownloadTask d = new DownloadTask("standby=1", 9, getApplicationContext(), ActivitySwitchedOn.this);
+                d.execute();
             }
         });
 
@@ -123,9 +127,22 @@ public class ActivitySwitchedOn extends AppCompatActivity {
         } else if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 String channel = data.getStringExtra("channel");
-                DownloadTask d = new DownloadTask("channelMain=" + channel, getApplicationContext(), null);
+                DownloadTask d = new DownloadTask("channelMain=" + channel, 1, getApplicationContext(), null);
                 d.execute();
             }
+        }
+    }
+
+    @Override
+    public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
+        /*
+            requestCode:
+            9 = Standby aktivieren
+         */
+        switch (requestCode) {
+            case 9:
+                if (success)
+                    startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
         }
     }
 }

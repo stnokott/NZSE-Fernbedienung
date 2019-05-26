@@ -24,14 +24,14 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
         btnSwitchOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("standby=0", getApplicationContext(), ActivitySwitchedOff.this);
+                DownloadTask d = new DownloadTask("standby=0", 9, getApplicationContext(), ActivitySwitchedOff.this);
                 d.execute();
             }
         });
     }
 
     @Override
-    public void onDownloadTaskCompleted(Boolean success, JSONObject json) {
+    public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject json) {
         if (success) {
             startActivity(new Intent(ActivitySwitchedOff.this, ActivitySwitchedOn.class));
             finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
