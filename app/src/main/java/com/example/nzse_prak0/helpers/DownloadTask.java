@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
-    // TODO: IP in Einstellungen verschieben
     private HttpRequest http;
     private String command;
 
