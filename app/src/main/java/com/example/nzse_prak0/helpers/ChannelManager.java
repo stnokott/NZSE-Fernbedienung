@@ -105,6 +105,10 @@ public class ChannelManager {
         return channelList;
     }
 
+    public Channel getChannelAt(int index) {
+        return channelList.get(index);
+    }
+
     public List<Channel> getFavoriteChannels() {
         List<Channel> returnList = new ArrayList<>();
         for (Channel channel : channelList) {
