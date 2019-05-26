@@ -242,7 +242,7 @@
                 android:id="@+id/imgCurrentChannel"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:alpha="0.1"
+                android:alpha="0.15"
                 android:contentDescription="@string/descCurrentChannel"
                 app:layout_constraintBottom_toBottomOf="@+id/lblPlaying"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -251,10 +251,30 @@
                 app:srcCompat="@drawable/ic_prosieben_logo" />
 
             <TextView
+                android:id="@+id/lblPlaying"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="@string/lblPlaying"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="42sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblCurrentChannel" />
+
+            <TextView
                 android:id="@+id/lblCurrentChannel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lblCurrentChannel"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -267,27 +287,9 @@
                 android:layout_weight="1"
                 android:background="#00FFFFFF"
                 android:contentDescription="@string/descBtnFavs"
-                android:tint="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_star_border_black_36dp" />
-
-            <TextView
-                android:id="@+id/lblPlaying"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:text="@string/lblPlaying"
-                android:textAlignment="center"
-                android:textSize="42sp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblCurrentChannel" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -309,7 +311,6 @@
                 android:contentDescription="@string/descBtnPause"
                 android:padding="@dimen/control_icon_padding"
                 android:scaleType="fitCenter"
-                android:tint="@color/colorPrimaryDark"
                 app:srcCompat="@drawable/ic_pause_black_36dp" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.nzse_prak0;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
@@ -165,6 +168,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         TextView lblPlaying = findViewById(R.id.lblPlaying);
         lblPlaying.setText(channel.getProgram());
         updateFavStatus(channel.getIsFav());
+
+        ImageView imgCurrentChannel = findViewById(R.id.imgCurrentChannel);
+        try (InputStream ims = getAssets().open(channelIconFilenames.get(channel.getProgram()))) {
+            Drawable d = Drawable.createFromStream(ims, null);
+            imgCurrentChannel.setImageDrawable(d);
+        } catch (IOException e) {
+            Log.e("setCurrentPlayingChannel", e.getMessage().toString());
+        }
 
         curPlayingChannel = channel;
     }
