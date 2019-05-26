@@ -3,6 +3,7 @@ package com.example.nzse_prak0;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +15,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+import com.example.nzse_prak0.helpers.ViewHelper;
 
 import org.json.JSONObject;
 
@@ -80,19 +81,27 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
     @Override
     public void onDownloadTaskCompleted(Boolean success, JSONObject json) {
         // BUtton aktivieren
-        Button btnTestConnection = findViewById(R.id.btnTestConnection);
+        final Button btnTestConnection = findViewById(R.id.btnTestConnection);
         btnTestConnection.setEnabled(true);
         // EditText defokussieren
-        ProgressBar progressTestConnection = findViewById(R.id.progressTestConnection);
+        final ProgressBar progressTestConnection = findViewById(R.id.progressTestConnection);
         progressTestConnection.setVisibility(View.INVISIBLE);
 
         if (success) {
-            btnTestConnection.setBackgroundTintList(ContextCompat.getColorStateList(ActivitySettings.this, R.color.colorValid));
+            ViewHelper.setViewBackgroundTint(btnTestConnection, getColor(R.color.colorValid));
             Toast.makeText(getApplicationContext(), "Verbindung erfolgreich!", Toast.LENGTH_SHORT).show();
         } else {
-            btnTestConnection.setBackgroundTintList(ContextCompat.getColorStateList(ActivitySettings.this, R.color.colorInvalid));
+            ViewHelper.setViewBackgroundTint(btnTestConnection, getColor(R.color.colorInvalid));
             Toast.makeText(getApplicationContext(), "Verbindung fehlgeschlagen!", Toast.LENGTH_LONG).show();
         }
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ViewHelper.clearBackgroundTint(btnTestConnection);
+            }
+        }, 3000);
     }
 
     private void saveSettings() {
