@@ -32,15 +32,23 @@ public class ChannelManager {
 
     public void parseJSON(JSONObject json) throws JSONException {
         if (json.has("channels")) {              // Überprüfe ob "channels" vorhanden ist
+            List<String> occupiedPrograms = new ArrayList<>();
+
             channelList.clear();
             JSONArray channels = json.getJSONArray("channels");
             response = json.getString("status");
 
             for (int i = 0; i < channels.length(); i++) {
                 JSONObject channel = channels.getJSONObject(i);
-                Channel newChannel = new Channel(channel.getString(JSON_KEY_CHANNEL), channel.getString(JSON_KEY_PROGRAM), channel.getString(JSON_KEY_PROVIDER));
-                this.channelList.add(newChannel);
-                Log.d(newChannel.getProgram(), "Program");
+                String program = channel.getString(JSON_KEY_PROGRAM);
+                if (!occupiedPrograms.contains(program)) {
+                    Channel newChannel = new Channel(channel.getString(JSON_KEY_CHANNEL), program, channel.getString(JSON_KEY_PROVIDER));
+                    this.channelList.add(newChannel);
+                    Log.d(newChannel.getProgram(), "Program");
+                    occupiedPrograms.add(program);
+                } else {
+                    Log.d(program, "übersprungen, bereits vorhanden");
+                }
             }
         }
     }
@@ -52,10 +60,10 @@ public class ChannelManager {
             writer.beginArray();
             for (Channel c : channelList) {
                 writer.beginObject();
-                writer.name("channel").value(c.getChannel());
-                writer.name("program").value(c.getProgram());
-                writer.name("provider").value(c.getProvider());
-                writer.name("isFav").value(c.getIsFav());
+                writer.name(JSON_KEY_CHANNEL).value(c.getChannel());
+                writer.name(JSON_KEY_PROGRAM).value(c.getProgram());
+                writer.name(JSON_KEY_PROVIDER).value(c.getProvider());
+                writer.name(JSON_KEY_FAVORITE).value(c.getIsFav());
                 writer.endObject();
             }
             writer.endArray();
