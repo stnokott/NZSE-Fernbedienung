@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,6 +87,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             public void onClick(View v) {
                 DownloadTask d = new DownloadTask("standby=1", 9, getApplicationContext(), ActivitySwitchedOn.this);
                 d.execute();
+                setProgressVisible(true);
             }
         });
 
@@ -163,6 +165,11 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
+    public void setProgressVisible(Boolean visible) {
+        ProgressBar progressMain = findViewById(R.id.progressMain);
+        progressMain.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+    }
+
     public void setCurrentPlayingChannel(Channel channel) {
         TextView lblPlaying = findViewById(R.id.lblPlaying);
         lblPlaying.setText(channel.getProgram());
@@ -218,6 +225,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             requestCode:
             9 = Standby aktivieren
          */
+        setProgressVisible(false);
+
         switch (requestCode) {
             case 9:
                 // Power-Button
