@@ -26,7 +26,7 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
         this.listener = listener;
         this.command = command;
         this.requestCode = requestCode;
-        http = new HttpRequest(ip, 5000, true);
+        http = new HttpRequest(ip, 2500, true);
     }
 
     @Override
