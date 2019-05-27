@@ -37,7 +37,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     private Channel curPlayingChannel = null;
 
     private static final String CHANNEL_ICON_FILENAMES_DICT_FILE = "filenames.json";
-    private HashMap<String, String> channelIconFilenames = new HashMap<>();
+    public static HashMap<String, String> channelIconFilenames = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +182,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         updateFavStatus(channel.getIsFav());
 
         ImageView imgCurrentChannel = findViewById(R.id.imgCurrentChannel);
-        try (InputStream ims = getAssets().open(channelIconFilenames.get(channel.getProgram()))) {
+        try (InputStream ims = getAssets().open(ActivitySwitchedOn.channelIconFilenames.get(channel.getProgram()))) {
             Drawable d = Drawable.createFromStream(ims, null);
             imgCurrentChannel.setImageDrawable(d);
         } catch (IOException e) {

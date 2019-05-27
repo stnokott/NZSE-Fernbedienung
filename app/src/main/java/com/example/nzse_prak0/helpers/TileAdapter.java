@@ -58,7 +58,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     public @NonNull TileViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                              int viewType) {
         // create a new view
-        ChannelTile c = new ChannelTile(parent.getContext(), "", Color.RED);
+        ChannelTile c = new ChannelTile(parent.getContext(), Color.RED);
 
         return new TileViewHolder(c);
     }
@@ -70,7 +70,6 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
         // - replace the contents of the view with that element
         ChannelTile channelTile = holder.getChannelTile();
         channelTile.setChannelInstance(channelList.get(position));
-        channelTile.setBgNum(Integer.toString(position+1));
         channelTile.setColor(colorList[position%colorList.length]);
     }
 
