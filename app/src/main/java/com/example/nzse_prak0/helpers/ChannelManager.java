@@ -16,6 +16,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ChannelManager {
@@ -50,6 +52,7 @@ public class ChannelManager {
                     Log.d(program, "übersprungen, bereits vorhanden");
                 }
             }
+            sort();
         }
     }
 
@@ -110,9 +113,19 @@ public class ChannelManager {
                 channelList.add(new Channel(channel, program, provider, isFav));
             }
             reader.endArray();
+            sort();
         } catch (IOException e) {
             Log.e("saveToJSON", e.getMessage());
         }
+    }
+
+    private void sort() {
+        Collections.sort(channelList, new Comparator<Channel>() {
+            @Override
+            public int compare(Channel o1, Channel o2) {
+                return o1.getProgram().compareTo(o2.getProgram());
+            }
+        });
     }
 
     public List<Channel> getChannels() {
