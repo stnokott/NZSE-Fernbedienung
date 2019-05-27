@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.widget.SearchView;
+
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +48,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         }
 
         createListeners(tileAdapter);
+        checkNoChannelsVisible();
     }
 
     private void initTileAdapter() {
@@ -117,6 +120,13 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
                 finish();
             }
         });
+        tileAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                checkNoChannelsVisible();
+            }
+        });
 
         final Button btnScanChannels = findViewById(R.id.btnScanChannels);
         btnScanChannels.setOnClickListener( new View.OnClickListener(){
@@ -154,5 +164,10 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         findViewById(R.id.btnScanChannels).setEnabled(true);
         findViewById(R.id.recyclerViewChannel).setEnabled(true);
         findViewById(R.id.spinnerOverlay).setVisibility(View.INVISIBLE);
+    }
+
+    public void checkNoChannelsVisible() {
+        TextView txtNoChannels = findViewById(R.id.lblNoChannels);
+        txtNoChannels.setVisibility(tileAdapter.getItemCount()==0 ? View.VISIBLE:View.INVISIBLE);
     }
 }
