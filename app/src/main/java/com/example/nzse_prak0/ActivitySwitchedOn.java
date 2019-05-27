@@ -212,17 +212,21 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            // Hauptkanal
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
-            DownloadTask d = new DownloadTask("channelMain=" + channelInstance.getChannel(), 1, getApplicationContext(), null);
+            DownloadTask d = new DownloadTask("channelMain=" + channelInstance.getChannel(), 1, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
+            setProgressVisible(true);
             setCurrentPlayingChannel(channelInstance);
         } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
+            // Pip
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
 
-            DownloadTask d = new DownloadTask("channelPip=" + channelInstance.getChannel(), 3, getApplicationContext(), null);
+            DownloadTask d = new DownloadTask("channelPip=" + channelInstance.getChannel(), 3, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
+            setProgressVisible(true);
         }
     }
 
