@@ -94,7 +94,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
         this.onItemClickListener = clickListener;
     }
 
-    // TODO: performantere Lösung finden
+    // TODO: performantere Lösung finden (z.B. hier? https://stackoverflow.com/a/30429439)
     public void filterToProgramName(String s) {
         channelList.clear();
         for (int i=0; i<channelListBackup.size(); i++) {
