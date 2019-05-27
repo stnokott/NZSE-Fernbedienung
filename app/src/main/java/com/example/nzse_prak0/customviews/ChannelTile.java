@@ -159,7 +159,7 @@ public class ChannelTile extends ConstraintLayout {
         float[] hsv = new float[3];
         Color.colorToHSV(c, hsv);
         hsv[2] *= 0.85f;
-        bgIcon.setImageAlpha(50);
+        bgIcon.setImageAlpha(80);
         //bgIcon.setColorFilter(Color.HSVToColor(hsv), PorterDuff.Mode.SRC_IN);
     }
 
