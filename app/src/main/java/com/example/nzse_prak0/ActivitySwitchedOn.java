@@ -223,9 +223,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
             DownloadTask d = new DownloadTask("channelPip=" + channelInstance.getChannel(), 3, getApplicationContext(), null);
             d.execute();
-
-            Toast t = Toast.makeText(getApplicationContext(), "Kanal " + channelInstance.getProgram() + " für PiP ausgewählt", Toast.LENGTH_SHORT);
-            t.show();
         }
     }
 
