@@ -1,6 +1,7 @@
 package com.example.nzse_prak0.helpers;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nzse_prak0.customviews.ChannelTile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder> {
@@ -27,6 +29,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
 
     private View.OnClickListener onItemClickListener;
     private List<Channel> channelList;
+    private List<Channel> channelListBackup = new ArrayList<>();
     private RecyclerView mRecyclerView;
 
     // Provide a reference to the views for each data item
@@ -51,6 +54,8 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     // Provide a suitable constructor (depends on the kind of dataset)
     public TileAdapter(List<Channel> channelList) {
         this.channelList = channelList;
+        this.channelListBackup.clear();
+        this.channelListBackup.addAll(channelList);
     }
 
     // Create new views (invoked by the layout manager)
@@ -89,10 +94,29 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
         this.onItemClickListener = clickListener;
     }
 
+    // TODO: performantere Lösung finden
+    public void filterToProgramName(String s) {
+        channelList.clear();
+        for (int i=0; i<channelListBackup.size(); i++) {
+            // case-insensitive-Suche
+            if (channelListBackup.get(i).getProgram().toLowerCase().contains(s.toLowerCase()))
+                channelList.add(channelListBackup.get(i));
+        }
+        notifyDataSetChanged();
+    }
+
+    public void clearFilter() {
+        channelList.clear();
+        channelList.addAll(channelListBackup);
+        notifyDataSetChanged();
+    }
+
     public void setChannelList(List<Channel> channelList) {
         // TODO: effizientere Methode?
         this.channelList.clear();
         this.channelList.addAll(channelList);
+        this.channelListBackup.clear();
+        this.channelListBackup.addAll(channelList);
         notifyDataSetChanged();
         mRecyclerView.scheduleLayoutAnimation();
     }

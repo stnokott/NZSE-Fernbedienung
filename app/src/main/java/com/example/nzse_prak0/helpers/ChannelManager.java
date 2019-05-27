@@ -119,6 +119,7 @@ public class ChannelManager {
         }
     }
 
+    // TODO: stattdessen SortedList verwenden https://stackoverflow.com/a/30429439
     private void sort() {
         Collections.sort(channelList, new Comparator<Channel>() {
             @Override
