@@ -116,6 +116,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class),  3);
+                DownloadTask d = new DownloadTask("showPip=1", 3, getApplicationContext(), null);
+                d.execute();
             }
         });
 
@@ -214,6 +216,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
+
+            DownloadTask d = new DownloadTask("channelPip=" + channelInstance.getChannel(), 3, getApplicationContext(), null);
+            d.execute();
+
             Toast t = Toast.makeText(getApplicationContext(), "Kanal " + channelInstance.getProgram() + " für PiP ausgewählt", Toast.LENGTH_SHORT);
             t.show();
         }
