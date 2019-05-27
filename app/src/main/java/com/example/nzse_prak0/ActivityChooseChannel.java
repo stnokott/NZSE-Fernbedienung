@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,10 +74,37 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_choosechannel, menu);
+
+        SearchView btnSearch = (SearchView) menu.findItem(R.id.btnSearch).getActionView();
+        btnSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                tileAdapter.filterToProgramName(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.equals("")) {
+                    tileAdapter.clearFilter();
+                } else {
+                    tileAdapter.filterToProgramName(newText);
+                }
+                return false;
+            }
+        });
+        btnSearch.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                tileAdapter.clearFilter();
+                return false;
+            }
+        });
+
         return true;
     }
 
-    private void createListeners(TileAdapter tileAdapter) {
+    private void createListeners(final TileAdapter tileAdapter) {
         // Listener für Tiles
         tileAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
