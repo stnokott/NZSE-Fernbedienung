@@ -21,7 +21,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ChannelManager {
-    // TODO: Kanäle mit gleichem Namen (aber unterschiedlicher Frequenz) filtern
     private static final String JSON_FILENAME_CHANNELS = "channels.json";
 
     private String response;
