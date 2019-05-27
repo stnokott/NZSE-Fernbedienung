@@ -42,12 +42,10 @@ public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObj) {
-        if (jsonObj == null) {
-            if (listener != null)
-                listener.onDownloadTaskCompleted(requestCode, false, null);
-        } else {
-            if (listener != null)
-                listener.onDownloadTaskCompleted(requestCode, true, jsonObj);
+        if (jsonObj == null && listener != null) {
+            listener.onDownloadTaskCompleted(requestCode, false, null);
+        } else if (listener != null) {
+            listener.onDownloadTaskCompleted(requestCode, true, jsonObj);
         }
     }
 }
