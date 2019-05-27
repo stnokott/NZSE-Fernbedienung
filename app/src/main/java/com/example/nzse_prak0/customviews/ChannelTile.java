@@ -2,31 +2,41 @@ package com.example.nzse_prak0.customviews;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.TextViewCompat;
 
+import com.example.nzse_prak0.ActivitySwitchedOn;
 import com.example.nzse_prak0.R;
 import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.Units;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ChannelTile extends ConstraintLayout {
     private Channel channelInstance;
     private TextView lblTitle;
     private TextView lblBg;
+    private ImageView bgIcon;
     private ImageButton btnFav;
 
-    public ChannelTile(Context context, String bgNum, int bgColor) {
+    public ChannelTile(Context context, int bgColor) {
         super(context);
 
         setId(View.generateViewId());
         initLayoutParams();
-        createBackgroundLabel(bgNum, bgColor);
+        createBackgroundIcon();
         createFavButton();
         createTitleLabel();
         setBackgroundColor(bgColor);
@@ -43,10 +53,9 @@ public class ChannelTile extends ConstraintLayout {
         setLayoutParams(params);
     }
 
-    private void createBackgroundLabel(String text, int bgColor) {
-        TextView newlblBg = new TextView(getContext());
-        newlblBg.setId(View.generateViewId());
-        newlblBg.setText(text);
+    private void createBackgroundIcon(){
+        ImageView newBgIcon = new ImageView(getContext());
+        newBgIcon.setId(View.generateViewId());
 
         // Layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
@@ -57,18 +66,14 @@ public class ChannelTile extends ConstraintLayout {
         params.endToEnd = ConstraintSet.PARENT_ID;
         params.topToTop = ConstraintSet.PARENT_ID;
         params.bottomToBottom = ConstraintSet.PARENT_ID;
-        newlblBg.setLayoutParams(params);
+        newBgIcon.setLayoutParams(params);
+        int px = Units.dpToPx(8, getContext());
+        newBgIcon.setPadding(px, px, px, px);
 
-        // Weitere Parameter
-        float[] hsv = new float[3];
-        Color.colorToHSV(bgColor, hsv);
-        hsv[2] *= 0.8f; // abdunkeln
-        newlblBg.setTextColor(Color.HSVToColor(hsv));
-        TextViewCompat.setAutoSizeTextTypeWithDefaults(newlblBg, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
-        newlblBg.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        newBgIcon.setTextAlignment(TEXT_ALIGNMENT_CENTER);
 
-        addView(newlblBg);
-        lblBg = newlblBg;
+        addView(newBgIcon);
+        bgIcon = newBgIcon;
     }
 
     private void createTitleLabel() {
@@ -149,16 +154,13 @@ public class ChannelTile extends ConstraintLayout {
         }
     }
 
-    public void setBgNum(String n) {
-        lblBg.setText(n);
-    }
-
     public void setColor(int c) {
         setBackgroundColor(c);
         float[] hsv = new float[3];
         Color.colorToHSV(c, hsv);
         hsv[2] *= 0.85f;
-        lblBg.setTextColor(Color.HSVToColor(hsv));
+        bgIcon.setImageAlpha(50);
+        //bgIcon.setColorFilter(Color.HSVToColor(hsv), PorterDuff.Mode.SRC_IN);
     }
 
     public Channel getChannelInstance() {
@@ -169,7 +171,12 @@ public class ChannelTile extends ConstraintLayout {
         this.channelInstance = channelInstance;
         lblTitle.setText(channelInstance.getProgram());
         updateFavStatus(channelInstance.getIsFav());
-
+        try (InputStream ims = getContext().getAssets().open(ActivitySwitchedOn.channelIconFilenames.get(channelInstance.getProgram()))) {
+            Drawable d = Drawable.createFromStream(ims, null);
+            bgIcon.setImageDrawable(d);
+        } catch (IOException | IllegalArgumentException e) {
+            Log.e("createBackgroundIcon", e.getMessage());
+        }
     }
 
     @Override
