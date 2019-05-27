@@ -50,6 +50,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         channelManager.loadFromJSON(getApplicationContext());
         loadIconFilenamesFromJSON();
 
+        // Start debug mode and shows a status bar at the bottom
+        DownloadTask d = new DownloadTask("debug=1", 0, getApplicationContext(), null);
+        d.execute();
+
         createListeners();
     }
 
