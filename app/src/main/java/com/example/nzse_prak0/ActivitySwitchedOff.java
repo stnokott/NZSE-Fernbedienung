@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,8 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
             public void onClick(View v) {
                 DownloadTask d = new DownloadTask("standby=0", 9, getApplicationContext(), ActivitySwitchedOff.this);
                 d.execute();
+                ProgressBar progressSwitchedOff = findViewById(R.id.progressSwitchedOff);
+                progressSwitchedOff.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -56,6 +59,8 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
 
     @Override
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject json) {
+        ProgressBar progressSwitchedOff = findViewById(R.id.progressSwitchedOff);
+        progressSwitchedOff.setVisibility(View.INVISIBLE);
         if (success) {
             startActivity(new Intent(ActivitySwitchedOff.this, ActivitySwitchedOn.class));
             finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
