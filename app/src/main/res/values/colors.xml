@@ -8,4 +8,5 @@
 
     <color name="colorInvalid">#EF5350</color>
     <color name="colorValid">#66BB6A</color>
+    <color name="colorValidBackground">#81C784</color>
 </resources>

@@ -2,6 +2,7 @@ package com.example.nzse_prak0;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -197,7 +197,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         /*
             requestCode:
             1 = Channel-Auswahl
-            3 = PiP-Auswahl
+            3 = PiP aktivieren/Kanal wechseln
          */
         if ((requestCode == 3 || requestCode == 1) && resultCode == Activity.RESULT_OK) {
             // für Favoriten-Speicherung
@@ -218,7 +218,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             DownloadTask d = new DownloadTask("channelMain=" + channelInstance.getChannel(), 1, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
             setProgressVisible(true);
-            setCurrentPlayingChannel(channelInstance);
         } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
             // Pip
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
@@ -234,16 +233,18 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
         /*
             requestCode:
+            3 = PiP aktivieren
             9 = Standby aktivieren
          */
         setProgressVisible(false);
 
-        switch (requestCode) {
-            case 9:
-                // Power-Button
-                if (success)
-                    startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
-                // Platz für weitere Responses
+        if (requestCode == 3 && success) {
+            // PiP aktiviert, setze Button-Farbe auf grün
+            ImageButton btnPip = findViewById(R.id.btnPip);
+            btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
+        } else if (requestCode == 9 && success) {
+            // Power-Button gedrückt, gehe zu ActivitySwitchedOff
+            startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
         }
     }
 }
