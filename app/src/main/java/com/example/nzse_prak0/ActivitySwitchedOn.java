@@ -54,9 +54,16 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         channelManager.loadFromJSON(getApplicationContext());
         loadIconFilenamesFromJSON();
 
+        int curChannelIndex = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_lastchannelindex_key), -1);
+        if (curChannelIndex != -1 && channelManager.getChannelCount() > curChannelIndex) {
+            setCurrentPlayingChannel(channelManager.getChannelAt(curChannelIndex), curChannelIndex);
+        }
+
+        /*
         // Start debug mode and shows a status bar at the bottom
         DownloadTask d = new DownloadTask("debug=1", 0, getApplicationContext(), null);
         d.execute();
+        */
 
         createListeners();
     }
@@ -196,7 +203,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
-    public void setCurrentPlayingChannel(Channel channel) {
+    public void setCurrentPlayingChannel(Channel channel, int index) {
+        SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_lastchannelindex_key), index);
         TextView lblPlaying = findViewById(R.id.lblPlaying);
         lblPlaying.setText(channel.getProgram());
         updateFavStatus(channel.getIsFav());
@@ -228,7 +236,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
-            setCurrentPlayingChannel(channelInstance);
+            setCurrentPlayingChannel(channelInstance, channelAdapterPosition);
         }
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {

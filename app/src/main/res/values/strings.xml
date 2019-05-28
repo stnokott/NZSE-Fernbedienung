@@ -50,6 +50,7 @@
 
     <string name="commons_file_name">commons</string>
     <string name="commons_standbystate_key">standby</string>
+    <string name="commons_lastchannelindex_key">channel</string>
 
-    <string name="intentExtra_channelAdapterPosition_key">channelInstance</string>
+    <string name="intentExtra_channelAdapterPosition_key">channelInstancePos</string>
 </resources>
