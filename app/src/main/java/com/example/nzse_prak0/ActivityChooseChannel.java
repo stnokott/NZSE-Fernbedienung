@@ -52,6 +52,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     }
 
     private void initTileAdapter() {
+        // TODO: Scan-Button verstecken, wenn nur Favoriten angezeigt werden sollen
         List<Channel> channels = new ArrayList<>();
 
         int favsOnly = getIntent().getIntExtra("favsOnly", 0);
