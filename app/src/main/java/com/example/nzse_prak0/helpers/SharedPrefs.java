@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.Pair;
 
-import com.example.nzse_prak0.R;
-
 import java.util.Collection;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -19,9 +17,9 @@ public class SharedPrefs {
 
     // TODO: besserer Datentyp als Pair?
 
-    public static void setPreferences(Context context, Collection<Pair<String, Object>> prefList) {
+    public static void setValues(Context context, String filename, Collection<Pair<String, Object>> prefList) {
         Context c = context.getApplicationContext();
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.preferences_file_name), MODE_PRIVATE);
+        SharedPreferences sharedPrefs = c.getSharedPreferences(filename, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
 
         for (Pair<String, Object> p : prefList) {
@@ -30,29 +28,9 @@ public class SharedPrefs {
         editor.apply();
     }
 
-    public static void setPreference(Context context, String key, Object value) {
+    public static void setValue(Context context, String filename, String key, Object value) {
         Context c = context.getApplicationContext();
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.preferences_file_name), MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-
-        setValue(editor, key, value);
-        editor.apply();
-    }
-
-    public static void setCommons(Context context, Collection<Pair<String, Object>> prefList) {
-        Context c = context.getApplicationContext();
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.commons_file_name), MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-
-        for (Pair<String, Object> p : prefList) {
-            setValue(editor, p.first, p.second);
-        }
-        editor.apply();
-    }
-
-    public static void setCommon(Context context, String key, Object value) {
-        Context c = context.getApplicationContext();
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.commons_file_name), MODE_PRIVATE);
+        SharedPreferences sharedPrefs = c.getSharedPreferences(filename, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
 
         setValue(editor, key, value);
@@ -76,13 +54,13 @@ public class SharedPrefs {
         }
     }
 
-    public static String getString(Context c, String key, String defaultValue) {
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getApplicationContext().getString(R.string.preferences_file_name), MODE_PRIVATE);
+    public static String getString(Context c, String filename, String key, String defaultValue) {
+        SharedPreferences sharedPrefs = c.getSharedPreferences(filename, MODE_PRIVATE);
         return sharedPrefs.getString(key, defaultValue);
     }
 
-    public static int getInt(Context c, String key, int defaultValue) {
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getApplicationContext().getString(R.string.preferences_file_name), MODE_PRIVATE);
+    public static int getInt(Context c, String filename, String key, int defaultValue) {
+        SharedPreferences sharedPrefs = c.getSharedPreferences(filename, MODE_PRIVATE);
         return sharedPrefs.getInt(key, defaultValue);
     }
 }

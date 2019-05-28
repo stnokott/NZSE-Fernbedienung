@@ -123,27 +123,27 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         EditText txtIP = findViewById(R.id.txtIP);
         settings.add(new Pair<String, Object>("ip", txtIP.getText().toString()));
 
-        SharedPrefs.setPreferences(getApplicationContext(), settings);
+        SharedPrefs.setValues(getApplicationContext(), getString(R.string.preferences_file_name), settings);
     }
 
     private void loadSettings() {
-        int ratioIndex = SharedPrefs.getInt(getApplicationContext(), "ratio", 0);
+        int ratioIndex = SharedPrefs.getInt(getApplicationContext(), getString(R.string.preferences_file_name), "ratio", 0);
         Spinner selectRatio = findViewById(R.id.selectRatio);
         selectRatio.setSelection(ratioIndex);
 
-        String ip = SharedPrefs.getString(getApplicationContext(), getString(R.string.preferences_ip_key), getString(R.string.preferences_ip_default));
+        String ip = SharedPrefs.getString(getApplicationContext(), getString(R.string.preferences_file_name), getString(R.string.preferences_ip_key), getString(R.string.preferences_ip_default));
         EditText txtIP = findViewById(R.id.txtIP);
         txtIP.setText(ip);
     }
 
     public static String getRatio(Context context) {
         Context c = context.getApplicationContext();
-        int ratioPos = SharedPrefs.getInt(c, c.getString(R.string.preferences_ratiopos_key), 0);
+        int ratioPos = SharedPrefs.getInt(c, c.getString(R.string.preferences_file_name), c.getString(R.string.preferences_ratiopos_key), 0);
         return context.getApplicationContext().getResources().getStringArray(R.array.ratios_array)[ratioPos];
     }
 
     public static String getIP(Context context) {
         Context c = context.getApplicationContext();
-        return SharedPrefs.getString(c, c.getString(R.string.preferences_ip_key), c.getString(R.string.preferences_ip_default));
+        return SharedPrefs.getString(c, c.getString(R.string.preferences_file_name), c.getString(R.string.preferences_ip_key), c.getString(R.string.preferences_ip_default));
     }
 }
