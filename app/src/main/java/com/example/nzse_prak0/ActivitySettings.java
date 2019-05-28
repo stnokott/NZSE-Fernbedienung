@@ -1,7 +1,6 @@
 package com.example.nzse_prak0;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+import com.example.nzse_prak0.helpers.SharedPrefs;
 import com.example.nzse_prak0.helpers.ViewHelper;
 
 import org.json.JSONObject;
@@ -111,50 +111,31 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
     }
 
     private void saveSettings() {
-        Context c = getApplicationContext();
-        SharedPreferences sharedPrefs = c.getSharedPreferences(getString(R.string.preferences_file_name), MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-
         Spinner selectRatio = findViewById(R.id.selectRatio);
-        editor.putInt(getString(R.string.preferences_ratiopos_key), selectRatio.getSelectedItemPosition());
+        SharedPrefs.setPreference(getApplicationContext(), "ratio", selectRatio.getSelectedItemPosition());
 
         EditText txtIP = findViewById(R.id.txtIP);
-        editor.putString(getString(R.string.preferences_ip_key), txtIP.getText().toString());
-
-        editor.apply();
+        SharedPrefs.setPreference(getApplicationContext(), "ip", txtIP.getText().toString());
     }
 
     private void loadSettings() {
-        Context c = getApplicationContext();
-        SharedPreferences sharedPrefs = c.getSharedPreferences(getString(R.string.preferences_file_name), MODE_PRIVATE);
-
-        int ratioIndex = sharedPrefs.getInt(getString(R.string.preferences_ratiopos_key), 0);
+        int ratioIndex = SharedPrefs.getInt(getApplicationContext(), "ratio", 0);
         Spinner selectRatio = findViewById(R.id.selectRatio);
         selectRatio.setSelection(ratioIndex);
 
-        String ip = sharedPrefs.getString(getString(R.string.preferences_ip_key), getString(R.string.preferences_ip_default));
+        String ip = SharedPrefs.getString(getApplicationContext(), getString(R.string.preferences_ip_key), getString(R.string.preferences_ip_default));
         EditText txtIP = findViewById(R.id.txtIP);
         txtIP.setText(ip);
     }
 
-    private static String getStringValue(Context c, String key, String def) {
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.preferences_file_name), MODE_PRIVATE);
-        return sharedPrefs.getString(key, def);
-    }
-
-    private static int getIntValue(Context c, String key, int def) {
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.preferences_file_name), MODE_PRIVATE);
-        return sharedPrefs.getInt(key, def);
-    }
-
     public static String getRatio(Context context) {
         Context c = context.getApplicationContext();
-        int ratioPos = getIntValue(c, c.getString(R.string.preferences_ratiopos_key), 0);
-        return c.getResources().getStringArray(R.array.ratios_array)[ratioPos];
+        int ratioPos = SharedPrefs.getInt(c, c.getString(R.string.preferences_ratiopos_key), 0);
+        return context.getApplicationContext().getResources().getStringArray(R.array.ratios_array)[ratioPos];
     }
 
     public static String getIP(Context context) {
         Context c = context.getApplicationContext();
-        return getStringValue(c, c.getString(R.string.preferences_ip_key), c.getString(R.string.preferences_ip_default));
+        return SharedPrefs.getString(c, c.getString(R.string.preferences_ip_key), c.getString(R.string.preferences_ip_default));
     }
 }
