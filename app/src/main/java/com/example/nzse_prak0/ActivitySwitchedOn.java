@@ -26,6 +26,7 @@ import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.ChannelManager;
 import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+import com.example.nzse_prak0.helpers.SharedPrefs;
 
 import org.json.JSONObject;
 
@@ -264,6 +265,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             btnPip.getBackground().clearColorFilter();
         } else if (requestCode == 9 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
+            SharedPrefs.setCommon(getApplicationContext(), getString(R.string.commons_standbystate_key), 1);
             startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
         }
     }
