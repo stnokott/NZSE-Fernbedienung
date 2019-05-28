@@ -265,7 +265,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             btnPip.getBackground().clearColorFilter();
         } else if (requestCode == 9 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
-            SharedPrefs.setCommon(getApplicationContext(), getString(R.string.commons_standbystate_key), 1);
+            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
             startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
         }
     }

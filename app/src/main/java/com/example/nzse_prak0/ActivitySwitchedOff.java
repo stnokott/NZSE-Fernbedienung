@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+import com.example.nzse_prak0.helpers.SharedPrefs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
@@ -21,6 +22,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_off);
 
         final FloatingActionButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
@@ -33,6 +35,10 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
                 progressSwitchedOff.setVisibility(View.VISIBLE);
             }
         });
+
+        int standbystate = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
+        if (standbystate == 0)
+            btnSwitchOn.callOnClick();
     }
 
     @Override
@@ -63,6 +69,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
         progressSwitchedOff.setVisibility(View.INVISIBLE);
         if (success) {
             startActivity(new Intent(ActivitySwitchedOff.this, ActivitySwitchedOn.class));
+            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 0);
             finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
         } else {
             Toast.makeText(getApplicationContext(), "TV aktivieren fehlgeschlagen", Toast.LENGTH_SHORT).show();
