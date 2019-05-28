@@ -53,11 +53,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         channelManager.loadFromJSON(getApplicationContext());
         loadIconFilenamesFromJSON();
-
-        int curChannelIndex = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_lastchannelindex_key), -1);
-        if (curChannelIndex != -1 && channelManager.getChannelCount() > curChannelIndex) {
-            setCurrentPlayingChannel(channelManager.getChannelAt(curChannelIndex), curChannelIndex);
-        }
+        applyLastKnownCommons();
 
         /*
         // Start debug mode and shows a status bar at the bottom
@@ -130,8 +126,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class),  3);
-                DownloadTask d = new DownloadTask("showPip=1", 3, getApplicationContext(), null);
-                d.execute();
             }
         });
         btnPip.setOnLongClickListener(new View.OnLongClickListener() {
@@ -179,7 +173,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         curPlayingChannel.setIsFav(!isFav);
     }
 
-    public void loadIconFilenamesFromJSON() {
+    private void loadIconFilenamesFromJSON() {
         try (JsonReader reader = new JsonReader(new InputStreamReader(getAssets().open(CHANNEL_ICON_FILENAMES_DICT_FILE)))) {
             channelIconFilenames.clear();
             reader.beginObject();
@@ -194,6 +188,30 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
+    private void applyLastKnownCommons() {
+        // TODO: Einstellung hinzufügen, ob zuletzt bekannte Commons bei Start angewendet werden sollen?
+        String filename = getString(R.string.commons_file_name);
+        int curChannelIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_channelindex_key), -1);
+        if (curChannelIndex != -1 && channelManager.getChannelCount() > curChannelIndex) {
+            DownloadTask d = new DownloadTask("channelMain=" + channelManager.getChannelAt(curChannelIndex).getChannel(), 1, getApplicationContext(), ActivitySwitchedOn.this);
+            d.execute();
+            setCurrentPlayingChannel(curChannelIndex);
+        }
+
+        int curPipStatus = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_pipstatus_key), -1);
+        if (curPipStatus != -1) {
+            int requestCode = curPipStatus == 1 ? 3 : 4;
+            DownloadTask d = new DownloadTask("showPip=" + curPipStatus, requestCode, getApplicationContext(), ActivitySwitchedOn.this);
+            d.execute();
+        }
+
+        String curPipChannel = SharedPrefs.getString(getApplicationContext(), filename, getString(R.string.commons_pipchannel_key), "");
+        if (!curPipChannel.isEmpty() && curPipStatus == 1) {
+            DownloadTask d = new DownloadTask("channelPip=" + curPipChannel, 5, getApplicationContext(), ActivitySwitchedOn.this);
+            d.execute();
+        }
+    }
+
     public void updateFavStatus(Boolean isFav) {
         ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
         if (isFav) {
@@ -203,8 +221,9 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
-    public void setCurrentPlayingChannel(Channel channel, int index) {
-        SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_lastchannelindex_key), index);
+    public void setCurrentPlayingChannel(int index) {
+        Channel channel = channelManager.getChannelAt(index);
+        SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_channelindex_key), index);
         TextView lblPlaying = findViewById(R.id.lblPlaying);
         lblPlaying.setText(channel.getProgram());
         updateFavStatus(channel.getIsFav());
@@ -225,33 +244,31 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         /*
             requestCode:
             1 = Channel-Auswahl
-            3 = PiP aktivieren/Kanal wechseln
+            3 = PiP aktivieren
          */
         if ((requestCode == 3 || requestCode == 1) && resultCode == Activity.RESULT_OK) {
             // für Favoriten-Speicherung
             // TODO: Öfter prüfen? Performance-Probleme?
             ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
-
-            // Daten von aktuellem Main-Channel anzeigen
-
-            int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
-            Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
-            setCurrentPlayingChannel(channelInstance, channelAdapterPosition);
         }
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             // Hauptkanal
-            int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
-            Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
+            int channelManagerIndex = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
+            Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelManagerIndex);
             DownloadTask d = new DownloadTask("channelMain=" + channelInstance.getChannel(), 1, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
+
+            // Daten von aktuellem Main-Channel anzeigen
+            setCurrentPlayingChannel(channelManagerIndex);
         } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
-            // Pip
+            // Pip ausgewählt
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
 
-            DownloadTask d = new DownloadTask("channelPip=" + channelInstance.getChannel(), 3, getApplicationContext(), ActivitySwitchedOn.this);
+            DownloadTask d = new DownloadTask("showPip=1&channelPip=" + channelInstance.getChannel(), 3, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
+            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipchannel_key), channelInstance.getChannel());
         }
     }
 
@@ -259,18 +276,21 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
         /*
             requestCode:
-            3 = PiP aktivieren
+            1 = Hauptkanal wählen
+            3 = PiP aktivieren und Kanal wählen
+            4 = PiP deaktivieren
             9 = Standby aktivieren
          */
-
         if (requestCode == 3 && success) {
             // PiP aktiviert, setze Button-Farbe auf grün
             ImageButton btnPip = findViewById(R.id.btnPip);
             btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
+            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
         } else if (requestCode == 4 && success) {
             // PiP deaktiviert
             ImageButton btnPip = findViewById(R.id.btnPip);
             btnPip.getBackground().clearColorFilter();
+            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
         } else if (requestCode == 9 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
