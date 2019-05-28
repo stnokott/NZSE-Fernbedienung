@@ -15,18 +15,49 @@ public class SharedPrefs {
     private SharedPrefs() {
     }
 
+    // TODO: gleichen Code in verschiedenen Methoden vermeiden
+
     public static void setPreferences(Context context, Collection<Pair<String, Object>> prefList) {
         Context c = context.getApplicationContext();
         SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.preferences_file_name), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
 
         for (Pair<String, Object> p : prefList) {
-            setPreference(editor, p.first, p.second);
+            setValue(editor, p.first, p.second);
         }
         editor.apply();
     }
 
-    private static void setPreference(SharedPreferences.Editor editor, String key, Object value) {
+    public static void setPreference(Context context, String key, Object value) {
+        Context c = context.getApplicationContext();
+        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.preferences_file_name), MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+
+        setValue(editor, key, value);
+        editor.apply();
+    }
+
+    public static void setCommons(Context context, Collection<Pair<String, Object>> prefList) {
+        Context c = context.getApplicationContext();
+        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.commons_file_name), MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+
+        for (Pair<String, Object> p : prefList) {
+            setValue(editor, p.first, p.second);
+        }
+        editor.apply();
+    }
+
+    public static void setCommon(Context context, String key, Object value) {
+        Context c = context.getApplicationContext();
+        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.commons_file_name), MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+
+        setValue(editor, key, value);
+        editor.apply();
+    }
+
+    private static void setValue(SharedPreferences.Editor editor, String key, Object value) {
         Class valueClass = value.getClass();
         if (valueClass == String.class) {
             editor.putString(key, (String) value);
@@ -41,15 +72,6 @@ public class SharedPrefs {
         } else {
             Log.w("SharedPrefs", "invalider Typ übergeben");
         }
-    }
-
-    public static void setPreference(Context context, String key, Object value) {
-        Context c = context.getApplicationContext();
-        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.preferences_file_name), MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-
-        setPreference(editor, key, value);
-        editor.apply();
     }
 
     public static String getString(Context c, String key, String defaultValue) {

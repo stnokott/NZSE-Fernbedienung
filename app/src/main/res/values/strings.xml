@@ -44,9 +44,12 @@
     <string name="lblPlayingPlaceholder">Kein Kanal gewählt</string>
 
     <string name="preferences_file_name">settings</string>
+    <string name="preferences_ip_key">ip</string>
     <string name="preferences_ip_default">192.168.0.104</string>
     <string name="preferences_ratiopos_key">ratio</string>
-    <string name="preferences_ip_key">ip</string>
+
+    <string name="commons_file_name">commons</string>
+    <string name="commons_standystate_key">standby</string>
 
     <string name="intentExtra_channelAdapterPosition_key">channelInstance</string>
 </resources>
