@@ -34,6 +34,8 @@
     <string name="lblBtnSaveSettings">Speichern</string>
     <string name="lblBtnTestConnection">Test</string>
     <string name="lblNoChannelsVisible">Keine Kanäle gefunden</string>
+    <string name="lblPipSwap">Tauschen</string>
+    <string name="lblPipDisable">Deaktivieren</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>
