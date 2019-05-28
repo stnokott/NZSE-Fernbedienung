@@ -17,6 +17,8 @@ public class SharedPrefs {
 
     // TODO: gleichen Code in verschiedenen Methoden vermeiden
 
+    // TODO: besserer Datentyp als Pair?
+
     public static void setPreferences(Context context, Collection<Pair<String, Object>> prefList) {
         Context c = context.getApplicationContext();
         SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.preferences_file_name), MODE_PRIVATE);
