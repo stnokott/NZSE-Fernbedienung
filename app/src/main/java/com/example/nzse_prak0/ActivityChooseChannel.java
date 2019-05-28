@@ -7,12 +7,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import androidx.appcompat.widget.SearchView;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +28,7 @@ import java.util.List;
 
 public class ActivityChooseChannel extends AppCompatActivity implements OnDownloadTaskCompleted {
     private TileAdapter tileAdapter;
+    private SearchView btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,33 +78,32 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_choosechannel, menu);
 
-        SearchView btnSearch = (SearchView) menu.findItem(R.id.btnSearch).getActionView();
+        btnSearch = (SearchView) menu.findItem(R.id.btnSearch).getActionView();
         btnSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                tileAdapter.filterToProgramName(query);
+                tileAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.equals("")) {
-                    tileAdapter.clearFilter();
-                } else {
-                    tileAdapter.filterToProgramName(newText);
-                }
-                return false;
-            }
-        });
-        btnSearch.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                tileAdapter.clearFilter();
+                tileAdapter.getFilter().filter(newText);
                 return false;
             }
         });
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // close search view on back button pressed
+        if (!btnSearch.isIconified()) {
+            btnSearch.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
     }
 
     private void createListeners(final TileAdapter tileAdapter) {
