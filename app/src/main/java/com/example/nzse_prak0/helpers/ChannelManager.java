@@ -145,6 +145,10 @@ public class ChannelManager {
         return returnList;
     }
 
+    public int getChannelCount() {
+        return channelList.size();
+    }
+
     public String getResponse() {
         return response;
     }
