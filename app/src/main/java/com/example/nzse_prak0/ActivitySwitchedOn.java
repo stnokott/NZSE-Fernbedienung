@@ -215,9 +215,9 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     public void updateFavStatus(Boolean isFav) {
         ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
         if (isFav) {
-            btnPlayingFavorite.setImageResource(R.drawable.star_fill_reverse_white_anim);
+            btnPlayingFavorite.setImageResource(R.drawable.star_fill_reverse_black_anim);
         } else {
-            btnPlayingFavorite.setImageResource(R.drawable.star_fill_white_anim);
+            btnPlayingFavorite.setImageResource(R.drawable.star_fill_black_anim);
         }
     }
 

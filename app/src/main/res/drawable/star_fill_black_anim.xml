@@ -1,0 +1,50 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="36dp"
+            android:height="36dp"
+            android:viewportWidth="36"
+            android:viewportHeight="36">
+            <path
+                android:name="border"
+                android:pathData="M 33 13.859 L 22.215 12.93 L 18 3 L 13.785 12.945 L 3 13.859 L 11.191 20.953 L 8.73 31.5 L 18 25.906 L 27.27 31.5 L 24.824 20.953 Z M 18 23.102 L 12.359 26.504 L 13.859 20.086 L 8.879 15.766 L 15.449 15.195 L 18 9.148 L 20.566 15.211 L 27.137 15.781 L 22.156 20.102 L 23.656 26.52 Z M 18 23.102"
+                android:fillColor="#000"
+                android:strokeWidth="1"/>
+            <group
+                android:name="group"
+                android:pivotX="18"
+                android:pivotY="18"
+                android:scaleX="0"
+                android:scaleY="0">
+                <path
+                    android:name="filled"
+                    android:pathData="M 18 25.906 L 27.27 31.5 L 24.809 20.953 L 33 13.859 L 22.215 12.945 L 18 3 L 13.785 12.945 L 3 13.859 L 11.191 20.953 L 8.73 31.5 Z M 18 25.906"
+                    android:fillColor="#000"
+                    android:strokeWidth="1"/>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="group">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="400"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_linear_in"/>
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="400"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_linear_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>
