@@ -3,6 +3,7 @@ package com.example.nzse_prak0;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,9 @@ import com.example.nzse_prak0.helpers.SharedPrefs;
 import com.example.nzse_prak0.helpers.ViewHelper;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivitySettings extends AppCompatActivity implements OnDownloadTaskCompleted {
     @Override
@@ -111,11 +115,15 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
     }
 
     private void saveSettings() {
+        List<Pair<String, Object>> settings = new ArrayList<>();
+
         Spinner selectRatio = findViewById(R.id.selectRatio);
-        SharedPrefs.setPreference(getApplicationContext(), "ratio", selectRatio.getSelectedItemPosition());
+        settings.add(new Pair<String, Object>("ratio", selectRatio.getSelectedItemPosition()));
 
         EditText txtIP = findViewById(R.id.txtIP);
-        SharedPrefs.setPreference(getApplicationContext(), "ip", txtIP.getText().toString());
+        settings.add(new Pair<String, Object>("ip", txtIP.getText().toString()));
+
+        SharedPrefs.setPreferences(getApplicationContext(), settings);
     }
 
     private void loadSettings() {
