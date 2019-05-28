@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +35,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
+    // TODO: ApplicationContext global verfügbar machen (und Kontext-Übergaben redundant machen): https://stackoverflow.com/a/5114361
     public static final ChannelManager channelManager = new ChannelManager();
     private Channel curPlayingChannel = null;
 
@@ -94,7 +94,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             public void onClick(View v) {
                 DownloadTask d = new DownloadTask("standby=1", 9, getApplicationContext(), ActivitySwitchedOn.this);
                 d.execute();
-                setProgressVisible(true);
             }
         });
 
@@ -196,11 +195,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
-    public void setProgressVisible(Boolean visible) {
-        ProgressBar progressMain = findViewById(R.id.progressMain);
-        progressMain.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-    }
-
     public void setCurrentPlayingChannel(Channel channel) {
         TextView lblPlaying = findViewById(R.id.lblPlaying);
         lblPlaying.setText(channel.getProgram());
@@ -242,7 +236,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
             DownloadTask d = new DownloadTask("channelMain=" + channelInstance.getChannel(), 1, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
-            setProgressVisible(true);
         } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
             // Pip
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
@@ -250,7 +243,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
             DownloadTask d = new DownloadTask("channelPip=" + channelInstance.getChannel(), 3, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
-            setProgressVisible(true);
         }
     }
 
@@ -261,7 +253,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             3 = PiP aktivieren
             9 = Standby aktivieren
          */
-        setProgressVisible(false);
 
         if (requestCode == 3 && success) {
             // PiP aktiviert, setze Button-Farbe auf grün
