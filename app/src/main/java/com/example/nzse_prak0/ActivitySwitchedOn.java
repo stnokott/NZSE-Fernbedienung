@@ -44,6 +44,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     private boolean play = true;
     private int pausedTime = 0;
     private Timer T=new Timer();
+    private int channelPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +190,33 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                     toggleFavButton();
             }
         });
+
+
+        ImageButton btnChannelNext = findViewById(R.id.btnChannelNext);
+        btnChannelNext.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Channel channel;
+                channel =  channelManager.getChannelAt(channelPosition+1);
+                DownloadTask d = new DownloadTask("channelMain=" + channel.getChannel(), 6, getApplicationContext(),null);
+                d.execute();
+
+                setCurrentPlayingChannel(channelPosition+1);
+            }
+        });
+
+        ImageButton btnChannelPrevious = findViewById(R.id.btnChannelPrevious);
+        btnChannelPrevious.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Channel channel;
+                channel =  channelManager.getChannelAt(channelPosition-1);
+                DownloadTask d = new DownloadTask("channelMain=" + channel.getChannel(), 6, getApplicationContext(),null);
+                d.execute();
+
+                setCurrentPlayingChannel(channelPosition-1);
+            }
+        });
     }
 
     public void toggleFavButton() {
@@ -281,6 +309,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
 
         curPlayingChannel = channel;
+        channelPosition = index;
     }
 
     @Override

@@ -30,6 +30,7 @@ public class ChannelManager {
     private static final String JSON_KEY_PROGRAM = "program";
     private static final String JSON_KEY_PROVIDER = "provider";
     private static final String JSON_KEY_FAVORITE = "isFav";
+    private static final int ChannelPosition = 0;
 
     public void parseJSON(JSONObject json) throws JSONException {
         if (json.has("channels")) {              // Überprüfe ob "channels" vorhanden ist
