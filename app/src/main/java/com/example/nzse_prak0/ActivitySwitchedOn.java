@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,8 @@ import java.util.TimerTask;
 
 public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
     // TODO: ApplicationContext global verfügbar machen (und Kontext-Übergaben redundant machen): https://stackoverflow.com/a/5114361
+    // TODO: requestCodes aus Resources holen
+
     public static final ChannelManager channelManager = new ChannelManager();
     private Channel curPlayingChannel = null;
 
@@ -43,6 +46,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     public static HashMap<String, String> channelIconFilenames = new HashMap<>();
     private boolean play = true;
     private int pausedTime = 0;
+    private int volume = 50;
     private Timer T=new Timer();
 
     @Override
@@ -52,7 +56,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
-        setBtnPipChangeEnabled(false);
+        final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+        setButtonEnabled(btnPipChange, false);
 
         channelManager.loadFromJSON(getApplicationContext());
         loadIconFilenamesFromJSON();
@@ -124,6 +129,30 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             }
         });
 
+        final ImageButton btnVolumeUp = findViewById(R.id.btnVolumeUp);
+        btnVolumeUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volumeUp();
+            }
+        });
+
+        final ImageButton btnVolumeDown = findViewById(R.id.btnVolumeDown);
+        btnVolumeDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volumeDown();
+            }
+        });
+
+        final ImageView btnMute = findViewById(R.id.btnMute);
+        btnMute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volumeMute();
+            }
+        });
+
         final ImageButton btnPause = findViewById(R.id.btnPause);
         btnPause.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -191,7 +220,27 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         });
     }
 
-    public void toggleFavButton() {
+    private void volumeUp() {
+        if (volume < 100) {
+            // volume-Attribut wird hier noch nicht verändert, erst bei erfolgreichem Request-Callback
+            DownloadTask d = new DownloadTask("volume=" + (volume + 1), 5, getApplicationContext(), ActivitySwitchedOn.this);
+            d.execute();
+        }
+    }
+
+    private void volumeDown() {
+        if (volume > 0) {
+            // volume-Attribut wird hier noch nicht verändert, erst bei erfolgreichem Request-Callback
+            DownloadTask d = new DownloadTask("volume=" + (volume - 1), 6, getApplicationContext(), ActivitySwitchedOn.this);
+            d.execute();
+        }
+    }
+
+    private void volumeMute() {
+
+    }
+
+    private void toggleFavButton() {
         ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
 
         Boolean isFav = curPlayingChannel.getIsFav();
@@ -219,7 +268,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void applyLastKnownCommons() {
-        // TODO: Einstellung hinzufügen, ob zuletzt bekannte Commons bei Start angewendet werden sollen?
+        // TODO: effizienter machen durch Abfrage als Array
         String filename = getString(R.string.commons_file_name);
         int curChannelIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_channelindex_key), -1);
         if (curChannelIndex != -1 && channelManager.getChannelCount() > curChannelIndex) {
@@ -237,7 +286,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         String curPipChannel = SharedPrefs.getString(getApplicationContext(), filename, getString(R.string.commons_pipchannel_key), "");
         if (!curPipChannel.isEmpty() && curPipStatus == 1) {
-            DownloadTask d = new DownloadTask("channelPip=" + curPipChannel, 5, getApplicationContext(), ActivitySwitchedOn.this);
+            DownloadTask d = new DownloadTask("channelPip=" + curPipChannel, 3, getApplicationContext(), ActivitySwitchedOn.this);
+            d.execute();
+        }
+
+        int curVolume = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_volume_key), volume);
+        if (curVolume != -1) {
+            volume = curVolume;
+            DownloadTask d = new DownloadTask("volume=" + volume, 8, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
     }
@@ -251,18 +307,26 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
-    private void setBtnPipChangeEnabled(Boolean enabled) {
-        final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-        btnPipChange.setEnabled(enabled);
+    private void setButtonEnabled(final ImageButton b, Boolean enabled) {
+        b.setEnabled(enabled);
         if (enabled) {
-            btnPipChange.clearColorFilter();
-            btnPipChange.getBackground().clearColorFilter();
-            btnPipChange.setElevation(getResources().getDimension(R.dimen.control_elevation_material));
+            b.clearColorFilter();
+            b.getBackground().clearColorFilter();
+            b.setElevation(getResources().getDimension(R.dimen.control_elevation_material));
         } else {
-            btnPipChange.setColorFilter(0xffc8c8c8);    // Button ausgrauen
-            btnPipChange.getBackground().setColorFilter(0xfff0f0f0, PorterDuff.Mode.SRC_IN);
-            btnPipChange.setElevation(0);
+            b.setColorFilter(0xffc8c8c8);    // Button ausgrauen
+            b.getBackground().setColorFilter(0xfff0f0f0, PorterDuff.Mode.SRC_IN);
+            b.setElevation(0);
         }
+    }
+
+    private void onVolumeChanged() {
+        SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_volume_key), volume);
+
+        final ImageButton btnVolumeUp = findViewById(R.id.btnVolumeUp);
+        setButtonEnabled(btnVolumeUp, volume != 100);
+        final ImageButton btnVolumeDown = findViewById(R.id.btnVolumeDown);
+        setButtonEnabled(btnVolumeDown, volume != 0);
     }
 
     public void setCurrentPlayingChannel(int index) {
@@ -323,20 +387,40 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             1 = Hauptkanal wählen
             3 = PiP aktivieren und Kanal wählen
             4 = PiP deaktivieren
+            5 = Volume up
+            6 = Volume down
+            8 = Lautstärke aus Commons abgerufen
             9 = Standby aktivieren
          */
+        if (!success) {
+            Toast.makeText(getApplicationContext(), "Nicht erfolgreich!", Toast.LENGTH_SHORT).show();
+        }
+
         if (requestCode == 3 && success) {
             // PiP aktiviert, setze Button-Farbe auf grün
             ImageButton btnPip = findViewById(R.id.btnPipToggle);
             btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
-            setBtnPipChangeEnabled(true);
+            final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+            setButtonEnabled(btnPipChange, true);
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
         } else if (requestCode == 4 && success) {
             // PiP deaktiviert
             ImageButton btnPip = findViewById(R.id.btnPipToggle);
             btnPip.getBackground().clearColorFilter();
-            setBtnPipChangeEnabled(false);
+            final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+            setButtonEnabled(btnPipChange, false);
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
+        } else if (requestCode == 5 && success) {
+            // Lautstärke hoch
+            volume++;
+            onVolumeChanged();
+        } else if (requestCode == 6 && success) {
+            // Lautstärke runter
+            volume--;
+            onVolumeChanged();
+        } else if (requestCode == 8 && success) {
+            // Lautstärke aus Commons geladen
+            onVolumeChanged();
         } else if (requestCode == 9 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
