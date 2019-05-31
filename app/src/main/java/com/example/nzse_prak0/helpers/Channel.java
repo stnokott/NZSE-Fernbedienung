@@ -7,6 +7,7 @@ public class Channel {
     private String program;
     private String provider;
     private Boolean isFav = false;
+    private int position;
 
     public Channel(String channel, String program, String provider){
         this(channel, program, provider, false);
@@ -53,4 +54,5 @@ public class Channel {
     public Boolean getIsFav() { return isFav; }
 
     public void setIsFav(Boolean isFav) { this.isFav = isFav; }
+
 }
