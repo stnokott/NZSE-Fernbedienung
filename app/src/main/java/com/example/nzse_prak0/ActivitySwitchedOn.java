@@ -9,15 +9,12 @@ import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -157,8 +154,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             }
         });
 
-        final ImageButton btnPip = findViewById(R.id.btnPipToggle);
-        btnPip.setOnClickListener(new View.OnClickListener() {
+        final ImageButton btnPipToggle = findViewById(R.id.btnPipToggle);
+        btnPipToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pipstatus = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
