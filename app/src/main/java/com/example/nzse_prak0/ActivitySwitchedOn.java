@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
     // TODO: ApplicationContext global verfügbar machen (und Kontext-Übergaben redundant machen): https://stackoverflow.com/a/5114361
@@ -42,6 +44,9 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     private static final String CHANNEL_ICON_FILENAMES_DICT_FILE = "filenames.json";
     public static HashMap<String, String> channelIconFilenames = new HashMap<>();
+    private boolean play = true;
+    private int pausedTime = 0;
+    private Timer T=new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +60,11 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         loadIconFilenamesFromJSON();
         applyLastKnownCommons();
 
-        /*
+
         // Start debug mode and shows a status bar at the bottom
         DownloadTask d = new DownloadTask("debug=1", 0, getApplicationContext(), null);
         d.execute();
-        */
+
 
         createListeners();
     }
@@ -118,6 +123,36 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                 Intent selectChannelIntent = new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class);
                 selectChannelIntent.putExtra("favsOnly", 1);
                 startActivityForResult(selectChannelIntent, 1);
+            }
+        });
+
+        final ImageButton btnPause = findViewById(R.id.btnPause);
+        btnPause.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if( play && pausedTime > 0){
+                    btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
+                    DownloadTask d = new DownloadTask("timeShiftPlay=" + pausedTime, 5, getApplicationContext(),null);
+                    d.execute();
+
+                    // Restart pausedTime and destroy Timer object
+                    pausedTime=0;
+                    play = false;
+                    T.cancel();
+                    // New Timer object
+                    T = new Timer();
+                } else{
+                    T.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            pausedTime++;
+                        }
+                    }, 0, 1000);
+                    btnPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                    DownloadTask d = new DownloadTask("timeShiftPause=",5, getApplicationContext(),null);
+                    d.execute();
+                    play = true;
+            }
             }
         });
 
