@@ -45,10 +45,9 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_on);
 
-        findViewById(R.id.btnPipChange).setEnabled(false); // erst nutzbar, wenn Pip aktiviert ist
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
+        setBtnPipChangeEnabled(false);
 
         channelManager.loadFromJSON(getApplicationContext());
         loadIconFilenamesFromJSON();
@@ -217,6 +216,20 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
+    private void setBtnPipChangeEnabled(Boolean enabled) {
+        final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+        btnPipChange.setEnabled(enabled);
+        if (enabled) {
+            btnPipChange.clearColorFilter();
+            btnPipChange.getBackground().clearColorFilter();
+            btnPipChange.setElevation(getResources().getDimension(R.dimen.control_elevation_material));
+        } else {
+            btnPipChange.setColorFilter(0xffc8c8c8);    // Button ausgrauen
+            btnPipChange.getBackground().setColorFilter(0xfff0f0f0, PorterDuff.Mode.SRC_IN);
+            btnPipChange.setElevation(0);
+        }
+    }
+
     public void setCurrentPlayingChannel(int index) {
         Channel channel = channelManager.getChannelAt(index);
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_channelindex_key), index);
@@ -281,13 +294,13 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             // PiP aktiviert, setze Button-Farbe auf grün
             ImageButton btnPip = findViewById(R.id.btnPipToggle);
             btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
-            findViewById(R.id.btnPipChange).setEnabled(true);
+            setBtnPipChangeEnabled(true);
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
         } else if (requestCode == 4 && success) {
             // PiP deaktiviert
             ImageButton btnPip = findViewById(R.id.btnPipToggle);
             btnPip.getBackground().clearColorFilter();
-            findViewById(R.id.btnPipChange).setEnabled(false);
+            setBtnPipChangeEnabled(false);
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
         } else if (requestCode == 9 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
