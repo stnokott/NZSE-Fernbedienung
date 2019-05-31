@@ -47,6 +47,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     private boolean play = true;
     private int pausedTime = 0;
     private int volume = 50;
+    private int muted = 0;
     private Timer T=new Timer();
 
     @Override
@@ -104,7 +105,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnSwitchOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("standby=1", 9, getApplicationContext(), ActivitySwitchedOn.this);
+                DownloadTask d = new DownloadTask("standby=1", 10, getApplicationContext(), ActivitySwitchedOn.this);
                 d.execute();
             }
         });
@@ -149,7 +150,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnMute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                volumeMute();
+                volumeToggleMute();
             }
         });
 
@@ -236,8 +237,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
-    private void volumeMute() {
-
+    private void volumeToggleMute() {
+        // muted-Attribut wird hier noch nicht verändert, erst bei erfolgreichem Request-Callback
+        DownloadTask d = new DownloadTask("volume=" + (muted == 0 ? 0 : volume), 8, getApplicationContext(), ActivitySwitchedOn.this);
+        d.execute();
     }
 
     private void toggleFavButton() {
@@ -293,7 +296,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         int curVolume = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_volume_key), volume);
         if (curVolume != -1) {
             volume = curVolume;
-            DownloadTask d = new DownloadTask("volume=" + volume, 8, getApplicationContext(), ActivitySwitchedOn.this);
+            DownloadTask d = new DownloadTask("volume=" + volume, 7, getApplicationContext(), ActivitySwitchedOn.this);
+            d.execute();
+        }
+
+        int curMuted = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_volume_muted_key), muted);
+        if (curMuted != -1) {
+            muted = curMuted;
+            DownloadTask d = new DownloadTask("volume=" + (muted == 1 ? 0 : volume), 9, getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
     }
@@ -327,6 +337,22 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         setButtonEnabled(btnVolumeUp, volume != 100);
         final ImageButton btnVolumeDown = findViewById(R.id.btnVolumeDown);
         setButtonEnabled(btnVolumeDown, volume != 0);
+
+        if (muted == 1) {
+            muted = 0;
+            onMutedChanged();
+        }
+    }
+
+    private void onMutedChanged() {
+        SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_volume_muted_key), muted);
+
+        final ImageView btnMute = findViewById(R.id.btnMute);
+        if (muted == 1) {
+            btnMute.setImageResource(R.drawable.ic_volume_off_black_36dp);
+        } else {
+            btnMute.setImageResource(R.drawable.ic_volume_up_black_36dp);
+        }
     }
 
     public void setCurrentPlayingChannel(int index) {
@@ -389,8 +415,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             4 = PiP deaktivieren
             5 = Volume up
             6 = Volume down
-            8 = Lautstärke aus Commons abgerufen
-            9 = Standby aktivieren
+            7 = Lautstärke aus Commons abgerufen
+            8 = Mute/Unmute
+            9 = Mute-Status aus Commond abgerufen
+            10 = Standby aktivieren
          */
         if (!success) {
             Toast.makeText(getApplicationContext(), "Nicht erfolgreich!", Toast.LENGTH_SHORT).show();
@@ -418,10 +446,17 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             // Lautstärke runter
             volume--;
             onVolumeChanged();
-        } else if (requestCode == 8 && success) {
+        } else if (requestCode == 7 && success) {
             // Lautstärke aus Commons geladen
             onVolumeChanged();
+        } else if (requestCode == 8 && success) {
+            // Mute-Status manuell geändert
+            muted = (muted == 0 ? 1 : 0);
+            onMutedChanged();
         } else if (requestCode == 9 && success) {
+            // Mute-Status aus Commons abgerufen
+            onMutedChanged();
+        } else if (requestCode == 10 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
             startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));

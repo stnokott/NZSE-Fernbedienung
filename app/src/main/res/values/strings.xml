@@ -55,7 +55,7 @@
     <string name="commons_pipstatus_key">pipstatus</string>
     <string name="commons_pipchannel_key">pipchannel</string>
     <string name="commons_volume_key">volume</string>
-    <string name="commons_volume_muted">muted</string>
+    <string name="commons_volume_muted_key">muted</string>
 
     <string name="intentExtra_channelAdapterPosition_key">channelInstancePos</string>
 </resources>
