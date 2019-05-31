@@ -101,7 +101,8 @@
             android:layout_weight=".5"
             android:clickable="true"
             android:contentDescription="@string/descBtnMute"
-            android:tint="?attr/colorPrimaryDark"
+            android:focusable="true"
+            android:tint="@color/colorAccent"
             app:srcCompat="@drawable/ic_volume_up_black_36dp" />
 
         <ImageButton
