@@ -134,6 +134,9 @@ public class ChannelManager {
     }
 
     public Channel getChannelAt(int index) {
+        if (index < 0 || index >= channelList.size()) {
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds bei getChannelAt!");
+        }
         return channelList.get(index);
     }
 
