@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Request Codes für startActivityForResult -->
+    <integer name="activitycode_mainchannel">1</integer>
+    <integer name="activitycode_choosepip">3</integer>
+
+    <!-- Request Codes für DownloadTask -->
+    <integer name="requestcode_mainchannel">1</integer>
+    <integer name="requestcode_pipactivate">3</integer>
+    <integer name="requestcode_pipdeactivate">4</integer>
+    <integer name="requestcode_volume_up">5</integer>
+    <integer name="requestcode_volume_down">6</integer>
+    <integer name="requestcode_volume_commons">7</integer>
+    <integer name="requestcode_mute_change">8</integer>
+    <integer name="requestcode_mute_commons">9</integer>
+    <integer name="requestcode_channel_change">10</integer>
+    <integer name="requestcode_timeshift">11</integer>
+
+    <integer name="requestcode_standby">99</integer>
+</resources>
