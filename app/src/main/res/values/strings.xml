@@ -36,6 +36,7 @@
     <string name="lblNoChannelsVisible">Keine Kanäle vorhanden</string>
     <string name="lblPipSwap">Tauschen</string>
     <string name="lblPipDisable">Deaktivieren</string>
+    <string name="lblBtnPipSwap">Picture-In-Picture und Hauptkanal tauschen</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>
