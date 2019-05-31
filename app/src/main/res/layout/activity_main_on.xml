@@ -99,6 +99,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight=".5"
+            android:clickable="true"
             android:contentDescription="@string/descBtnMute"
             android:tint="?attr/colorPrimaryDark"
             app:srcCompat="@drawable/ic_volume_up_black_36dp" />
@@ -182,27 +183,7 @@
         app:layout_constraintTop_toTopOf="@+id/guidelineV40">
 
         <ImageButton
-            android:id="@+id/btnMute"
-            style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/descBtnPiP"
-            android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
-            android:scaleType="centerInside"
-            android:tint="@color/colorAccent"
-            app:srcCompat="@drawable/ic_volume_up_black_36dp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight=".5" />
-
-        <ImageButton
-            android:id="@+id/btnPip"
+            android:id="@+id/btnPipToggle"
             style="@android:style/Widget.Material.Light.ImageButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -213,6 +194,20 @@
             android:scaleType="centerInside"
             android:tint="@color/colorAccent"
             app:srcCompat="@drawable/ic_filter_none_black_36dp" />
+
+        <ImageButton
+            android:id="@+id/btnPipChange"
+            style="@android:style/Widget.Material.Light.ImageButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/lblBtnPipSwap"
+            android:elevation="@dimen/control_elevation_material"
+            android:padding="@dimen/control_icon_padding"
+            android:scaleType="centerInside"
+            android:tint="@color/colorAccent"
+            app:srcCompat="@drawable/ic_swap_horiz_black_36dp" />
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
