@@ -9,15 +9,12 @@ import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +47,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
+        setBtnPipChangeEnabled(false);
 
         channelManager.loadFromJSON(getApplicationContext());
         loadIconFilenamesFromJSON();
@@ -121,33 +119,30 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             }
         });
 
-        final ImageButton btnPip = findViewById(R.id.btnPip);
+        final ImageButton btnPip = findViewById(R.id.btnPipToggle);
         btnPip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class),  3);
+                int pipstatus = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
+                if (pipstatus == 1) {
+                    // wenn Pip schon aktiviert, deaktiviere
+                    DownloadTask d = new DownloadTask("showPip=0", 4, getApplicationContext(), ActivitySwitchedOn.this);
+                    d.execute();
+                } else {
+                    // wenn Pip noch nicht aktiviert, aktiviere und wähle Kanal
+                    startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), 3);
+                }
             }
         });
-        btnPip.setOnLongClickListener(new View.OnLongClickListener() {
+
+        final ImageButton btnPipSwap = findViewById(R.id.btnPipChange);
+        btnPipSwap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                PopupMenu popupPip = new PopupMenu(v.getContext(), btnPip);
-                popupPip.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.btnPipDisable) {
-                            DownloadTask d = new DownloadTask("showPip=0", 4, getApplicationContext(), ActivitySwitchedOn.this);
-                            d.execute();
-                        } else if (item.getItemId() == R.id.btnPipSwap) {
-                            Toast.makeText(getApplicationContext(), "btnSwap", Toast.LENGTH_SHORT).show();
-                        }
-                        return true;
-                    }
-                });
-                MenuInflater inflater = popupPip.getMenuInflater();
-                inflater.inflate(R.menu.menu_popup_pip, popupPip.getMenu());
-                popupPip.show();
-                return true;
+            public void onClick(View v) {
+                int pipstatus = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
+                if (pipstatus == 1) {
+                    startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), 3);
+                }
             }
         });
 
@@ -221,6 +216,20 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
+    private void setBtnPipChangeEnabled(Boolean enabled) {
+        final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+        btnPipChange.setEnabled(enabled);
+        if (enabled) {
+            btnPipChange.clearColorFilter();
+            btnPipChange.getBackground().clearColorFilter();
+            btnPipChange.setElevation(getResources().getDimension(R.dimen.control_elevation_material));
+        } else {
+            btnPipChange.setColorFilter(0xffc8c8c8);    // Button ausgrauen
+            btnPipChange.getBackground().setColorFilter(0xfff0f0f0, PorterDuff.Mode.SRC_IN);
+            btnPipChange.setElevation(0);
+        }
+    }
+
     public void setCurrentPlayingChannel(int index) {
         Channel channel = channelManager.getChannelAt(index);
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_channelindex_key), index);
@@ -283,13 +292,15 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
          */
         if (requestCode == 3 && success) {
             // PiP aktiviert, setze Button-Farbe auf grün
-            ImageButton btnPip = findViewById(R.id.btnPip);
+            ImageButton btnPip = findViewById(R.id.btnPipToggle);
             btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
+            setBtnPipChangeEnabled(true);
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
         } else if (requestCode == 4 && success) {
             // PiP deaktiviert
-            ImageButton btnPip = findViewById(R.id.btnPip);
+            ImageButton btnPip = findViewById(R.id.btnPipToggle);
             btnPip.getBackground().clearColorFilter();
+            setBtnPipChangeEnabled(false);
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
         } else if (requestCode == 9 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
