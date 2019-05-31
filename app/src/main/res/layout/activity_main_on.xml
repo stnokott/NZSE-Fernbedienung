@@ -93,7 +93,7 @@
             app:srcCompat="@drawable/ic_add_black_36dp" />
 
         <ImageView
-            android:id="@+id/imgMute"
+            android:id="@+id/btnMute"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"

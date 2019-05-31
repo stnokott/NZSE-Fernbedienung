@@ -153,11 +153,11 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                     DownloadTask d = new DownloadTask("timeShiftPause=",5, getApplicationContext(),null);
                     d.execute();
                     play = true;
-            }
+                }
             }
         });
 
-        final ImageButton btnPip = findViewById(R.id.btnPip);
+        final ImageButton btnPip = findViewById(R.id.btnPipToggle);
         btnPip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
