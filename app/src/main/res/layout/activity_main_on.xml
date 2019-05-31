@@ -99,6 +99,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight=".5"
+            android:clickable="true"
             android:contentDescription="@string/descBtnMute"
             android:tint="?attr/colorPrimaryDark"
             app:srcCompat="@drawable/ic_volume_up_black_36dp" />
@@ -195,7 +196,7 @@
             app:srcCompat="@drawable/ic_filter_none_black_36dp" />
 
         <ImageButton
-            android:id="@+id/btnPipSwap"
+            android:id="@+id/btnPipChange"
             style="@android:style/Widget.Material.Light.ImageButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
