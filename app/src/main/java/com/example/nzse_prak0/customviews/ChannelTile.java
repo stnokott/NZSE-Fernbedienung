@@ -2,7 +2,6 @@ package com.example.nzse_prak0.customviews;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.TextViewCompat;
 
 import com.example.nzse_prak0.ActivitySwitchedOn;
 import com.example.nzse_prak0.R;
@@ -159,7 +156,7 @@ public class ChannelTile extends ConstraintLayout {
         float[] hsv = new float[3];
         Color.colorToHSV(c, hsv);
         hsv[2] *= 0.85f;
-        bgIcon.setImageAlpha(80);
+        bgIcon.setImageAlpha(65);
         //bgIcon.setColorFilter(Color.HSVToColor(hsv), PorterDuff.Mode.SRC_IN);
     }
 

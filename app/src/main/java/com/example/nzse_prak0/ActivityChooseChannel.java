@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,11 +31,14 @@ import java.util.List;
 public class ActivityChooseChannel extends AppCompatActivity implements OnDownloadTaskCompleted {
     private TileAdapter tileAdapter;
     private SearchView btnSearch;
+    int favsOnly;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosechannel);
+
+        favsOnly = getIntent().getIntExtra("favsOnly", 0);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewChannel);
         recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
@@ -46,6 +51,11 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
+        if (favsOnly == 1) {
+            hideScanButton();
+            final TextView lblNoChannels = findViewById(R.id.lblNoChannels);
+            lblNoChannels.setText(getString(R.string.lblNoChannelsVisibleFavs));
+        }
 
         createListeners(tileAdapter);
         checkNoChannelsVisible();
@@ -55,7 +65,6 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         // TODO: Scan-Button verstecken, wenn nur Favoriten angezeigt werden sollen
         List<Channel> channels = new ArrayList<>();
 
-        int favsOnly = getIntent().getIntExtra("favsOnly", 0);
         if (favsOnly == 1) {
             channels.addAll(ActivitySwitchedOn.channelManager.getFavoriteChannels());
         } else {
@@ -128,20 +137,22 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             }
         });
 
-        final Button btnScanChannels = findViewById(R.id.btnScanChannels);
-        btnScanChannels.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                DownloadTask d = new DownloadTask("scanChannels=", 1, getApplicationContext(), ActivityChooseChannel.this);
-                d.execute();
-                Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
-                t.show();
+        if (favsOnly == 0) {
+            final Button btnScanChannels = findViewById(R.id.btnScanChannels);
+            btnScanChannels.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DownloadTask d = new DownloadTask("scanChannels=", 1, getApplicationContext(), ActivityChooseChannel.this);
+                    d.execute();
+                    Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
+                    t.show();
 
-                btnScanChannels.setEnabled(false);
-                findViewById(R.id.recyclerViewChannel).setEnabled(false);
-                findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
-            }
-        });
+                    btnScanChannels.setEnabled(false);
+                    findViewById(R.id.recyclerViewChannel).setEnabled(false);
+                    findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
+                }
+            });
+        }
     }
 
     @Override
@@ -169,5 +180,16 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     public void checkNoChannelsVisible() {
         TextView txtNoChannels = findViewById(R.id.lblNoChannels);
         txtNoChannels.setVisibility(tileAdapter.getItemCount()==0 ? View.VISIBLE:View.INVISIBLE);
+    }
+
+    private void hideScanButton() {
+        final RecyclerView recyclerViewChannel = findViewById(R.id.recyclerViewChannel);
+        ConstraintLayout.LayoutParams recyclerParams = (ConstraintLayout.LayoutParams) recyclerViewChannel.getLayoutParams();
+        recyclerParams.topToTop = ConstraintSet.PARENT_ID;
+        recyclerViewChannel.setLayoutParams(recyclerParams);
+
+        // Button entfernen
+        final ConstraintLayout chooseChannelsLayout = findViewById(R.id.chooseChannelsLayout);
+        chooseChannelsLayout.removeView(findViewById(R.id.btnScanChannels));
     }
 }

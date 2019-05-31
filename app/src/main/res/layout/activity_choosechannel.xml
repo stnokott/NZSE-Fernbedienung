@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chooseChannelsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityChooseChannel" >
+    tools:context=".ActivityChooseChannel">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewChannel"
@@ -32,12 +33,13 @@
         android:id="@+id/spinnerOverlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:indeterminate="true"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewChannel"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerViewChannel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnScanChannels" />
+        app:layout_constraintTop_toTopOf="@id/recyclerViewChannel" />
 
     <TextView
         android:id="@+id/lblNoChannels"
@@ -49,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnScanChannels"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewChannel"
         tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
