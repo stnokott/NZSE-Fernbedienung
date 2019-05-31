@@ -106,7 +106,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnSwitchOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("standby=1", 10, getApplicationContext(), ActivitySwitchedOn.this);
+                DownloadTask d = new DownloadTask("standby=1", 99, getApplicationContext(), ActivitySwitchedOn.this);
                 d.execute();
             }
         });
@@ -161,7 +161,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             public void onClick(View v){
                 if( play && pausedTime > 0){
                     btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
-                    DownloadTask d = new DownloadTask("timeShiftPlay=" + pausedTime, 5, getApplicationContext(),null);
+                    DownloadTask d = new DownloadTask("timeShiftPlay=" + pausedTime, 11, getApplicationContext(), null);
                     d.execute();
 
                     // Restart pausedTime and destroy Timer object
@@ -178,7 +178,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                         }
                     }, 0, 1000);
                     btnPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                    DownloadTask d = new DownloadTask("timeShiftPause=",5, getApplicationContext(),null);
+                    DownloadTask d = new DownloadTask("timeShiftPause=", 11, getApplicationContext(), null);
                     d.execute();
                     play = true;
                 }
@@ -226,12 +226,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnChannelNext.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Channel channel;
-                channel =  channelManager.getChannelAt(channelPosition+1);
-                DownloadTask d = new DownloadTask("channelMain=" + channel.getChannel(), 6, getApplicationContext(),null);
-                d.execute();
-
-                setCurrentPlayingChannel(channelPosition+1);
+                nextChannel();
             }
         });
 
@@ -239,12 +234,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnChannelPrevious.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Channel channel;
-                channel =  channelManager.getChannelAt(channelPosition-1);
-                DownloadTask d = new DownloadTask("channelMain=" + channel.getChannel(), 6, getApplicationContext(),null);
-                d.execute();
-
-                setCurrentPlayingChannel(channelPosition-1);
+                previousChannel();
             }
         });
     }
@@ -269,6 +259,36 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         // muted-Attribut wird hier noch nicht verändert, erst bei erfolgreichem Request-Callback
         DownloadTask d = new DownloadTask("volume=" + (muted == 0 ? 0 : volume), 8, getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
+    }
+
+    private void nextChannel() {
+        int nextIndex;
+        if (channelPosition == channelManager.getChannelCount() - 1) {
+            // falls Ende erreicht, fange von vorne an
+            nextIndex = 0;
+        } else {
+            nextIndex = channelPosition + 1;
+        }
+        Channel channel = channelManager.getChannelAt(nextIndex);
+        DownloadTask d = new DownloadTask("channelMain=" + channel.getChannel(), 10, getApplicationContext(), null);
+        d.execute();
+
+        setCurrentPlayingChannel(nextIndex);
+    }
+
+    private void previousChannel() {
+        int nextIndex;
+        if (channelPosition == 0) {
+            // falls Anfang erreicht, fange von hinten an
+            nextIndex = channelManager.getChannelCount() - 1;
+        } else {
+            nextIndex = channelPosition - 1;
+        }
+        Channel channel = channelManager.getChannelAt(nextIndex);
+        DownloadTask d = new DownloadTask("channelMain=" + channel.getChannel(), 10, getApplicationContext(), null);
+        d.execute();
+
+        setCurrentPlayingChannel(nextIndex);
     }
 
     private void toggleFavButton() {
@@ -447,7 +467,9 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             7 = Lautstärke aus Commons abgerufen
             8 = Mute/Unmute
             9 = Mute-Status aus Commond abgerufen
-            10 = Standby aktivieren
+            10 = Programm-Wechsel per +- Buttons
+            11 = Timeshift
+            99 = Standby aktivieren
          */
         if (!success) {
             Toast.makeText(getApplicationContext(), "Nicht erfolgreich!", Toast.LENGTH_SHORT).show();
@@ -485,7 +507,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         } else if (requestCode == 9 && success) {
             // Mute-Status aus Commons abgerufen
             onMutedChanged();
-        } else if (requestCode == 10 && success) {
+        } else if (requestCode == 99 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
             startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
