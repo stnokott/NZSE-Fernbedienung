@@ -1,6 +1,7 @@
 package com.example.nzse_prak0;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -503,56 +504,64 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     @Override
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
         if (!success) {
-            Toast.makeText(getApplicationContext(), "Fehler!", Toast.LENGTH_SHORT).show();
-        }
+            if (requestCode == getResources().getInteger(R.integer.requestcode_connectiontest)) {
+                // wenn Verbindungstest nicht erfolgreich
+                Toast.makeText(getApplicationContext(), "Verbindung zu TV verloren!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
+            } else {
+                // wenn nicht erfolgreich, prüfe Verbindung
+                Context c = getApplicationContext();
+                ActivitySettings.testConnection(ActivitySettings.getIP(c), c, ActivitySwitchedOn.this);
+            }
+        } else {
+            // siehe /res/values/integers.xml für requestCode-Werte
 
-        // siehe /res/values/integers.xml für requestCode-Werte
-
-        if (requestCode == getResources().getInteger(R.integer.requestcode_pipactivate) && success) {
-            // PiP aktiviert, setze Button-Farbe auf grün
-            ImageButton btnPip = findViewById(R.id.btnPipToggle);
-            btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
-            final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-            setButtonEnabled(btnPipChange, true);
-            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_pipdeactivate) && success) {
-            // PiP deaktiviert
-            ImageButton btnPip = findViewById(R.id.btnPipToggle);
-            btnPip.getBackground().clearColorFilter();
-            final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-            setButtonEnabled(btnPipChange, false);
-            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_up) && success) {
-            // Lautstärke hoch
-            volume++;
-            onVolumeChanged();
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_down) && success) {
-            // Lautstärke runter
-            volume--;
-            onVolumeChanged();
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_commons) && success) {
-            // Lautstärke aus Commons geladen
-            onVolumeChanged();
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_mute_change) && success) {
-            // Mute-Status manuell geändert
-            muted = (muted == 0 ? 1 : 0);
-            onMutedChanged();
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_mute_commons) && success) {
-            // Mute-Status aus Commons abgerufen
-            onMutedChanged();
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_pause) && success) {
-            // Pausiert
-            onTimeshiftPaused();
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_resume) && success) {
-            // Fortgesetzt & timeShiftPlay=offset gesetzt
-            onTimeshiftResumed(false);
-        } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_reset) && success) {
-            // Fortgesetzt & timeShiftPlay=0 gesetzt
-            onTimeshiftResumed(true);
-        } else if (requestCode == 99 && success) {
-            // Power-Button gedrückt, gehe zu ActivitySwitchedOff
-            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
-            startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
+            if (requestCode == getResources().getInteger(R.integer.requestcode_pipactivate)) {
+                // PiP aktiviert, setze Button-Farbe auf grün
+                ImageButton btnPip = findViewById(R.id.btnPipToggle);
+                btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
+                final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+                setButtonEnabled(btnPipChange, true);
+                SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_pipdeactivate)) {
+                // PiP deaktiviert
+                ImageButton btnPip = findViewById(R.id.btnPipToggle);
+                btnPip.getBackground().clearColorFilter();
+                final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+                setButtonEnabled(btnPipChange, false);
+                SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_up)) {
+                // Lautstärke hoch
+                volume++;
+                onVolumeChanged();
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_down)) {
+                // Lautstärke runter
+                volume--;
+                onVolumeChanged();
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_commons)) {
+                // Lautstärke aus Commons geladen
+                onVolumeChanged();
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_mute_change)) {
+                // Mute-Status manuell geändert
+                muted = (muted == 0 ? 1 : 0);
+                onMutedChanged();
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_mute_commons)) {
+                // Mute-Status aus Commons abgerufen
+                onMutedChanged();
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_pause)) {
+                // Pausiert
+                onTimeshiftPaused();
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_resume)) {
+                // Fortgesetzt & timeShiftPlay=offset gesetzt
+                onTimeshiftResumed(false);
+            } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_reset)) {
+                // Fortgesetzt & timeShiftPlay=0 gesetzt
+                onTimeshiftResumed(true);
+            } else if (requestCode == 99) {
+                // Power-Button gedrückt, gehe zu ActivitySwitchedOff
+                SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
+                startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
+            }
         }
     }
 }

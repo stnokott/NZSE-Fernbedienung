@@ -18,5 +18,7 @@
     <integer name="requestcode_timeshift_resume">12</integer>
     <integer name="requestcode_timeshift_reset">13</integer>
 
+    <integer name="requestcode_connectiontest">50</integer>
+
     <integer name="requestcode_standby">99</integer>
 </resources>

@@ -73,10 +73,9 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
             public void onClick(View v) {
                 EditText txtIP = findViewById(R.id.txtIP);
                 String ip = txtIP.getText().toString();
-                DownloadTask d = new DownloadTask("", 2, ActivitySettings.this, ip);
-                d.execute();
 
-                v.setEnabled(false); // Button deaktivieren
+                final Button btnTestConnection = findViewById(R.id.btnTestConnection);
+                btnTestConnection.setEnabled(false); // Button deaktivieren
                 // Progress-Indicator zeigen
                 ProgressBar progressTestConnection = findViewById(R.id.progressTestConnection);
                 progressTestConnection.setVisibility(View.VISIBLE);
@@ -84,34 +83,37 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
                 // Tastatur verstecken
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(txtIP.getWindowToken(), 0);
+                testConnection(ip, getApplicationContext(), ActivitySettings.this);
             }
         });
     }
 
     @Override
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject json) {
-        // BUtton aktivieren
-        final Button btnTestConnection = findViewById(R.id.btnTestConnection);
-        btnTestConnection.setEnabled(true);
-        // EditText defokussieren
-        final ProgressBar progressTestConnection = findViewById(R.id.progressTestConnection);
-        progressTestConnection.setVisibility(View.INVISIBLE);
+        if (requestCode == getResources().getInteger(R.integer.requestcode_connectiontest)) {
+            // Button aktivieren
+            final Button btnTestConnection = findViewById(R.id.btnTestConnection);
+            btnTestConnection.setEnabled(true);
+            // EditText defokussieren
+            final ProgressBar progressTestConnection = findViewById(R.id.progressTestConnection);
+            progressTestConnection.setVisibility(View.INVISIBLE);
 
-        if (success) {
-            ViewHelper.setViewBackgroundTint(btnTestConnection, getColor(R.color.colorValid));
-            Toast.makeText(getApplicationContext(), "Verbindung erfolgreich!", Toast.LENGTH_SHORT).show();
-        } else {
-            ViewHelper.setViewBackgroundTint(btnTestConnection, getColor(R.color.colorInvalid));
-            Toast.makeText(getApplicationContext(), "Verbindung fehlgeschlagen!", Toast.LENGTH_LONG).show();
-        }
-
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ViewHelper.clearBackgroundTint(btnTestConnection);
+            if (success) {
+                ViewHelper.setViewBackgroundTint(btnTestConnection, getColor(R.color.colorValid));
+                Toast.makeText(getApplicationContext(), "Verbindung erfolgreich!", Toast.LENGTH_SHORT).show();
+            } else {
+                ViewHelper.setViewBackgroundTint(btnTestConnection, getColor(R.color.colorInvalid));
+                Toast.makeText(getApplicationContext(), "Verbindung fehlgeschlagen!", Toast.LENGTH_LONG).show();
             }
-        }, 3000);
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ViewHelper.clearBackgroundTint(btnTestConnection);
+                }
+            }, 3000);
+        }
     }
 
     private void saveSettings() {
@@ -124,6 +126,11 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         settings.add(new Pair<String, Object>("ip", txtIP.getText().toString()));
 
         SharedPrefs.setValues(getApplicationContext(), getString(R.string.preferences_file_name), settings);
+    }
+
+    public static void testConnection(String ip, Context context, OnDownloadTaskCompleted listener) {
+        DownloadTask d = new DownloadTask("debug=1", context.getResources().getInteger(R.integer.requestcode_connectiontest), listener, ip);
+        d.execute();
     }
 
     private void loadSettings() {
