@@ -2,6 +2,7 @@ package com.example.nzse_prak0;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
@@ -45,7 +46,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     private int pausedTime = 0;
     private int volume = 50;
     private int muted = 0;
-    private Timer T=new Timer();
+    private Timer timer =new Timer();
     private int channelPosition;
 
     @Override
@@ -66,7 +67,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         // Start debug mode and shows a status bar at the bottom
         DownloadTask d = new DownloadTask("debug=1", 0, getApplicationContext(), null);
         d.execute();
-
+        // Timeshift beenden, falls noch läuft
+        // TODO: letzt bekannten TImeshift-Status persistent speichern (nicht die Zeit, nur ob pausiert ist)
+        DownloadTask d1 = new DownloadTask("timeShiftPlay=0", getResources().getInteger(R.integer.requestcode_timeshift_resume), getApplicationContext(), null);
+        d1.execute();
 
         createListeners();
     }
@@ -152,7 +156,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             }
         });
 
-        // TODO: "Live"-Button, der timeShift=0 sendet
         final ImageButton btnPause = findViewById(R.id.btnPause);
         btnPause.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -162,6 +165,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                 } else{
                     timeshiftPause();
                 }
+            }
+        });
+
+        final Button btnLive = findViewById(R.id.btnLive);
+        btnLive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timeshiftResume(true);
             }
         });
 
@@ -272,31 +283,19 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void timeshiftPause() {
-        final ImageButton btnPause = findViewById(R.id.btnPause);
-        T.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                pausedTime++;
-            }
-        }, 0, 1000);
-        btnPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-        DownloadTask d = new DownloadTask("timeShiftPause=", getResources().getInteger(R.integer.requestcode_timeshift), getApplicationContext(), null);
+        DownloadTask d = new DownloadTask("timeShiftPause=", getResources().getInteger(R.integer.requestcode_timeshift_pause), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
-        play = true;
     }
 
     private void timeshiftResume(Boolean reset) {
-        final ImageButton btnPause = findViewById(R.id.btnPause);
-        btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
-        DownloadTask d = new DownloadTask("timeShiftPlay=" + (reset ? 0 : pausedTime), getResources().getInteger(R.integer.requestcode_timeshift), getApplicationContext(), null);
+        int requestCode;
+        if (reset) {
+            requestCode = getResources().getInteger(R.integer.requestcode_timeshift_reset);
+        } else {
+            requestCode = getResources().getInteger(R.integer.requestcode_timeshift_resume);
+        }
+        DownloadTask d = new DownloadTask("timeShiftPlay=" + (reset ? 0 : pausedTime), requestCode, getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
-
-        // Restart pausedTime and destroy Timer object
-        pausedTime=0;
-        play = false;
-        T.cancel();
-        // New Timer object
-        T = new Timer();
     }
 
     private void toggleFavButton() {
@@ -411,6 +410,41 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
+    private void onTimeshiftPaused() {
+        final ImageButton btnPause = findViewById(R.id.btnPause);
+        btnPause.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+
+        final Button btnLive = findViewById(R.id.btnLive);
+        btnLive.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.ic_circle_grey_24dp), null, null, null);
+        btnLive.setTextColor(0xFF9E9E9E);
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                pausedTime++;
+            }
+        }, 0, 1000);
+        play = true;
+    }
+
+    private void onTimeshiftResumed(Boolean reset) {
+        final ImageButton btnPause = findViewById(R.id.btnPause);
+        btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
+
+        if (reset) {
+            final Button btnLive = findViewById(R.id.btnLive);
+            btnLive.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.ic_circle_red_24dp), null, null, null);
+            btnLive.setTextColor(Color.BLACK);
+        }
+
+        // Restart pausedTime and destroy Timer object
+        pausedTime=0;
+        play = false;
+        timer.cancel();
+        // New Timer object
+        timer = new Timer();
+    }
+
     public void setCurrentPlayingChannel(int index) {
         Channel channel = channelManager.getChannelAt(index);
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_channelindex_key), index);
@@ -468,56 +502,53 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     @Override
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
-        /*
-            requestCode:
-            1 = Hauptkanal wählen
-            3 = PiP aktivieren und Kanal wählen
-            4 = PiP deaktivieren
-            5 = Volume up
-            6 = Volume down
-            7 = Lautstärke aus Commons abgerufen
-            8 = Mute/Unmute
-            9 = Mute-Status aus Commond abgerufen
-            10 = Programm-Wechsel per +- Buttons
-            11 = Timeshift aktiviert/deaktiviert
-            99 = Standby aktivieren
-         */
         if (!success) {
-            Toast.makeText(getApplicationContext(), "Nicht erfolgreich!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Fehler!", Toast.LENGTH_SHORT).show();
         }
 
-        if (requestCode == 3 && success) {
+        // siehe /res/values/integers.xml für requestCode-Werte
+
+        if (requestCode == getResources().getInteger(R.integer.requestcode_pipactivate) && success) {
             // PiP aktiviert, setze Button-Farbe auf grün
             ImageButton btnPip = findViewById(R.id.btnPipToggle);
             btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
             final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
             setButtonEnabled(btnPipChange, true);
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
-        } else if (requestCode == 4 && success) {
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_pipdeactivate) && success) {
             // PiP deaktiviert
             ImageButton btnPip = findViewById(R.id.btnPipToggle);
             btnPip.getBackground().clearColorFilter();
             final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
             setButtonEnabled(btnPipChange, false);
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
-        } else if (requestCode == 5 && success) {
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_up) && success) {
             // Lautstärke hoch
             volume++;
             onVolumeChanged();
-        } else if (requestCode == 6 && success) {
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_down) && success) {
             // Lautstärke runter
             volume--;
             onVolumeChanged();
-        } else if (requestCode == 7 && success) {
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_commons) && success) {
             // Lautstärke aus Commons geladen
             onVolumeChanged();
-        } else if (requestCode == 8 && success) {
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_mute_change) && success) {
             // Mute-Status manuell geändert
             muted = (muted == 0 ? 1 : 0);
             onMutedChanged();
-        } else if (requestCode == 9 && success) {
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_mute_commons) && success) {
             // Mute-Status aus Commons abgerufen
             onMutedChanged();
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_pause) && success) {
+            // Pausiert
+            onTimeshiftPaused();
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_resume) && success) {
+            // Fortgesetzt & timeShiftPlay=offset gesetzt
+            onTimeshiftResumed(false);
+        } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_reset) && success) {
+            // Fortgesetzt & timeShiftPlay=0 gesetzt
+            onTimeshiftResumed(true);
         } else if (requestCode == 99 && success) {
             // Power-Button gedrückt, gehe zu ActivitySwitchedOff
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
