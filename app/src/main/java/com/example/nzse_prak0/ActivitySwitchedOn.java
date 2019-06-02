@@ -161,28 +161,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnPause.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if( play && pausedTime > 0){
-                    btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
-                    DownloadTask d = new DownloadTask("timeShiftPlay=" + pausedTime, getResources().getInteger(R.integer.requestcode_timeshift), getApplicationContext(), null);
-                    d.execute();
-
-                    // Restart pausedTime and destroy Timer object
-                    pausedTime=0;
-                    play = false;
-                    T.cancel();
-                    // New Timer object
-                    T = new Timer();
+                if(play && pausedTime > 0){
+                    timeshiftResume(false);
                 } else{
-                    T.scheduleAtFixedRate(new TimerTask() {
-                        @Override
-                        public void run() {
-                            pausedTime++;
-                        }
-                    }, 0, 1000);
-                    btnPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                    DownloadTask d = new DownloadTask("timeShiftPause=", getResources().getInteger(R.integer.requestcode_timeshift), getApplicationContext(), null);
-                    d.execute();
-                    play = true;
+                    timeshiftPause();
                 }
             }
         });
@@ -291,6 +273,34 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         d.execute();
 
         setCurrentPlayingChannel(nextIndex);
+    }
+
+    private void timeshiftPause() {
+        final ImageButton btnPause = findViewById(R.id.btnPause);
+        T.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                pausedTime++;
+            }
+        }, 0, 1000);
+        btnPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        DownloadTask d = new DownloadTask("timeShiftPause=", getResources().getInteger(R.integer.requestcode_timeshift), getApplicationContext(), null);
+        d.execute();
+        play = true;
+    }
+
+    private void timeshiftResume(Boolean reset) {
+        final ImageButton btnPause = findViewById(R.id.btnPause);
+        btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
+        DownloadTask d = new DownloadTask("timeShiftPlay=" + (reset ? 0 : pausedTime), getResources().getInteger(R.integer.requestcode_timeshift), getApplicationContext(), null);
+        d.execute();
+
+        // Restart pausedTime and destroy Timer object
+        pausedTime=0;
+        play = false;
+        T.cancel();
+        // New Timer object
+        T = new Timer();
     }
 
     private void toggleFavButton() {
@@ -420,6 +430,11 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             Log.e("setCurrentPlayingChannel", e.getMessage());
         }
 
+        if (index != channelPosition && play && pausedTime > 0) {
+            // wenn Kanal gewechselt wird, während Timeshift, beende Timeshift
+            timeshiftResume(true);
+        }
+
         curPlayingChannel = channel;
         channelPosition = index;
     }
@@ -468,7 +483,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             8 = Mute/Unmute
             9 = Mute-Status aus Commond abgerufen
             10 = Programm-Wechsel per +- Buttons
-            11 = Timeshift
+            11 = Timeshift aktiviert/deaktiviert
             99 = Standby aktivieren
          */
         if (!success) {
