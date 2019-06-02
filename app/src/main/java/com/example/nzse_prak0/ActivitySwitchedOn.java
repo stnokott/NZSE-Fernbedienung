@@ -36,9 +36,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
-    // TODO: ApplicationContext global verfügbar machen (und Kontext-Übergaben redundant machen): https://stackoverflow.com/a/5114361
-    // TODO: requestCodes aus Resources holen
-
     public static final ChannelManager channelManager = new ChannelManager();
     private Channel curPlayingChannel = null;
 
@@ -156,7 +153,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         });
 
         // TODO: "Live"-Button, der timeShift=0 sendet
-        // TODO: was tun, wenn der Nutzer während Pause das Programm wechselt?
         final ImageButton btnPause = findViewById(R.id.btnPause);
         btnPause.setOnClickListener(new View.OnClickListener(){
             @Override
