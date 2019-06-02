@@ -42,6 +42,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewChannel);
         recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
+        recyclerView.setItemViewCacheSize(25);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -79,6 +80,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             */
         }
         tileAdapter = new TileAdapter(channels);
+        tileAdapter.setHasStableIds(false);
         ((RecyclerView) findViewById(R.id.recyclerViewChannel)).setAdapter(tileAdapter);
     }
 
