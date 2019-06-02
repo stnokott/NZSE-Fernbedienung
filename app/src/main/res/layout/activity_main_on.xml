@@ -58,13 +58,12 @@
         android:elevation="@dimen/control_elevation_material"
         android:padding="@dimen/control_icon_padding"
         android:scaleType="fitCenter"
-        android:tint="@color/colorYellow"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV40"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineH66"
         app:layout_constraintTop_toTopOf="@+id/guidelineV20"
-        app:srcCompat="@drawable/ic_star_black_36dp" />
+        app:srcCompat="@drawable/ic_fav_red_36dp" />
 
     <LinearLayout
         android:id="@+id/layoutVolume"
@@ -283,7 +282,7 @@
                 android:contentDescription="@string/descBtnFavs"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/star_fill_black_anim" />
+                app:srcCompat="@drawable/fav_fill_black_anim" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

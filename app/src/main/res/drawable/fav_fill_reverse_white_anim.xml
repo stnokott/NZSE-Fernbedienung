@@ -4,23 +4,23 @@
     <aapt:attr name="android:drawable">
         <vector
             android:name="vector"
-            android:width="36dp"
-            android:height="36dp"
-            android:viewportWidth="36"
-            android:viewportHeight="36">
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
             <path
                 android:name="border"
-                android:pathData="M 33 13.859 L 22.215 12.93 L 18 3 L 13.785 12.945 L 3 13.859 L 11.191 20.953 L 8.73 31.5 L 18 25.906 L 27.27 31.5 L 24.824 20.953 Z M 18 23.102 L 12.359 26.504 L 13.859 20.086 L 8.879 15.766 L 15.449 15.195 L 18 9.148 L 20.566 15.211 L 27.137 15.781 L 22.156 20.102 L 23.656 26.52 Z M 18 23.102"
-                android:fillColor="#000"
+                android:pathData="M 16.5 3 C 14.76 3 13.09 3.81 12 5.09 C 10.91 3.81 9.24 3 7.5 3 C 4.42 3 2 5.42 2 8.5 C 2 12.28 5.4 15.36 10.55 20.04 L 12 21.35 L 13.45 20.03 C 18.6 15.36 22 12.28 22 8.5 C 22 5.42 19.58 3 16.5 3 Z M 12.1 18.55 L 12 18.65 L 11.9 18.55 C 7.14 14.24 4 11.39 4 8.5 C 4 6.5 5.5 5 7.5 5 C 9.04 5 10.54 5.99 11.07 7.36 L 12.94 7.36 C 13.46 5.99 14.96 5 16.5 5 C 18.5 5 20 6.5 20 8.5 C 20 11.39 16.86 14.24 12.1 18.55 Z"
+                android:fillColor="#FFF"
                 android:strokeWidth="1"/>
             <group
                 android:name="group"
-                android:pivotX="18"
-                android:pivotY="18">
+                android:pivotX="12"
+                android:pivotY="12">
                 <path
                     android:name="filled"
-                    android:pathData="M 18 25.906 L 27.27 31.5 L 24.809 20.953 L 33 13.859 L 22.215 12.945 L 18 3 L 13.785 12.945 L 3 13.859 L 11.191 20.953 L 8.73 31.5 Z M 18 25.906"
-                    android:fillColor="#000"
+                    android:pathData="M 12 21.35 L 10.55 20.03 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7.5 3 C 9.24 3 10.91 3.81 12 5.09 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 C 22 12.28 18.6 15.36 13.45 20.04 L 12 21.35 Z"
+                    android:fillColor="#FFF"
                     android:strokeWidth="1"/>
             </group>
         </vector>
@@ -30,14 +30,14 @@
             <set>
                 <objectAnimator
                     android:propertyName="scaleX"
-                    android:duration="400"
+                    android:duration="200"
                     android:valueFrom="1"
                     android:valueTo="0"
                     android:valueType="floatType"
                     android:interpolator="@android:interpolator/fast_out_linear_in"/>
                 <objectAnimator
                     android:propertyName="scaleY"
-                    android:duration="400"
+                    android:duration="200"
                     android:valueFrom="1"
                     android:valueTo="0"
                     android:valueType="floatType"

@@ -118,7 +118,7 @@ public class ChannelTile extends ConstraintLayout {
         // weitere Parameter
         newbtnFav.setElevation(Units.dpToPx(3, getContext()));
         newbtnFav.setOutlineProvider(null); // Schatten durch Elevation verhindern
-        newbtnFav.setImageResource(R.drawable.star_fill_white_anim);
+        newbtnFav.setImageResource(R.drawable.fav_fill_white_anim);
         newbtnFav.setBackground(null);
 
         // Listener
@@ -145,9 +145,9 @@ public class ChannelTile extends ConstraintLayout {
 
     public void updateFavStatus(Boolean isFav) {
         if (isFav) {
-            btnFav.setImageResource(R.drawable.star_fill_reverse_white_anim);
+            btnFav.setImageResource(R.drawable.fav_fill_reverse_white_anim);
         } else {
-            btnFav.setImageResource(R.drawable.star_fill_white_anim);
+            btnFav.setImageResource(R.drawable.fav_fill_white_anim);
         }
     }
 
