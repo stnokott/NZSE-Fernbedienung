@@ -42,28 +42,9 @@
 
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV40"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineH66"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineV20" />
-
-    <ImageButton
-        android:id="@+id/btnFavs"
-        style="@android:style/Widget.Material.Light.ImageButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/descBtnFavs"
-        android:elevation="@dimen/control_elevation_material"
-        android:padding="@dimen/control_icon_padding"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineV40"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineH66"
-        app:layout_constraintTop_toTopOf="@+id/guidelineV20"
-        app:srcCompat="@drawable/ic_fav_red_36dp" />
 
     <LinearLayout
         android:id="@+id/layoutVolume"

@@ -6,6 +6,7 @@
 
     <!-- Request Codes für DownloadTask -->
     <integer name="requestcode_mainchannel">1</integer>
+    <integer name="requestcode_scanchannels">2</integer>
     <integer name="requestcode_pipactivate">3</integer>
     <integer name="requestcode_pipdeactivate">4</integer>
     <integer name="requestcode_volume_up">5</integer>

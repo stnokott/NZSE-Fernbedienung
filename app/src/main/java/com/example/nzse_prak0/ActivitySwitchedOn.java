@@ -117,19 +117,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent selectChannelIntent = new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class);
-                selectChannelIntent.putExtra("favsOnly", 0);
-                startActivityForResult(selectChannelIntent, getResources().getInteger(R.integer.activitycode_mainchannel));
-            }
-        });
-
-        final ImageButton btnFavs = findViewById(R.id.btnFavs);
-        btnFavs.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent selectChannelIntent = new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class);
-                selectChannelIntent.putExtra("favsOnly", 1);
-                startActivityForResult(selectChannelIntent, getResources().getInteger(R.integer.activitycode_mainchannel));
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), getResources().getInteger(R.integer.activitycode_mainchannel));
             }
         });
 

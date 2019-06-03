@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,14 +30,12 @@ import java.util.List;
 public class ActivityChooseChannel extends AppCompatActivity implements OnDownloadTaskCompleted {
     private TileAdapter tileAdapter;
     private SearchView btnSearch;
-    int favsOnly = 0;   // TODO: boolean verwenden
+    boolean favsOnly = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosechannel);
-
-        favsOnly = getIntent().getIntExtra("favsOnly", 0);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewChannel);
         recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
@@ -53,24 +49,14 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
-        if (favsOnly == 1) {
-            hideScanButton();
-            final TextView lblNoChannels = findViewById(R.id.lblNoChannels);
-            lblNoChannels.setText(getString(R.string.lblNoChannelsVisibleFavs));
-        }
 
         createListeners(tileAdapter);
         checkNoChannelsVisible();
     }
 
     private void initTileAdapter() {
-        List<Channel> channels = new ArrayList<>();
+        List<Channel> channels = new ArrayList<>(ActivitySwitchedOn.channelManager.getChannels());
 
-        if (favsOnly == 1) {
-            channels.addAll(ActivitySwitchedOn.channelManager.getFavoriteChannels());
-        } else {
-            channels.addAll(ActivitySwitchedOn.channelManager.getChannels());
-        }
         tileAdapter = new TileAdapter(channels);
         tileAdapter.setHasStableIds(false);
         ((RecyclerView) findViewById(R.id.recyclerViewChannel)).setAdapter(tileAdapter);
@@ -100,9 +86,9 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         btnToggleFavs.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                favsOnly = (favsOnly == 1 ? 0 : 1);
+                favsOnly = !favsOnly;
 
-                if (favsOnly == 1) {
+                if (favsOnly) {
                     btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_white_36dp));
                     tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getFavoriteChannels());
                 } else {
@@ -147,12 +133,12 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             }
         });
 
-        if (favsOnly == 0) {
-            final Button btnScanChannels = findViewById(R.id.btnScanChannels);
-            btnScanChannels.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DownloadTask d = new DownloadTask("scanChannels=", 1, getApplicationContext(), ActivityChooseChannel.this);
+        final Button btnScanChannels = findViewById(R.id.btnScanChannels);
+        btnScanChannels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!favsOnly) {
+                    DownloadTask d = new DownloadTask("scanChannels=", getResources().getInteger(R.integer.requestcode_scanchannels), getApplicationContext(), ActivityChooseChannel.this);
                     d.execute();
                     Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
                     t.show();
@@ -162,13 +148,13 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
                     findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
                     findViewById(R.id.backgroundOverlay).setVisibility(View.VISIBLE);
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
-        if (success) {
+        if (requestCode == getResources().getInteger(R.integer.requestcode_scanchannels) && success) {
             Toast toast = Toast.makeText(getApplicationContext(), "Kanäle gescannt!", Toast.LENGTH_SHORT);
             toast.show();
             try {
@@ -192,16 +178,5 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     public void checkNoChannelsVisible() {
         TextView txtNoChannels = findViewById(R.id.lblNoChannels);
         txtNoChannels.setVisibility(tileAdapter.getItemCount()==0 ? View.VISIBLE:View.INVISIBLE);
-    }
-
-    private void hideScanButton() {
-        final RecyclerView recyclerViewChannel = findViewById(R.id.recyclerViewChannel);
-        ConstraintLayout.LayoutParams recyclerParams = (ConstraintLayout.LayoutParams) recyclerViewChannel.getLayoutParams();
-        recyclerParams.topToTop = ConstraintSet.PARENT_ID;
-        recyclerViewChannel.setLayoutParams(recyclerParams);
-
-        // Button entfernen
-        final ConstraintLayout chooseChannelsLayout = findViewById(R.id.chooseChannelsLayout);
-        chooseChannelsLayout.removeView(findViewById(R.id.btnScanChannels));
     }
 }
