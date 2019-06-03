@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ActivityChooseChannel"
-            android:label="Kanal wählen"></activity>
+            android:label="Kanal wählen">
+        </activity>
         <activity
             android:name=".ActivitySettings"
             android:label="Einstellungen">
