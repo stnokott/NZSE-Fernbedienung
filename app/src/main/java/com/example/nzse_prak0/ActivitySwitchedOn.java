@@ -139,6 +139,15 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                 volumeUp();
             }
         });
+        View.OnLongClickListener volumeUpLongClickListener = new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                volumeUp();
+                return false;
+            }
+        };
+        @SuppressWarnings("squid:S1854")
+        final ContinuousLongClickListener clUp = new ContinuousLongClickListener(btnVolumeUp, volumeUpLongClickListener);
 
         final ImageButton btnVolumeDown = findViewById(R.id.btnVolumeDown);
         btnVolumeDown.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +156,15 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                 volumeDown();
             }
         });
+        View.OnLongClickListener volumeDownLongClickListener = new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                volumeDown();
+                return false;
+            }
+        };
+        @SuppressWarnings("squid:S1854")
+        final ContinuousLongClickListener clDown = new ContinuousLongClickListener(btnVolumeDown, volumeDownLongClickListener);
 
         final ImageView btnMute = findViewById(R.id.btnMute);
         btnMute.setOnClickListener(new View.OnClickListener() {
