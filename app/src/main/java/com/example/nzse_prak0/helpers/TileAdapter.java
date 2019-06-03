@@ -128,7 +128,6 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     }
 
     public void setChannelList(List<Channel> channelList) {
-        // TODO: effizientere Methode?
         this.channelList = channelList;
         this.channelListFiltered = channelList;
         notifyDataSetChanged();

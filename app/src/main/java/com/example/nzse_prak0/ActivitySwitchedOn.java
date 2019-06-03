@@ -69,7 +69,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         DownloadTask d = new DownloadTask("debug=1", 0, getApplicationContext(), null);
         d.execute();
         // Timeshift beenden, falls noch läuft
-        // TODO: letzt bekannten TImeshift-Status persistent speichern (nicht die Zeit, nur ob pausiert ist)
         DownloadTask d1 = new DownloadTask("timeShiftPlay=0", getResources().getInteger(R.integer.requestcode_timeshift_resume), getApplicationContext(), null);
         d1.execute();
 
@@ -90,7 +89,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.btnSettings) {
             startActivity(new Intent(ActivitySwitchedOn.this, ActivitySettings.class));
         }
@@ -301,8 +299,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void applyLastKnownCommons() {
-        // TODO: effizienter machen durch Abfrage als Array
         String filename = getString(R.string.commons_file_name);
+
         int curChannelIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_channelindex_key), -1);
         if (curChannelIndex != -1 && channelManager.getChannelCount() > curChannelIndex) {
             DownloadTask d = new DownloadTask("channelMain=" + channelManager.getChannelAt(curChannelIndex).getChannelId(), getResources().getInteger(R.integer.requestcode_mainchannel), getApplicationContext(), ActivitySwitchedOn.this);
@@ -403,7 +401,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
 
         // Restart pausedTime and destroy Timer object
-        //pausedTime=0;
+        pausedTime = 0;
         play = false;
         timer.cancel();
         // New Timer object
