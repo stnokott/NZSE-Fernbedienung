@@ -319,7 +319,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         String curPipChannel = SharedPrefs.getString(getApplicationContext(), filename, getString(R.string.commons_pipchannel_key), "");
         if (!curPipChannel.isEmpty() && curPipStatus == 1) {
-            DownloadTask d = new DownloadTask("channelPip=" + curPipChannel, getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
+            DownloadTask d = new DownloadTask("showPip=1&channelPip=" + curPipChannel, getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
 
@@ -403,7 +403,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
 
         // Restart pausedTime and destroy Timer object
-        pausedTime=0;
+        //pausedTime=0;
         play = false;
         timer.cancel();
         // New Timer object
