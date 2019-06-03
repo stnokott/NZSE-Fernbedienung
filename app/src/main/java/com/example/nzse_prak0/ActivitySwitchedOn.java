@@ -3,7 +3,6 @@ package com.example.nzse_prak0;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
@@ -162,18 +161,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             @Override
             public void onClick(View v){
                 if(play && pausedTime > 0){
-                    timeshiftResume(false);
+                    timeshiftResume();
                 } else{
                     timeshiftPause();
                 }
-            }
-        });
-
-        final Button btnLive = findViewById(R.id.btnLive);
-        btnLive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                timeshiftResume(true);
             }
         });
 
@@ -288,14 +279,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         d.execute();
     }
 
-    private void timeshiftResume(Boolean reset) {
-        int requestCode;
-        if (reset) {
-            requestCode = getResources().getInteger(R.integer.requestcode_timeshift_reset);
-        } else {
-            requestCode = getResources().getInteger(R.integer.requestcode_timeshift_resume);
-        }
-        DownloadTask d = new DownloadTask("timeShiftPlay=" + (reset ? 0 : pausedTime), requestCode, getApplicationContext(), ActivitySwitchedOn.this);
+    private void timeshiftResume() {
+        DownloadTask d = new DownloadTask("timeShiftPlay=" + pausedTime, getResources().getInteger(R.integer.requestcode_timeshift_resume), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
 
@@ -415,10 +400,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         final ImageButton btnPause = findViewById(R.id.btnPause);
         btnPause.setImageResource(R.drawable.ic_play_arrow_black_36dp);
 
-        final Button btnLive = findViewById(R.id.btnLive);
-        btnLive.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.ic_circle_grey_24dp), null, null, null);
-        btnLive.setTextColor(0xFF9E9E9E);
-
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -428,15 +409,9 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         play = true;
     }
 
-    private void onTimeshiftResumed(Boolean reset) {
+    private void onTimeshiftResumed() {
         final ImageButton btnPause = findViewById(R.id.btnPause);
         btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
-
-        if (reset) {
-            final Button btnLive = findViewById(R.id.btnLive);
-            btnLive.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.ic_circle_red_24dp), null, null, null);
-            btnLive.setTextColor(Color.BLACK);
-        }
 
         // Restart pausedTime and destroy Timer object
         pausedTime=0;
@@ -463,7 +438,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         if (index != channelPosition && play && pausedTime > 0) {
             // wenn Kanal gewechselt wird, während Timeshift, beende Timeshift
-            timeshiftResume(true);
+            timeshiftResume();
         }
 
         curPlayingChannel = channel;
@@ -553,10 +528,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                 onTimeshiftPaused();
             } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_resume)) {
                 // Fortgesetzt & timeShiftPlay=offset gesetzt
-                onTimeshiftResumed(false);
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_reset)) {
-                // Fortgesetzt & timeShiftPlay=0 gesetzt
-                onTimeshiftResumed(true);
+                onTimeshiftResumed();
             } else if (requestCode == 99) {
                 // Power-Button gedrückt, gehe zu ActivitySwitchedOff
                 SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
