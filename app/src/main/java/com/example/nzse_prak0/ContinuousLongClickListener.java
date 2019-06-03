@@ -7,12 +7,12 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class ContinuousLongClickListener implements View.OnTouchListener, View.OnLongClickListener {
-    public static final int WHAT = 264776257;
+    private static final int WHAT = 264776257;
     private final View.OnLongClickListener onLongClickListener;
     private final Handler handler;
     private int delay;
 
-    public ContinuousLongClickListener(View view, View.OnLongClickListener onLongClickListener) {
+    ContinuousLongClickListener(View view, View.OnLongClickListener onLongClickListener) {
         this.onLongClickListener = onLongClickListener;
         delay = 200;
         handler = new Handler();

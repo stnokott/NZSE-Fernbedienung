@@ -52,7 +52,7 @@
 
     <string name="commons_file_name">commons</string>
     <string name="commons_standbystate_key">standby</string>
-    <string name="commons_channelindex_key">channel</string>
+    <string name="commons_channelindex_key">channelId</string>
     <string name="commons_pipstatus_key">pipstatus</string>
     <string name="commons_pipchannel_key">pipchannel</string>
     <string name="commons_volume_key">volume</string>

@@ -69,15 +69,6 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             channels.addAll(ActivitySwitchedOn.channelManager.getFavoriteChannels());
         } else {
             channels.addAll(ActivitySwitchedOn.channelManager.getChannels());
-            /*
-            channels = new ArrayList<>();
-            Channel c1 = new Channel("8a", "Phoenix", "ARD");
-            Channel c2 = new Channel("8b", "Bayerisches FS", "ARD");
-            Channel c3 = new Channel("8c", "SWR Fernsehen RP", "ARD");
-            channels.add(c1);
-            channels.add(c2);
-            channels.add(c3);
-            */
         }
         tileAdapter = new TileAdapter(channels);
         tileAdapter.setHasStableIds(false);

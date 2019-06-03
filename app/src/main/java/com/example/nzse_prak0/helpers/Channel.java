@@ -1,38 +1,28 @@
 package com.example.nzse_prak0.helpers;
 
-import android.os.Parcel;
-
 public class Channel {
-    private String channel;
+    private String channelId;
     private String program;
     private String provider;
-    private Boolean isFav = false;
-    private int position;
+    private Boolean isFav;
 
-    public Channel(String channel, String program, String provider){
-        this(channel, program, provider, false);
+    public Channel(String channelId, String program, String provider) {
+        this(channelId, program, provider, false);
     }
 
-    public Channel(String channel, String program, String provider, Boolean isFav) {
-        this.channel = channel;
+    public Channel(String channelId, String program, String provider, Boolean isFav) {
+        this.channelId = channelId;
         this.program = program;
         this.provider = provider;
         this.isFav = isFav;
     }
 
-    private Channel(Parcel p) {
-        this.channel = p.readString();
-        this.program = p.readString();
-        this.provider = p.readString();
-        this.isFav = p.readInt() == 1;
+    public String getChannelId() {
+        return channelId;
     }
 
-    public String getChannel() {
-        return channel;
-    }
-
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
     public String getProgram() {

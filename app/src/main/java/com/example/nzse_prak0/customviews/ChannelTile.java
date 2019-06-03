@@ -24,7 +24,6 @@ import java.io.InputStream;
 public class ChannelTile extends ConstraintLayout {
     private Channel channelInstance;
     private TextView lblTitle;
-    private TextView lblBg;
     private ImageView bgIcon;
     private ImageButton btnFav;
 
@@ -157,7 +156,6 @@ public class ChannelTile extends ConstraintLayout {
         Color.colorToHSV(c, hsv);
         hsv[2] *= 0.85f;
         bgIcon.setImageAlpha(65);
-        //bgIcon.setColorFilter(Color.HSVToColor(hsv), PorterDuff.Mode.SRC_IN);
     }
 
     public Channel getChannelInstance() {
