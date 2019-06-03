@@ -35,6 +35,7 @@
     <string name="lblBtnTestConnection">Test</string>
     <string name="lblNoChannelsVisible">Keine Kanäle vorhanden</string>
     <string name="lblNoChannelsVisibleFavs">Keine Favoriten gewählt</string>
+    <string name="lblBtnToggleFavs">Favoriten filtern</string>
     <string name="lblPipSwap">Tauschen</string>
     <string name="lblPipDisable">Deaktivieren</string>
     <string name="lblBtnPipSwap">Picture-In-Picture und Hauptkanal tauschen</string>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,7 +32,7 @@ import java.util.List;
 public class ActivityChooseChannel extends AppCompatActivity implements OnDownloadTaskCompleted {
     private TileAdapter tileAdapter;
     private SearchView btnSearch;
-    int favsOnly;
+    int favsOnly = 0;   // TODO: boolean verwenden
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,23 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             @Override
             public boolean onQueryTextChange(String newText) {
                 tileAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        final MenuItem btnToggleFavs = menu.findItem(R.id.btnToggleFavs);
+        btnToggleFavs.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                favsOnly = (favsOnly == 1 ? 0 : 1);
+
+                if (favsOnly == 1) {
+                    btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_white_36dp));
+                    tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getFavoriteChannels());
+                } else {
+                    btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_border_white_36dp));
+                    tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getChannels());
+                }
                 return false;
             }
         });

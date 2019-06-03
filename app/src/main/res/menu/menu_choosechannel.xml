@@ -8,4 +8,9 @@
         android:title="@string/lblBtnSearch"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
+    <item
+        android:id="@+id/btnToggleFavs"
+        android:icon="@drawable/ic_favorite_border_white_36dp"
+        android:title="@string/lblBtnToggleFavs"
+        app:showAsAction="ifRoom" />
 </menu>
