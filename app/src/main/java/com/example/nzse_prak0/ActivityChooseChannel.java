@@ -151,6 +151,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
                     btnScanChannels.setEnabled(false);
                     findViewById(R.id.recyclerViewChannel).setEnabled(false);
                     findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
+                    findViewById(R.id.backgroundOverlay).setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -176,6 +177,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         findViewById(R.id.btnScanChannels).setEnabled(true);
         findViewById(R.id.recyclerViewChannel).setEnabled(true);
         findViewById(R.id.spinnerOverlay).setVisibility(View.INVISIBLE);
+        findViewById(R.id.backgroundOverlay).setVisibility(View.INVISIBLE);
     }
 
     public void checkNoChannelsVisible() {
