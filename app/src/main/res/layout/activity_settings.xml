@@ -38,8 +38,9 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_tv_black_24dp"
                     android:drawablePadding="8dp"
-                    android:labelFor="@id/selectRatio"
+                    android:labelFor="@id/txtIP"
                     android:text="@string/lblIP"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/control_label_fontsize" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,6 +56,7 @@
                         android:hint="@string/preferences_ip_default"
                         android:inputType="number"
                         android:singleLine="true"
+                        android:textColor="@color/colorSecondaryText"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/btnTestConnection"
                         app:layout_constraintStart_toStartOf="parent"
@@ -105,6 +107,7 @@
                 android:drawablePadding="8dp"
                 android:labelFor="@id/selectRatio"
                 android:text="@string/lblRatio"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/control_label_fontsize" />
 
             <LinearLayout
@@ -128,6 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Hauptbildschirm"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="18sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -179,6 +183,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Bild in Bild "
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="18sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
