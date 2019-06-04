@@ -437,9 +437,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         int reqChooseChannel = getResources().getInteger(R.integer.activitycode_mainchannel);
         int reqChoosePip = getResources().getInteger(R.integer.activitycode_choosepip);
 
-        if ((requestCode == reqChoosePip || requestCode == reqChooseChannel) && resultCode == Activity.RESULT_OK) {
+        if (requestCode == reqChoosePip || requestCode == reqChooseChannel) {
             // für Favoriten-Speicherung
-            // TODO: Öfter prüfen? Performance-Probleme?
             ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
         }
 
