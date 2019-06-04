@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -39,7 +38,6 @@ import java.util.TimerTask;
 
 public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
     public static final ChannelManager channelManager = new ChannelManager();
-    private Channel curPlayingChannel = null;
 
     private static final String CHANNEL_ICON_FILENAMES_DICT_FILE = "filenames.json";
     public static final Map<String, String> channelIconFilenames = new HashMap<>();
@@ -48,7 +46,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     private int volume = 50;
     private int muted = 0;
     private Timer timer =new Timer();
-    private int channelPosition;
+    private int currentChannelIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +184,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnPlayingFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (curPlayingChannel != null)
+                if (currentChannelIndex != -1)
                     toggleFavButton();
             }
         });
@@ -233,11 +231,11 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     private void nextChannel() {
         int nextIndex;
-        if (channelPosition == channelManager.getChannelCount() - 1) {
+        if (currentChannelIndex == channelManager.getChannelCount() - 1) {
             // falls Ende erreicht, fange von vorne an
             nextIndex = 0;
         } else {
-            nextIndex = channelPosition + 1;
+            nextIndex = currentChannelIndex + 1;
         }
         Channel channel = channelManager.getChannelAt(nextIndex);
         DownloadTask d = new DownloadTask("channelMain=" + channel.getChannelId(), getResources().getInteger(R.integer.requestcode_channel_change), getApplicationContext(), null);
@@ -248,11 +246,11 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     private void previousChannel() {
         int nextIndex;
-        if (channelPosition == 0) {
+        if (currentChannelIndex == 0) {
             // falls Anfang erreicht, fange von hinten an
             nextIndex = channelManager.getChannelCount() - 1;
         } else {
-            nextIndex = channelPosition - 1;
+            nextIndex = currentChannelIndex - 1;
         }
         Channel channel = channelManager.getChannelAt(nextIndex);
         DownloadTask d = new DownloadTask("channelMain=" + channel.getChannelId(), getResources().getInteger(R.integer.requestcode_channel_change), getApplicationContext(), null);
@@ -272,15 +270,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void toggleFavButton() {
-        ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
+        Boolean isFav = channelManager.getChannelAt(currentChannelIndex).getIsFav();
+        updateCurPlayingFavStatus(!isFav);
 
-        Boolean isFav = curPlayingChannel.getIsFav();
-        updateCurPlayingFavStatus(isFav);
-
-        Animatable animatable = (Animatable) btnPlayingFavorite.getDrawable();
-        animatable.start();
-
-        curPlayingChannel.setIsFav(!isFav);
+        channelManager.getChannelAt(currentChannelIndex).setIsFav(!isFav);
     }
 
     private void loadIconFilenamesFromJSON() {
@@ -341,7 +334,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         if (isFav) {
             btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_red_36dp);
         } else {
-            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_border_black_36dp);
+            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_border_white_36dp);
         }
     }
 
@@ -423,13 +416,12 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             Log.e("setCurrentPlayingChannel", e.getMessage());
         }
 
-        if (index != channelPosition && play && pausedTime > 0) {
+        if (index != currentChannelIndex && play && pausedTime > 0) {
             // wenn Kanal gewechselt wird, während Timeshift, beende Timeshift
             timeshiftResume();
         }
 
-        curPlayingChannel = channel;
-        channelPosition = index;
+        currentChannelIndex = index;
     }
 
     @Override
@@ -440,6 +432,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         if (requestCode == reqChoosePip || requestCode == reqChooseChannel) {
             // für Favoriten-Speicherung
             ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
+            setCurrentPlayingChannel(currentChannelIndex);
         }
 
         if (requestCode == reqChooseChannel && resultCode == Activity.RESULT_OK) {

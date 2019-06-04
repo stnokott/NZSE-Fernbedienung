@@ -174,7 +174,7 @@
             android:padding="@dimen/control_icon_padding"
             android:scaleType="centerInside"
             android:tint="@color/colorPrimaryText"
-            app:srcCompat="@drawable/ic_filter_none_black_36dp" />
+            app:srcCompat="@drawable/ic_picture_in_picture_black_36dp" />
 
         <ImageButton
             android:id="@+id/btnPipChange"
@@ -196,6 +196,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -217,7 +218,8 @@
                 android:id="@+id/imgCurrentChannel"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:alpha="0.1"
+                android:alpha="0.3"
+                android:backgroundTint="#FFFFFF"
                 android:contentDescription="@string/descCurrentChannel"
                 app:layout_constraintBottom_toBottomOf="@+id/lblPlaying"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -235,7 +237,7 @@
                 android:gravity="center"
                 android:text="@string/lblPlayingPlaceholder"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryText"
+                android:textColor="@android:color/white"
                 android:textSize="42sp"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -248,7 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lblCurrentChannel"
-                android:textColor="@color/colorSecondaryText"
+                android:textColor="@color/colorPrimaryLight"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -263,7 +265,7 @@
                 android:contentDescription="@string/descBtnFavs"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_favorite_border_black_36dp" />
+                app:srcCompat="@drawable/ic_favorite_border_white_36dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -285,7 +287,7 @@
                 android:contentDescription="@string/descBtnPause"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_pause_black_36dp"
-                android:tint="@color/colorPrimaryText" />
+                android:tint="@android:color/white" />
 
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
