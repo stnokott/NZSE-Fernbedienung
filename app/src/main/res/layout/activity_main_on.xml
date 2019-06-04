@@ -157,6 +157,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:animateLayoutChanges="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV80"
         app:layout_constraintEnd_toStartOf="@+id/guidelineH66"
@@ -171,7 +172,6 @@
             android:layout_weight="1"
             android:contentDescription="@string/descBtnPiP"
             android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
             android:scaleType="centerInside"
             android:tint="@color/colorPrimaryText"
             app:srcCompat="@drawable/ic_picture_in_picture_black_36dp" />
@@ -186,7 +186,7 @@
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="centerInside"
-            android:tint="@color/colorPrimaryText"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_swap_horiz_black_36dp" />
 
     </LinearLayout>
@@ -195,7 +195,7 @@
         android:id="@+id/layoutPlayingBar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

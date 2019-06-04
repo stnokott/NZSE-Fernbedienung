@@ -70,7 +70,6 @@ public class ChannelManager {
             }
             writer.endArray();
             writer.close();
-            //Toast.makeText(context.getApplicationContext(), "JSON gespeichert!", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e("saveToJSON", e.getMessage());
         }
