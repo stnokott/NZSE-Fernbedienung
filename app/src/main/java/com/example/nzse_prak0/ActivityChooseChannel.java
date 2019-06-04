@@ -88,6 +88,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             public boolean onMenuItemClick(MenuItem item) {
                 favsOnly = !favsOnly;
 
+                // TODO: Items bei Favo-Ansicht nur verstecken, um zurückgegebenen Index nicht zu verfälschen
                 if (favsOnly) {
                     btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_white_36dp));
                     tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getFavoriteChannels());
