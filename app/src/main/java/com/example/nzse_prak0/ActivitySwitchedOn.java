@@ -479,8 +479,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
             if (requestCode == getResources().getInteger(R.integer.requestcode_pipactivate)) {
                 // PiP aktiviert, setze Button-Farbe auf grün
-                ImageButton btnPip = findViewById(R.id.btnPipToggle);
-                btnPip.getBackground().setColorFilter(getColor(R.color.colorValidBackground), PorterDuff.Mode.SRC_IN);
+                final ImageButton btnPip = findViewById(R.id.btnPipToggle);
+                btnPip.getBackground().setColorFilter(getColor(R.color.colorValid), PorterDuff.Mode.SRC_IN);
                 final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
                 setButtonEnabled(btnPipChange, true);
                 SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);

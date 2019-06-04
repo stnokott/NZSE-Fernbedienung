@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:adjustViewBounds="true"
-        android:backgroundTint="@color/colorAccentLight"
+        android:backgroundTint="@color/colorPrimary"
         android:backgroundTintMode="src_over"
         android:contentDescription="@string/descBtnPower"
         android:elevation="@dimen/control_elevation_material"
@@ -38,7 +38,7 @@
         android:layout_marginBottom="8dp"
         android:elevation="@dimen/control_elevation_material"
         android:text="@string/lblBtnChannels"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimaryText"
 
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV40"
@@ -68,7 +68,7 @@
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="fitCenter"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorPrimaryText"
             app:layout_constraintDimensionRatio="1"
             app:srcCompat="@drawable/ic_add_black_36dp" />
 
@@ -82,7 +82,7 @@
             android:clickable="true"
             android:contentDescription="@string/descBtnMute"
             android:focusable="true"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorPrimaryText"
             app:srcCompat="@drawable/ic_volume_up_black_36dp" />
 
         <ImageButton
@@ -95,7 +95,7 @@
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="fitCenter"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorPrimaryText"
             app:srcCompat="@drawable/ic_remove_black_36dp" />
     </LinearLayout>
 
@@ -121,7 +121,7 @@
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="fitCenter"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorPrimaryText"
             app:layout_constraintDimensionRatio="1"
             app:srcCompat="@drawable/ic_keyboard_arrow_up_black_36dp" />
 
@@ -133,7 +133,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight=".5"
             android:contentDescription="@string/descImgTV"
-            android:tint="@color/colorPrimaryDark"
+            android:tint="@color/colorPrimaryText"
             app:srcCompat="@drawable/ic_tv_black_36dp" />
 
         <ImageButton
@@ -146,7 +146,7 @@
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="fitCenter"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorPrimaryText"
             app:layout_constraintDimensionRatio="1"
             app:srcCompat="@drawable/ic_keyboard_arrow_down_black_36dp" />
     </LinearLayout>
@@ -173,7 +173,7 @@
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="centerInside"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorPrimaryText"
             app:srcCompat="@drawable/ic_filter_none_black_36dp" />
 
         <ImageButton
@@ -186,7 +186,7 @@
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="centerInside"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorPrimaryText"
             app:srcCompat="@drawable/ic_swap_horiz_black_36dp" />
 
     </LinearLayout>
@@ -235,7 +235,7 @@
                 android:gravity="center"
                 android:text="@string/lblPlayingPlaceholder"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="42sp"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -248,7 +248,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lblCurrentChannel"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -284,7 +284,8 @@
                 android:backgroundTint="#00FFFFFF"
                 android:contentDescription="@string/descBtnPause"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_pause_black_36dp" />
+                android:src="@drawable/ic_pause_black_36dp"
+                android:tint="@color/colorPrimaryText" />
 
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

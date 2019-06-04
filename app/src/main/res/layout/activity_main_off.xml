@@ -17,7 +17,7 @@
         android:layout_marginBottom="8dp"
         android:elevation="8dp"
         android:indeterminate="true"
-        android:indeterminateTint="@color/colorAccent"
+        android:indeterminateTint="@color/colorPrimary"
         android:outlineProvider="none"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,14 +37,14 @@
         android:foregroundTint="#FFFFFF"
         android:padding="@dimen/control_icon_padding"
         android:scaleType="fitCenter"
-        app:backgroundTint="#D81B60"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:maxImageSize="150dp"
-        app:rippleColor="@color/colorAccentLight" />
+        app:rippleColor="@color/colorPrimary" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

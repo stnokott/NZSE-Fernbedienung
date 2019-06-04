@@ -23,7 +23,7 @@
         android:id="@+id/btnScanChannels"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
+        android:background="@color/colorAccent"
         android:text="@string/lblScanChannels"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
