@@ -13,8 +13,10 @@
         android:paddingBottom="@dimen/control_padding_material"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,37 +26,6 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/control_padding_material"
             android:paddingRight="@dimen/control_padding_material">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/lblRatio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_aspect_ratio_black_24dp"
-                    android:drawablePadding="8dp"
-                    android:labelFor="@id/selectRatio"
-                    android:text="@string/lblRatio"
-                    android:textSize="@dimen/control_label_fontsize" />
-
-                <Spinner
-                    android:id="@+id/selectRatio"
-                    style="@android:style/Widget.Material.Light.Spinner.Underlined"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/ratios_array" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/control_border_thickness"
-                android:layout_marginTop="@dimen/control_padding_material"
-                android:layout_marginBottom="@dimen/control_padding_material"
-                android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +43,7 @@
                     android:textSize="@dimen/control_label_fontsize" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/linearLayout"
+                    android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -119,7 +90,126 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/divider4"
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/control_border_thickness"
+                android:layout_marginTop="@dimen/control_padding_material"
+                android:layout_marginBottom="@dimen/control_padding_material"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/lblRatio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_aspect_ratio_black_24dp"
+                android:drawablePadding="8dp"
+                android:labelFor="@id/selectRatio"
+                android:text="@string/lblRatio"
+                android:textSize="@dimen/control_label_fontsize" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="168dp"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/lblRatioMain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hauptbildschirm"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <RadioButton
+                            android:id="@+id/siteMain16_9"
+                            android:layout_width="95dp"
+                            android:layout_height="32dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="72dp"
+                            android:text="16:9"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/lblRatioMain" />
+
+                        <RadioButton
+                            android:id="@+id/siteMain4_3"
+                            android:layout_width="94dp"
+                            android:layout_height="33dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="5dp"
+                            android:text="4:3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/siteMain16_9" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="186dp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="178dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/lblRatioPip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bild in Bild "
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <RadioButton
+                            android:id="@+id/sitePip16_9"
+                            android:layout_width="95dp"
+                            android:layout_height="32dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="23dp"
+                            android:text="16:9"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/lblRatioPip" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton5"
+                            android:layout_width="95dp"
+                            android:layout_height="32dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="5dp"
+                            android:text="4:3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/sitePip16_9" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider6"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/control_border_thickness"
                 android:layout_marginTop="@dimen/control_padding_material"
