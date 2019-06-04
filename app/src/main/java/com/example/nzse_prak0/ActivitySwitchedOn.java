@@ -275,7 +275,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
 
         Boolean isFav = curPlayingChannel.getIsFav();
-        updateFavStatus(isFav);
+        updateCurPlayingFavStatus(isFav);
 
         Animatable animatable = (Animatable) btnPlayingFavorite.getDrawable();
         animatable.start();
@@ -336,12 +336,12 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
-    public void updateFavStatus(Boolean isFav) {
+    public void updateCurPlayingFavStatus(Boolean isFav) {
         ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
         if (isFav) {
-            btnPlayingFavorite.setImageResource(R.drawable.fav_fill_reverse_black_anim);
+            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_red_36dp);
         } else {
-            btnPlayingFavorite.setImageResource(R.drawable.fav_fill_black_anim);
+            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_border_black_36dp);
         }
     }
 
@@ -413,7 +413,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_channelindex_key), index);
         TextView lblPlaying = findViewById(R.id.lblPlaying);
         lblPlaying.setText(channel.getProgram());
-        updateFavStatus(channel.getIsFav());
+        updateCurPlayingFavStatus(channel.getIsFav());
 
         ImageView imgCurrentChannel = findViewById(R.id.imgCurrentChannel);
         try (InputStream ims = getAssets().open(ActivitySwitchedOn.channelIconFilenames.get(channel.getProgram()))) {
