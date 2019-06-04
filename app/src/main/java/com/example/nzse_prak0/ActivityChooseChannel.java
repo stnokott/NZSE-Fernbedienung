@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +19,7 @@ import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.example.nzse_prak0.helpers.TileAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -133,7 +133,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             }
         });
 
-        final Button btnScanChannels = findViewById(R.id.btnScanChannels);
+        final FloatingActionButton btnScanChannels = findViewById(R.id.btnScanChannels);
         btnScanChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
