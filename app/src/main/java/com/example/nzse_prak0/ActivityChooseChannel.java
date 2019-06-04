@@ -121,7 +121,12 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
                 TileAdapter.TileViewHolder viewHolder = (TileAdapter.TileViewHolder) v.getTag();
 
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra(getString(R.string.intentExtra_channelAdapterPosition_key), viewHolder.getAdapterPosition());
+
+                String curChannelName = viewHolder.getChannelTile().getChannelInstance().getChannelId();
+                // um auch bei gefilterter RecyclerView (z.B. favOnly) den korrekten Index zu bekommen
+                int curChannelAdapterIndex = ActivitySwitchedOn.channelManager.getIndexFromChannelName(curChannelName);
+                returnIntent.putExtra(getString(R.string.intentExtra_channelAdapterPosition_key), curChannelAdapterIndex);
+
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }

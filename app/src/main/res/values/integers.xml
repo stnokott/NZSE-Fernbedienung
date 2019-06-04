@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Request Codes für startActivityForResult -->
-    <integer name="activitycode_mainchannel">1</integer>
+    <integer name="activitycode_choosechannel">1</integer>
     <integer name="activitycode_choosepip">3</integer>
 
     <!-- Request Codes für DownloadTask -->

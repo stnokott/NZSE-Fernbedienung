@@ -115,7 +115,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), getResources().getInteger(R.integer.activitycode_mainchannel));
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), getResources().getInteger(R.integer.activitycode_choosechannel));
             }
         });
 
@@ -433,7 +433,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        int reqChooseChannel = getResources().getInteger(R.integer.activitycode_mainchannel);
+        int reqChooseChannel = getResources().getInteger(R.integer.activitycode_choosechannel);
         int reqChoosePip = getResources().getInteger(R.integer.activitycode_choosepip);
 
         if (requestCode == reqChoosePip || requestCode == reqChooseChannel) {

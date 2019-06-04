@@ -153,5 +153,13 @@ public class ChannelManager {
     public String getResponse() {
         return response;
     }
+
+    public int getIndexFromChannelName(String channelName) {
+        for (int i = 0; i < channelList.size(); i++) {
+            if (channelList.get(i).getChannelId().equals(channelName))
+                return i;
+        }
+        return -1;
+    }
 }
 
