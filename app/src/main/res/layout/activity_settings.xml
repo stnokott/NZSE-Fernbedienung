@@ -78,6 +78,7 @@
                         android:layout_height="wrap_content"
                         android:elevation="3dp"
                         android:indeterminate="true"
+                        android:indeterminateTint="@color/colorPrimary"
                         android:outlineProvider="none"
                         android:scaleX=".8"
                         android:scaleY=".8"
@@ -105,7 +106,6 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_aspect_ratio_black_24dp"
                 android:drawablePadding="8dp"
-                android:labelFor="@id/selectRatio"
                 android:text="@string/lblRatio"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/control_label_fontsize" />
@@ -170,7 +170,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="178dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
