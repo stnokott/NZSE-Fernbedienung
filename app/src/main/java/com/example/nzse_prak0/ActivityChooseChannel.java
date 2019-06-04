@@ -178,5 +178,10 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     public void checkNoChannelsVisible() {
         TextView txtNoChannels = findViewById(R.id.lblNoChannels);
         txtNoChannels.setVisibility(tileAdapter.getItemCount()==0 ? View.VISIBLE:View.INVISIBLE);
+        if (favsOnly) {
+            txtNoChannels.setText(getString(R.string.lblNoFavorites));
+        } else {
+            txtNoChannels.setText(getString(R.string.lblNoChannels));
+        }
     }
 }

@@ -33,7 +33,8 @@
     <string name="lblBtnSettings">Einstellungen</string>
     <string name="lblBtnSaveSettings">Speichern</string>
     <string name="lblBtnTestConnection">Test</string>
-    <string name="lblNoChannelsVisible">Keine Kanäle vorhanden</string>
+    <string name="lblNoChannels">Keine Kanäle vorhanden</string>
+    <string name="lblNoFavorites">Keine Favoriten gewählt</string>
     <string name="lblBtnToggleFavs">Favoriten filtern</string>
     <string name="lblPipSwap">Tauschen</string>
     <string name="lblPipDisable">Deaktivieren</string>
