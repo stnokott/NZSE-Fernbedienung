@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -119,8 +118,8 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
     private void saveSettings() {
         List<Pair<String, Object>> settings = new ArrayList<>();
 
-        Spinner selectRatio = findViewById(R.id.selectRatio);
-        settings.add(new Pair<String, Object>("ratio", selectRatio.getSelectedItemPosition()));
+//        Spinner selectRatio = findViewById(R.id.selectRatio);
+//        settings.add(new Pair<String, Object>("ratio", selectRatio.getSelectedItemPosition()));
 
         EditText txtIP = findViewById(R.id.txtIP);
         settings.add(new Pair<String, Object>("ip", txtIP.getText().toString()));
@@ -135,8 +134,8 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
 
     private void loadSettings() {
         int ratioIndex = SharedPrefs.getInt(getApplicationContext(), getString(R.string.preferences_file_name), "ratio", 0);
-        Spinner selectRatio = findViewById(R.id.selectRatio);
-        selectRatio.setSelection(ratioIndex);
+//        Spinner selectRatio = findViewById(R.id.selectRatio);
+//        selectRatio.setSelection(ratioIndex);
 
         String ip = SharedPrefs.getString(getApplicationContext(), getString(R.string.preferences_file_name), getString(R.string.preferences_ip_key), getString(R.string.preferences_ip_default));
         EditText txtIP = findViewById(R.id.txtIP);
