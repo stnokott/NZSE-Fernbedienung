@@ -490,7 +490,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                     Channel pipChannel = channelManager.getChannelAt(currentPipIndex);
                     try (InputStream ims = getAssets().open(channelIconFilenames.get(pipChannel.getProgram()))) {
                         Drawable d = Drawable.createFromStream(ims, null);
-                        d.setAlpha(77);
+                        d.setAlpha(150);
                         btnPipChange.setImageDrawable(d);
                     } catch (IOException e) {
                         btnPipChange.setImageResource(R.drawable.ic_swap_horiz_black_36dp);
