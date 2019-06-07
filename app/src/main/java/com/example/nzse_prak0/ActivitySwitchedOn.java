@@ -275,7 +275,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     private void toggleFavButton() {
         Boolean isFav = channelManager.getChannelAt(currentChannelIndex).getIsFav();
-        updateCurPlayingFavStatus(!isFav);
+        updateCurPlayingFavStatus(!isFav, true);
 
         channelManager.getChannelAt(currentChannelIndex).setIsFav(!isFav);
         channelManager.saveToJSON(getApplicationContext());
@@ -343,16 +343,24 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         d1.execute();
     }
 
-    public void updateCurPlayingFavStatus(Boolean isFav) {
+    public void updateCurPlayingFavStatus(Boolean isFav, boolean animate) {
         ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
         if (isFav) {
-            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_anim_white);
-            Animatable btnPlayingFavoriteAnim = (Animatable) btnPlayingFavorite.getDrawable();
-            btnPlayingFavoriteAnim.start();
+            if (animate) {
+                btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_anim_white_36dp);
+                Animatable btnPlayingFavoriteAnim = (Animatable) btnPlayingFavorite.getDrawable();
+                btnPlayingFavoriteAnim.start();
+            } else {
+                btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_anim_reverse_white_36dp);
+            }
         } else {
-            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_anim_reverse_white);
-            Animatable btnPlayingFavoriteAnim = (Animatable) btnPlayingFavorite.getDrawable();
-            btnPlayingFavoriteAnim.start();
+            if (animate) {
+                btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_anim_reverse_white_36dp);
+                Animatable btnPlayingFavoriteAnim = (Animatable) btnPlayingFavorite.getDrawable();
+                btnPlayingFavoriteAnim.start();
+            } else {
+                btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_anim_white_36dp);
+            }
         }
     }
 
@@ -435,7 +443,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_channelindex_key), index);
         TextView lblPlaying = findViewById(R.id.lblPlaying);
         lblPlaying.setText(channel.getProgram());
-        updateCurPlayingFavStatus(channel.getIsFav());
+        updateCurPlayingFavStatus(channel.getIsFav(), false);
 
         ImageView imgCurrentChannel = findViewById(R.id.imgCurrentChannel);
         try (InputStream ims = getAssets().open(ActivitySwitchedOn.channelIconFilenames.get(channel.getProgram()))) {
