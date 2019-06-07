@@ -2,6 +2,7 @@ package com.example.nzse_prak0.customviews;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
@@ -116,7 +117,7 @@ public class ChannelTile extends ConstraintLayout {
         // weitere Parameter
         newbtnFav.setElevation(Units.dpToPx(3, getContext()));
         newbtnFav.setOutlineProvider(null); // Schatten durch Elevation verhindern
-        newbtnFav.setImageResource(R.drawable.ic_favorite_border_white_36dp);
+        newbtnFav.setImageResource(R.drawable.ic_favorite_anim_white);
         newbtnFav.setBackground(null);
 
         // Listener
@@ -140,9 +141,13 @@ public class ChannelTile extends ConstraintLayout {
 
     public void updateFavStatus(Boolean isFav) {
         if (isFav) {
-            btnFav.setImageResource(R.drawable.ic_favorite_white_36dp);
+            btnFav.setImageResource(R.drawable.ic_favorite_anim_white);
+            Animatable btnFavAnim = (Animatable) btnFav.getDrawable();
+            btnFavAnim.start();
         } else {
-            btnFav.setImageResource(R.drawable.ic_favorite_border_white_36dp);
+            btnFav.setImageResource(R.drawable.ic_favorite_anim_reverse_white);
+            Animatable btnFavAnim = (Animatable) btnFav.getDrawable();
+            btnFavAnim.start();
         }
     }
 

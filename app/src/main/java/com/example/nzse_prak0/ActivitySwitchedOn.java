@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -344,9 +345,13 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     public void updateCurPlayingFavStatus(Boolean isFav) {
         ImageButton btnPlayingFavorite = findViewById(R.id.btnPlayingFavorite);
         if (isFav) {
-            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_white_36dp);
+            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_anim_white);
+            Animatable btnPlayingFavoriteAnim = (Animatable) btnPlayingFavorite.getDrawable();
+            btnPlayingFavoriteAnim.start();
         } else {
-            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_border_white_36dp);
+            btnPlayingFavorite.setImageResource(R.drawable.ic_favorite_anim_reverse_white);
+            Animatable btnPlayingFavoriteAnim = (Animatable) btnPlayingFavorite.getDrawable();
+            btnPlayingFavoriteAnim.start();
         }
     }
 
