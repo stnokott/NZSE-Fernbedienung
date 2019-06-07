@@ -121,22 +121,24 @@
                     android:layout_marginTop="8dp">
 
                     <RadioGroup
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
+                        android:checkedButton="@id/radioPip169"
                         app:layout_constraintStart_toStartOf="@+id/guideline5"
                         app:layout_constraintTop_toBottomOf="@+id/lblSettingsPip">
 
                         <RadioButton
-                            android:id="@+id/radioPip_16_9"
+                            android:id="@+id/radioPip169"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:checked="true"
                             android:text="@string/lbl_16_9" />
 
                         <RadioButton
-                            android:id="@+id/radioPip_4_3"
+                            android:id="@+id/radioPip43"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -144,22 +146,24 @@
                     </RadioGroup>
 
                     <RadioGroup
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
+                        android:checkedButton="@id/radioMainchannel169"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/lblSettingsMainchannel">
 
                         <RadioButton
-                            android:id="@+id/radioMainchannel_16_9"
+                            android:id="@+id/radioMainchannel169"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:checked="true"
                             android:text="@string/lbl_16_9" />
 
                         <RadioButton
-                            android:id="@+id/radioMainchannel_4_3"
+                            android:id="@+id/radioMainchannel43"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -171,6 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lblSettingsPip"
+                        android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="@+id/guideline5"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -179,6 +184,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lblSettingsMainchannel"
+                        android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

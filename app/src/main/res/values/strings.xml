@@ -53,7 +53,8 @@
     <string name="preferences_file_name">settings</string>
     <string name="preferences_ip_key">ip</string>
     <string name="preferences_ip_default">192.168.0.104</string>
-    <string name="preferences_ratiopos_key">ratio</string>
+    <string name="preferences_ratio_index_main_key">ratio_main</string>
+    <string name="preferences_ratio_index_pip_key">ratio_pip</string>
 
     <string name="commons_file_name">commons</string>
     <string name="commons_standbystate_key">standby</string>

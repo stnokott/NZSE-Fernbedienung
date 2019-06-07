@@ -331,6 +331,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             DownloadTask d = new DownloadTask("volume=" + (muted == 1 ? 0 : volume), getResources().getInteger(R.integer.requestcode_mute_commons), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
+
+        int zoomMain = ActivitySettings.getZoomMain(getApplicationContext());
+        DownloadTask d = new DownloadTask("zoomMain=" + zoomMain, getResources().getInteger(R.integer.requestcode_zoom_main), getApplicationContext(), ActivitySwitchedOn.this);
+        d.execute();
+
+        int zoomPip = ActivitySettings.getZoomPip(getApplicationContext());
+        DownloadTask d1 = new DownloadTask("zoomPip=" + zoomPip, getResources().getInteger(R.integer.requestcode_zoom_pip), getApplicationContext(), ActivitySwitchedOn.this);
+        d1.execute();
     }
 
     public void updateCurPlayingFavStatus(Boolean isFav) {

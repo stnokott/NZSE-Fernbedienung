@@ -17,6 +17,8 @@
     <integer name="requestcode_channel_change">10</integer>
     <integer name="requestcode_timeshift_pause">11</integer>
     <integer name="requestcode_timeshift_resume">12</integer>
+    <integer name="requestcode_zoom_main">13</integer>
+    <integer name="requestcode_zoom_pip">14</integer>
 
     <integer name="requestcode_connectiontest">50</integer>
 
