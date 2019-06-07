@@ -100,117 +100,96 @@
                 android:layout_marginBottom="@dimen/control_padding_material"
                 android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/lblRatio"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_aspect_ratio_black_24dp"
-                android:drawablePadding="8dp"
-                android:text="@string/lblRatio"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/control_label_fontsize" />
+                android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="168dp"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/lblRatioMain"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hauptbildschirm"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="18sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <RadioButton
-                            android:id="@+id/siteMain16_9"
-                            android:layout_width="95dp"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="72dp"
-                            android:text="16:9"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/lblRatioMain" />
-
-                        <RadioButton
-                            android:id="@+id/siteMain4_3"
-                            android:layout_width="94dp"
-                            android:layout_height="33dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="5dp"
-                            android:text="4:3"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/siteMain16_9" />
-
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layout_constraintGuide_begin="186dp" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/lblRatio"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_aspect_ratio_black_24dp"
+                    android:drawablePadding="8dp"
+                    android:text="@string/lblRatio"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/control_label_fontsize" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
 
-                        <TextView
-                            android:id="@+id/lblRatioPip"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Bild in Bild "
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="18sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <RadioButton
-                            android:id="@+id/sitePip16_9"
-                            android:layout_width="95dp"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="23dp"
-                            android:text="16:9"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/lblRatioPip" />
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="@+id/guideline5"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
                         <RadioButton
                             android:id="@+id/radioButton5"
-                            android:layout_width="95dp"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="5dp"
-                            android:text="4:3"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/sitePip16_9" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RadioButton" />
 
-                </LinearLayout>
+                        <RadioButton
+                            android:id="@+id/radioButton4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RadioButton" />
+                    </RadioGroup>
 
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                        <RadioButton
+                            android:id="@+id/radioButton3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RadioButton" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RadioButton" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bild-in-Bild"
+                        app:layout_constraintStart_toStartOf="@+id/guideline5"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hauptansicht"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent=".5" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
             <View
