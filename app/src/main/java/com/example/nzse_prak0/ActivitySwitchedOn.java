@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -376,6 +377,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         final ImageButton btnVolumeDown = findViewById(R.id.btnVolumeDown);
         setButtonEnabled(btnVolumeDown, volume != 0);
 
+        final ImageView btnMuteOverlay = findViewById(R.id.btnMuteOverlay);
+        ClipDrawable mImageDrawable = (ClipDrawable) btnMuteOverlay.getDrawable();
+        mImageDrawable.setLevel(Math.round(10000 * (volume / 100f)));
+
         if (muted == 1) {
             muted = 0;
             onMutedChanged();
@@ -386,10 +391,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_volume_muted_key), muted);
 
         final ImageView btnMute = findViewById(R.id.btnMute);
+        final ImageView btnMuteOverlay = findViewById(R.id.btnMuteOverlay);
+        ClipDrawable mImageDrawable = (ClipDrawable) btnMuteOverlay.getDrawable();
         if (muted == 1) {
             btnMute.setImageResource(R.drawable.ic_volume_off_black_36dp);
+            mImageDrawable.setLevel(0);
         } else {
             btnMute.setImageResource(R.drawable.ic_volume_up_black_36dp);
+            mImageDrawable.setLevel(Math.round(10000 * (volume / 100f)));
         }
     }
 

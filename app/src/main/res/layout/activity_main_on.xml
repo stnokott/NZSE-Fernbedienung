@@ -72,18 +72,30 @@
             app:layout_constraintDimensionRatio="1"
             app:srcCompat="@drawable/ic_add_black_36dp" />
 
-        <ImageView
-            android:id="@+id/btnMute"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_weight=".5"
-            android:clickable="true"
-            android:contentDescription="@string/descBtnMute"
-            android:focusable="true"
-            android:tint="@color/colorPrimaryText"
-            app:srcCompat="@drawable/ic_volume_up_black_36dp" />
+            android:layout_weight=".5">
+
+            <ImageView
+                android:id="@+id/btnMute"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:contentDescription="@string/descBtnMute"
+                android:focusable="true"
+                android:tint="@color/colorPrimaryText"
+                app:srcCompat="@drawable/ic_volume_up_black_36dp" />
+
+            <ImageView
+                android:id="@+id/btnMuteOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/clip_source" />
+
+        </FrameLayout>
 
         <ImageButton
             android:id="@+id/btnVolumeDown"
