@@ -33,7 +33,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/lblIP"
+                    android:id="@+id/lblSettingsIP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_tv_black_24dp"
@@ -126,21 +126,21 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="@+id/guideline5"
-                        app:layout_constraintTop_toBottomOf="@+id/textView2">
+                        app:layout_constraintTop_toBottomOf="@+id/lblSettingsPip">
 
                         <RadioButton
-                            android:id="@+id/radioButton5"
+                            android:id="@+id/radioPip_16_9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="RadioButton" />
+                            android:text="@string/lbl_16_9" />
 
                         <RadioButton
-                            android:id="@+id/radioButton4"
+                            android:id="@+id/radioPip_4_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="RadioButton" />
+                            android:text="@string/lbl_4_3" />
                     </RadioGroup>
 
                     <RadioGroup
@@ -149,36 +149,36 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView">
+                        app:layout_constraintTop_toBottomOf="@+id/lblSettingsMainchannel">
 
                         <RadioButton
-                            android:id="@+id/radioButton3"
+                            android:id="@+id/radioMainchannel_16_9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="RadioButton" />
+                            android:text="@string/lbl_16_9" />
 
                         <RadioButton
-                            android:id="@+id/radioButton2"
+                            android:id="@+id/radioMainchannel_4_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="RadioButton" />
+                            android:text="@string/lbl_4_3" />
                     </RadioGroup>
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/lblSettingsPip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bild-in-Bild"
+                        android:text="@string/lblSettingsPip"
                         app:layout_constraintStart_toStartOf="@+id/guideline5"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/lblSettingsMainchannel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hauptansicht"
+                        android:text="@string/lblSettingsMainchannel"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

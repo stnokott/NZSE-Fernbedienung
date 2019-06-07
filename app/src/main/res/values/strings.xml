@@ -39,6 +39,10 @@
     <string name="lblPipSwap">Tauschen</string>
     <string name="lblPipDisable">Deaktivieren</string>
     <string name="lblBtnPipSwap">Picture-In-Picture und Hauptkanal tauschen</string>
+    <string name="lblSettingsMainchannel">Hauptkanal</string>
+    <string name="lblSettingsPip">Bild-in-Bild</string>
+    <string name="lbl_4_3">4:3</string>
+    <string name="lbl_16_9">16:9</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>
