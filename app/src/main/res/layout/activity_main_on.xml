@@ -40,7 +40,7 @@
         android:text="@string/lblBtnChannels"
         android:textColor="@color/colorPrimaryText"
 
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV40"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
