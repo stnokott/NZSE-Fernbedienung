@@ -1,6 +1,8 @@
 package com.example.nzse_prak0;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,6 +63,13 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         //noinspection SimplifiableIfStatement
         if (id == R.id.btnSaveSettings) {
             saveSettings();
+
+            Intent returnIntent = new Intent();
+            final Switch toggleBackgroundImg = findViewById(R.id.toggleBackgroundImg);
+            int showBackgroundImg = toggleBackgroundImg.isChecked() ? 1 : 0;
+            returnIntent.putExtra(getString(R.string.intentExtra_showBackgroundImg_key), showBackgroundImg);
+
+            setResult(Activity.RESULT_OK, returnIntent);
             finish();
         }
 
@@ -160,18 +170,24 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         selectedIndex = (radioPip169.isChecked() ? 0 : 1);
         settings.add(new Pair<String, Object>(getString(R.string.preferences_ratio_index_pip_key), selectedIndex));
 
-        EditText txtIP = findViewById(R.id.txtIP);
+        final EditText txtIP = findViewById(R.id.txtIP);
         settings.add(new Pair<String, Object>(getString(R.string.preferences_ip_key), txtIP.getText().toString()));
+
+        final Switch toggleBackgroundImg = findViewById(R.id.toggleBackgroundImg);
+        int isSelected = toggleBackgroundImg.isChecked() ? 1 : 0;
+        settings.add(new Pair<String, Object>(getString(R.string.preferences_background_img_key), isSelected));
 
         SharedPrefs.setValues(getApplicationContext(), getString(R.string.preferences_file_name), settings);
     }
 
     private void loadSettings() {
-        String ip = SharedPrefs.getString(getApplicationContext(), getString(R.string.preferences_file_name), getString(R.string.preferences_ip_key), getString(R.string.preferences_ip_default));
+        String filename = getString(R.string.preferences_file_name);
+
+        String ip = SharedPrefs.getString(getApplicationContext(), filename, getString(R.string.preferences_ip_key), getString(R.string.preferences_ip_default));
         EditText txtIP = findViewById(R.id.txtIP);
         txtIP.setText(ip);
 
-        int selectedIndex = SharedPrefs.getInt(getApplicationContext(), getString(R.string.preferences_file_name), getString(R.string.preferences_ratio_index_main_key), 0);
+        int selectedIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.preferences_ratio_index_main_key), 0);
         if (selectedIndex == 1) {
             final RadioButton radioMainChannel43 = findViewById(R.id.radioMainchannel43);
             radioMainChannel43.setChecked(true);
@@ -180,7 +196,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
             radioMainChannel169.setChecked(true);
         }
 
-        selectedIndex = SharedPrefs.getInt(getApplicationContext(), getString(R.string.preferences_file_name), getString(R.string.preferences_ratio_index_pip_key), 0);
+        selectedIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.preferences_ratio_index_pip_key), 0);
         if (selectedIndex == 1) {
             final RadioButton radioPip43 = findViewById(R.id.radioPip43);
             radioPip43.setChecked(true);
@@ -188,6 +204,10 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
             final RadioButton radioPip169 = findViewById(R.id.radioPip169);
             radioPip169.setChecked(true);
         }
+
+        int isSelected = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.preferences_background_img_key), 1);
+        final Switch toggleBackgroundImg = findViewById(R.id.toggleBackgroundImg);
+        toggleBackgroundImg.setChecked(isSelected == 1);
     }
 
     public static void testConnection(String ip, Context context, OnDownloadTaskCompleted listener) {
@@ -208,5 +228,10 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
     public static int getZoomPip(Context context) {
         Context c = context.getApplicationContext();
         return SharedPrefs.getInt(c, c.getString(R.string.preferences_file_name), c.getString(R.string.preferences_ratio_index_pip_key), 0);
+    }
+
+    public static int getShowBackgroundImg(Context context) {
+        Context c = context.getApplicationContext();
+        return SharedPrefs.getInt(c, c.getString(R.string.preferences_file_name), c.getString(R.string.preferences_background_img_key), 1);
     }
 }

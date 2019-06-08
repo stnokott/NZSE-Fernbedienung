@@ -51,6 +51,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     private int currentChannelIndex = -1;
     private int currentPipIndex = -1;
 
+    private int showBackgroundImg = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +66,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         channelManager.loadFromJSON(getApplicationContext());
         loadIconFilenamesFromJSON();
-        applyLastKnownCommons();
+        applyLastKnownSettings();
 
 
         // Start debug mode and shows a status bar at the bottom
@@ -92,7 +94,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         int id = item.getItemId();
 
         if (id == R.id.btnSettings) {
-            startActivity(new Intent(ActivitySwitchedOn.this, ActivitySettings.class));
+            startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivitySettings.class), getResources().getInteger(R.integer.activitycode_settings));
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,8 +166,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                 int pipstatus = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
                 if (pipstatus == 1) {
                     // wenn Pip schon aktiviert, deaktiviere
-                    DownloadTask d = new DownloadTask("showPip=0", getResources().getInteger(R.integer.requestcode_pipdeactivate), getApplicationContext(), ActivitySwitchedOn.this);
-                    d.execute();
+                    pipDeactivate();
                 } else {
                     // wenn Pip noch nicht aktiviert, aktiviere und wähle Kanal
                     startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), getResources().getInteger(R.integer.activitycode_choosepip));
@@ -213,22 +214,28 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     private void volumeUp() {
         if (volume < 100) {
-            // volume-Attribut wird hier noch nicht verändert, erst bei erfolgreichem Request-Callback
-            DownloadTask d = new DownloadTask("volume=" + (volume + 1), getResources().getInteger(R.integer.requestcode_volume_up), getApplicationContext(), ActivitySwitchedOn.this);
+            volume++;
+            onVolumeChanged();
+
+            DownloadTask d = new DownloadTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_up), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
     }
 
     private void volumeDown() {
         if (volume > 0) {
-            // volume-Attribut wird hier noch nicht verändert, erst bei erfolgreichem Request-Callback
-            DownloadTask d = new DownloadTask("volume=" + (volume - 1), getResources().getInteger(R.integer.requestcode_volume_down), getApplicationContext(), ActivitySwitchedOn.this);
+            volume--;
+            onVolumeChanged();
+
+            DownloadTask d = new DownloadTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_down), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
     }
 
     private void volumeToggleMute() {
-        // muted-Attribut wird hier noch nicht verändert, erst bei erfolgreichem Request-Callback
+        muted = (muted == 0 ? 1 : 0);
+        onMutedChanged();
+
         DownloadTask d = new DownloadTask("volume=" + (muted == 0 ? 0 : volume), getResources().getInteger(R.integer.requestcode_mute_change), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
@@ -264,11 +271,15 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void timeshiftPause() {
+        onTimeshiftPaused();
+
         DownloadTask d = new DownloadTask("timeShiftPause=", getResources().getInteger(R.integer.requestcode_timeshift_pause), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
 
     private void timeshiftResume() {
+        onTimeshiftResumed();
+
         DownloadTask d = new DownloadTask("timeShiftPlay=" + pausedTime, getResources().getInteger(R.integer.requestcode_timeshift_resume), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
@@ -279,6 +290,44 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         channelManager.getChannelAt(currentChannelIndex).setIsFav(!isFav);
         channelManager.saveToJSON(getApplicationContext());
+    }
+
+    private void pipActivate() {
+        // setze Button-Farbe auf grün
+        final ImageButton btnPip = findViewById(R.id.btnPipToggle);
+        btnPip.getBackground().setColorFilter(getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+        final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+        //setButtonEnabled(btnPipChange, true);
+        btnPipChange.setVisibility(View.VISIBLE);
+
+        if (currentPipIndex != -1) {
+            Channel pipChannel = channelManager.getChannelAt(currentPipIndex);
+            try (InputStream ims = getAssets().open(channelIconFilenames.get(pipChannel.getProgram()))) {
+                Drawable drawable = Drawable.createFromStream(ims, null);
+                drawable.setAlpha(150);
+                btnPipChange.setImageDrawable(drawable);
+            } catch (IOException e) {
+                btnPipChange.setImageResource(R.drawable.ic_swap_horiz_black_36dp);
+                Log.e("setCurrentPlayingChannel", e.getMessage());
+            }
+        }
+
+        SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
+
+        DownloadTask d = new DownloadTask("showPip=1", getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
+        d.execute();
+    }
+
+    private void pipDeactivate() {
+        ImageButton btnPip = findViewById(R.id.btnPipToggle);
+        btnPip.getBackground().clearColorFilter();
+        final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
+        //setButtonEnabled(btnPipChange, false);
+        btnPipChange.setVisibility(View.GONE);
+        SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
+
+        DownloadTask d = new DownloadTask("showPip=0", getResources().getInteger(R.integer.requestcode_pipdeactivate), getApplicationContext(), ActivitySwitchedOn.this);
+        d.execute();
     }
 
     private void loadIconFilenamesFromJSON() {
@@ -296,8 +345,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         }
     }
 
-    private void applyLastKnownCommons() {
+    private void applyLastKnownSettings() {
         String filename = getString(R.string.commons_file_name);
+
+        showBackgroundImg = ActivitySettings.getShowBackgroundImg(getApplicationContext());
 
         int curChannelIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_channelindex_key), -1);
         if (curChannelIndex != -1 && channelManager.getChannelCount() > curChannelIndex) {
@@ -308,9 +359,11 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         int curPipStatus = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_pipstatus_key), -1);
         if (curPipStatus != -1) {
-            int requestCode = curPipStatus == 0 ? getResources().getInteger(R.integer.requestcode_pipdeactivate) : getResources().getInteger(R.integer.requestcode_pipactivate);
-            DownloadTask d = new DownloadTask("showPip=" + curPipStatus, requestCode, getApplicationContext(), ActivitySwitchedOn.this);
-            d.execute();
+            if (curPipStatus == 0) {
+                pipDeactivate();
+            } else {
+                pipActivate();
+            }
         }
 
         int curPipChannel = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_pipchannel_key), -1);
@@ -323,6 +376,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         int curVolume = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_volume_key), volume);
         if (curVolume != -1) {
             volume = curVolume;
+            onVolumeChanged();
+
             DownloadTask d = new DownloadTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_commons), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
@@ -330,6 +385,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         int curMuted = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_volume_muted_key), muted);
         if (curMuted != -1) {
             muted = curMuted;
+            onMutedChanged();
+
             DownloadTask d = new DownloadTask("volume=" + (muted == 1 ? 0 : volume), getResources().getInteger(R.integer.requestcode_mute_commons), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
@@ -424,6 +481,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void onTimeshiftResumed() {
+        // TODO: muss Offset kontinuierlich hochgezählt werden?
         final ImageButton btnPause = findViewById(R.id.btnPause);
         btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
 
@@ -446,11 +504,15 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         updateCurPlayingFavStatus(channel.getIsFav(), false);
 
         ImageView imgCurrentChannel = findViewById(R.id.imgCurrentChannel);
-        try (InputStream ims = getAssets().open(ActivitySwitchedOn.channelIconFilenames.get(channel.getProgram()))) {
-            Drawable d = Drawable.createFromStream(ims, null);
-            imgCurrentChannel.setImageDrawable(d);
-        } catch (IOException e) {
-            Log.e("setCurrentPlayingChannel", e.getMessage());
+        if (showBackgroundImg == 1) {
+            try (InputStream ims = getAssets().open(ActivitySwitchedOn.channelIconFilenames.get(channel.getProgram()))) {
+                Drawable d = Drawable.createFromStream(ims, null);
+                imgCurrentChannel.setImageDrawable(d);
+            } catch (IOException e) {
+                Log.e("setCurrentPlayingChannel", e.getMessage());
+            }
+        } else {
+            imgCurrentChannel.setImageDrawable(null);
         }
 
         if (index != currentChannelIndex && play && pausedTime > 0) {
@@ -465,6 +527,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         int reqChooseChannel = getResources().getInteger(R.integer.activitycode_choosechannel);
         int reqChoosePip = getResources().getInteger(R.integer.activitycode_choosepip);
+        int reqSettings = getResources().getInteger(R.integer.activitycode_settings);
 
         if (requestCode == reqChoosePip || requestCode == reqChooseChannel) {
             // für Favoriten-Speicherung
@@ -490,6 +553,15 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             DownloadTask d = new DownloadTask("showPip=1&channelPip=" + channelInstance.getChannelId(), getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipchannel_key), channelAdapterPosition);
+
+            pipActivate();
+        } else if (requestCode == reqSettings && resultCode == Activity.RESULT_OK) {
+            // Einstellungen bestätigt
+            int newShowBackgroundImg = data.getIntExtra(getString(R.string.intentExtra_showBackgroundImg_key), 1);
+            if (newShowBackgroundImg != showBackgroundImg) {
+                showBackgroundImg = newShowBackgroundImg;
+                setCurrentPlayingChannel(currentChannelIndex);
+            }
         }
     }
 
@@ -508,60 +580,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         } else {
             // siehe /res/values/integers.xml für requestCode-Werte
 
-            if (requestCode == getResources().getInteger(R.integer.requestcode_pipactivate)) {
-                // PiP aktiviert, setze Button-Farbe auf grün
-                final ImageButton btnPip = findViewById(R.id.btnPipToggle);
-                btnPip.getBackground().setColorFilter(getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
-                final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-                //setButtonEnabled(btnPipChange, true);
-                btnPipChange.setVisibility(View.VISIBLE);
-
-                if (currentPipIndex != -1) {
-                    Channel pipChannel = channelManager.getChannelAt(currentPipIndex);
-                    try (InputStream ims = getAssets().open(channelIconFilenames.get(pipChannel.getProgram()))) {
-                        Drawable d = Drawable.createFromStream(ims, null);
-                        d.setAlpha(150);
-                        btnPipChange.setImageDrawable(d);
-                    } catch (IOException e) {
-                        btnPipChange.setImageResource(R.drawable.ic_swap_horiz_black_36dp);
-                        Log.e("setCurrentPlayingChannel", e.getMessage());
-                    }
-                }
-
-                SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_pipdeactivate)) {
-                // PiP deaktiviert
-                ImageButton btnPip = findViewById(R.id.btnPipToggle);
-                btnPip.getBackground().clearColorFilter();
-                final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-                //setButtonEnabled(btnPipChange, false);
-                btnPipChange.setVisibility(View.GONE);
-                SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_up)) {
-                // Lautstärke hoch
-                volume++;
-                onVolumeChanged();
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_down)) {
-                // Lautstärke runter
-                volume--;
-                onVolumeChanged();
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_volume_commons)) {
-                // Lautstärke aus Commons geladen
-                onVolumeChanged();
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_mute_change)) {
-                // Mute-Status manuell geändert
-                muted = (muted == 0 ? 1 : 0);
-                onMutedChanged();
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_mute_commons)) {
-                // Mute-Status aus Commons abgerufen
-                onMutedChanged();
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_pause)) {
-                // Pausiert
-                onTimeshiftPaused();
-            } else if (requestCode == getResources().getInteger(R.integer.requestcode_timeshift_resume)) {
-                // Fortgesetzt & timeShiftPlay=offset gesetzt
-                onTimeshiftResumed();
-            } else if (requestCode == 99) {
+            if (requestCode == 99) {
                 // Power-Button gedrückt, gehe zu ActivitySwitchedOff
                 SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
                 startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));

@@ -39,7 +39,7 @@
                     android:drawableStart="@drawable/ic_tv_black_24dp"
                     android:drawablePadding="8dp"
                     android:labelFor="@id/txtIP"
-                    android:text="@string/lblIP"
+                    android:text="@string/lblSettingsIP"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/control_label_fontsize" />
 
@@ -106,12 +106,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/lblRatio"
+                    android:id="@+id/lblSettingsRatio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_aspect_ratio_black_24dp"
                     android:drawablePadding="8dp"
-                    android:text="@string/lblRatio"
+                    android:text="@string/lblSettingsRatio"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/control_label_fontsize" />
 
@@ -205,6 +205,40 @@
                 android:layout_marginTop="@dimen/control_padding_material"
                 android:layout_marginBottom="@dimen/control_padding_material"
                 android:background="@android:color/darker_gray" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/toggleBackgroundImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lblSettingsBackgroundImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_image_black_24dp"
+                    android:drawablePadding="8dp"
+                    android:text="@string/lblSettingsBackgroundImg"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/control_label_fontsize"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lblSettingsBackgroundImgSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblSettingsBackgroundImgSubtitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lblSettingsBackgroundImg" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>

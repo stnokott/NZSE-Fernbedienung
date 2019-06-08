@@ -25,8 +25,10 @@
     <string name="lblBtnChannels">Programme</string>
     <string name="lblScanChannels">Scan</string>
     <string name="lblCurrentChannel">Aktueller Sender</string>
-    <string name="lblRatio">Seitenverhältnis</string>
-    <string name="lblIP">TV IP-Adresse</string>
+    <string name="lblSettingsIP">TV IP-Adresse</string>
+    <string name="lblSettingsRatio">Seitenverhältnis</string>
+    <string name="lblSettingsBackgroundImg">Senderbild anzeigen</string>
+    <string name="lblSettingsBackgroundImgSubtitle">Für aktuellen Kanal</string>
     <string name="lblMisc">Beispieleinstellung</string>
     <string name="lblBtnSearch">Suche</string>
     <string name="lblBtnLive">Live</string>
@@ -55,6 +57,7 @@
     <string name="preferences_ip_default">192.168.0.104</string>
     <string name="preferences_ratio_index_main_key">ratio_main</string>
     <string name="preferences_ratio_index_pip_key">ratio_pip</string>
+    <string name="preferences_background_img_key">background_img</string>
 
     <string name="commons_file_name">commons</string>
     <string name="commons_standbystate_key">standby</string>
@@ -65,4 +68,5 @@
     <string name="commons_volume_muted_key">muted</string>
 
     <string name="intentExtra_channelAdapterPosition_key">channelInstancePos</string>
+    <string name="intentExtra_showBackgroundImg_key">background_img</string>
 </resources>
