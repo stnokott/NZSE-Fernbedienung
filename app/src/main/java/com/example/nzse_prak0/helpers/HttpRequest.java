@@ -1,7 +1,5 @@
 package com.example.nzse_prak0.helpers;
 
-//package de.h_da.fbi.kreling.tvremotecontrol2;
-
 import android.os.NetworkOnMainThreadException;
 import android.os.StrictMode;
 import android.util.Log;
