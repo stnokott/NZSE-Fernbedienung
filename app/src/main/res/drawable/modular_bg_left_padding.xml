@@ -3,5 +3,6 @@
     <item
         android:top="8dp"
         android:bottom="8dp"
+        android:left="8dp"
         android:drawable="@drawable/modular_bg_left" />
 </layer-list>
