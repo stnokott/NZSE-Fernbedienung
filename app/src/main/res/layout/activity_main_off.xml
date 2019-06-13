@@ -43,7 +43,6 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:maxImageSize="150dp"
         app:rippleColor="@color/colorPrimary" />
 
     <androidx.constraintlayout.widget.Guideline
