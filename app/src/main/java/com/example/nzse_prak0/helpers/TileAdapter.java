@@ -40,7 +40,7 @@ public class TileAdapter extends RecyclerView.Adapter<TileAdapter.TileViewHolder
     public class TileViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         private ChannelTile channelTile;
-        public TileViewHolder(ChannelTile c) {
+        TileViewHolder(ChannelTile c) {
             super(c);
             channelTile = c;
             channelTile.setTag(this); // ViewHolder-Instanz als Tag, um von ChannelTile ViewHolder zu bekommen

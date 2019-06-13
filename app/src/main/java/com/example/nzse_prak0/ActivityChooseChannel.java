@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nzse_prak0.helpers.Channel;
-import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.TileAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -95,7 +95,6 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             public boolean onMenuItemClick(MenuItem item) {
                 favsOnly = !favsOnly;
 
-                // TODO: Items bei Favo-Ansicht nur verstecken, um zurückgegebenen Index nicht zu verfälschen
                 if (favsOnly) {
                     btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_white_36dp));
                     tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getFavoriteChannels());

@@ -62,7 +62,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_settings_white_36dp);
         final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-        //setButtonEnabled(btnPipChange, false);
         btnPipChange.setVisibility(View.GONE);
 
         channelManager.loadFromJSON(getApplicationContext());
@@ -298,7 +297,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         final ImageButton btnPip = findViewById(R.id.btnPipToggle);
         btnPip.getBackground().setColorFilter(getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-        //setButtonEnabled(btnPipChange, true);
         btnPipChange.setVisibility(View.VISIBLE);
 
         if (currentPipIndex != -1) {
@@ -323,7 +321,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         ImageButton btnPip = findViewById(R.id.btnPipToggle);
         btnPip.getBackground().clearColorFilter();
         final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-        //setButtonEnabled(btnPipChange, false);
         btnPipChange.setVisibility(View.GONE);
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
 
