@@ -5,7 +5,7 @@
     <integer name="activitycode_choosepip">3</integer>
     <integer name="activitycode_settings">4</integer>
 
-    <!-- Request Codes für DownloadTask -->
+    <!-- Request Codes für RequestTask -->
     <integer name="requestcode_mainchannel">1</integer>
     <integer name="requestcode_scanchannels">2</integer>
     <integer name="requestcode_pipactivate">3</integer>

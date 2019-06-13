@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.SharedPrefs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -29,7 +29,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
         btnSwitchOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("standby=0", 9, getApplicationContext(), ActivitySwitchedOff.this);
+                RequestTask d = new RequestTask("standby=0", 9, getApplicationContext(), ActivitySwitchedOff.this);
                 d.execute();
                 ProgressBar progressSwitchedOff = findViewById(R.id.progressSwitchedOff);
                 progressSwitchedOff.setVisibility(View.VISIBLE);

@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.SharedPrefs;
 import com.example.nzse_prak0.helpers.ViewHelper;
 
@@ -101,7 +101,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         radioMainchannel169.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("zoomMain=0", getResources().getInteger(R.integer.requestcode_zoom_main), getApplicationContext(), null);
+                RequestTask d = new RequestTask("zoomMain=0", getResources().getInteger(R.integer.requestcode_zoom_main), getApplicationContext(), null);
                 d.execute();
             }
         });
@@ -109,7 +109,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         radioMainchannel43.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("zoomMain=1", getResources().getInteger(R.integer.requestcode_zoom_main), getApplicationContext(), null);
+                RequestTask d = new RequestTask("zoomMain=1", getResources().getInteger(R.integer.requestcode_zoom_main), getApplicationContext(), null);
                 d.execute();
             }
         });
@@ -117,7 +117,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         radioPip169.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("zoomPip=0", getResources().getInteger(R.integer.requestcode_zoom_pip), getApplicationContext(), null);
+                RequestTask d = new RequestTask("zoomPip=0", getResources().getInteger(R.integer.requestcode_zoom_pip), getApplicationContext(), null);
                 d.execute();
             }
         });
@@ -125,7 +125,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         radioPip43.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("zoomPip=1", getResources().getInteger(R.integer.requestcode_zoom_pip), getApplicationContext(), null);
+                RequestTask d = new RequestTask("zoomPip=1", getResources().getInteger(R.integer.requestcode_zoom_pip), getApplicationContext(), null);
                 d.execute();
             }
         });
@@ -211,7 +211,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
     }
 
     public static void testConnection(String ip, Context context, OnDownloadTaskCompleted listener) {
-        DownloadTask d = new DownloadTask("debug=1", context.getResources().getInteger(R.integer.requestcode_connectiontest), listener, ip);
+        RequestTask d = new RequestTask("debug=1", context.getResources().getInteger(R.integer.requestcode_connectiontest), listener, ip);
         d.execute();
     }
 

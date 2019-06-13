@@ -25,8 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.ChannelManager;
-import com.example.nzse_prak0.helpers.DownloadTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
+import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.SharedPrefs;
 
 import org.json.JSONObject;
@@ -71,10 +71,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
 
         // Start debug mode and shows a status bar at the bottom
-        DownloadTask d = new DownloadTask("debug=1", 0, getApplicationContext(), null);
+        RequestTask d = new RequestTask("debug=1", 0, getApplicationContext(), null);
         d.execute();
         // Timeshift beenden, falls noch läuft
-        DownloadTask d1 = new DownloadTask("timeShiftPlay=0", getResources().getInteger(R.integer.requestcode_timeshift_resume), getApplicationContext(), null);
+        RequestTask d1 = new RequestTask("timeShiftPlay=0", getResources().getInteger(R.integer.requestcode_timeshift_resume), getApplicationContext(), null);
         d1.execute();
 
         createListeners();
@@ -111,7 +111,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnSwitchOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTask d = new DownloadTask("standby=1", getResources().getInteger(R.integer.requestcode_standby), getApplicationContext(), ActivitySwitchedOn.this);
+                RequestTask d = new RequestTask("standby=1", getResources().getInteger(R.integer.requestcode_standby), getApplicationContext(), ActivitySwitchedOn.this);
                 d.execute();
             }
         });
@@ -218,7 +218,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             volume++;
             onVolumeChanged();
 
-            DownloadTask d = new DownloadTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_up), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_up), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
     }
@@ -228,7 +228,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             volume--;
             onVolumeChanged();
 
-            DownloadTask d = new DownloadTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_down), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_down), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
     }
@@ -237,7 +237,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         muted = (muted == 0 ? 1 : 0);
         onMutedChanged();
 
-        DownloadTask d = new DownloadTask("volume=" + (muted == 0 ? 0 : volume), getResources().getInteger(R.integer.requestcode_mute_change), getApplicationContext(), ActivitySwitchedOn.this);
+        RequestTask d = new RequestTask("volume=" + (muted == 0 ? 0 : volume), getResources().getInteger(R.integer.requestcode_mute_change), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
 
@@ -250,7 +250,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             nextIndex = currentChannelIndex + 1;
         }
         Channel channel = channelManager.getChannelAt(nextIndex);
-        DownloadTask d = new DownloadTask("channelMain=" + channel.getChannelId(), getResources().getInteger(R.integer.requestcode_channel_change), getApplicationContext(), null);
+        RequestTask d = new RequestTask("channelMain=" + channel.getChannelId(), getResources().getInteger(R.integer.requestcode_channel_change), getApplicationContext(), null);
         d.execute();
 
         setCurrentPlayingChannel(nextIndex);
@@ -265,7 +265,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             nextIndex = currentChannelIndex - 1;
         }
         Channel channel = channelManager.getChannelAt(nextIndex);
-        DownloadTask d = new DownloadTask("channelMain=" + channel.getChannelId(), getResources().getInteger(R.integer.requestcode_channel_change), getApplicationContext(), null);
+        RequestTask d = new RequestTask("channelMain=" + channel.getChannelId(), getResources().getInteger(R.integer.requestcode_channel_change), getApplicationContext(), null);
         d.execute();
 
         setCurrentPlayingChannel(nextIndex);
@@ -274,14 +274,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     private void timeshiftPause() {
         onTimeshiftPaused();
 
-        DownloadTask d = new DownloadTask("timeShiftPause=", getResources().getInteger(R.integer.requestcode_timeshift_pause), getApplicationContext(), ActivitySwitchedOn.this);
+        RequestTask d = new RequestTask("timeShiftPause=", getResources().getInteger(R.integer.requestcode_timeshift_pause), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
 
     private void timeshiftResume() {
         onTimeshiftResumed();
 
-        DownloadTask d = new DownloadTask("timeShiftPlay=" + pausedTime, getResources().getInteger(R.integer.requestcode_timeshift_resume), getApplicationContext(), ActivitySwitchedOn.this);
+        RequestTask d = new RequestTask("timeShiftPlay=" + pausedTime, getResources().getInteger(R.integer.requestcode_timeshift_resume), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
 
@@ -315,7 +315,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 1);
 
-        DownloadTask d = new DownloadTask("showPip=1", getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
+        RequestTask d = new RequestTask("showPip=1", getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
 
@@ -327,7 +327,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         btnPipChange.setVisibility(View.GONE);
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipstatus_key), 0);
 
-        DownloadTask d = new DownloadTask("showPip=0", getResources().getInteger(R.integer.requestcode_pipdeactivate), getApplicationContext(), ActivitySwitchedOn.this);
+        RequestTask d = new RequestTask("showPip=0", getResources().getInteger(R.integer.requestcode_pipdeactivate), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
     }
 
@@ -353,7 +353,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         int curChannelIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_channelindex_key), -1);
         if (curChannelIndex != -1 && channelManager.getChannelCount() > curChannelIndex) {
-            DownloadTask d = new DownloadTask("channelMain=" + channelManager.getChannelAt(curChannelIndex).getChannelId(), getResources().getInteger(R.integer.requestcode_mainchannel), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("channelMain=" + channelManager.getChannelAt(curChannelIndex).getChannelId(), getResources().getInteger(R.integer.requestcode_mainchannel), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
             setCurrentPlayingChannel(curChannelIndex);
         }
@@ -370,7 +370,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         int curPipChannel = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_pipchannel_key), -1);
         currentPipIndex = curPipChannel;
         if (curPipChannel != -1 && curPipStatus == 1) {
-            DownloadTask d = new DownloadTask("channelPip=" + curPipChannel, getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("channelPip=" + curPipChannel, getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
 
@@ -379,7 +379,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             volume = curVolume;
             onVolumeChanged();
 
-            DownloadTask d = new DownloadTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_commons), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("volume=" + volume, getResources().getInteger(R.integer.requestcode_volume_commons), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
 
@@ -388,16 +388,16 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             muted = curMuted;
             onMutedChanged();
 
-            DownloadTask d = new DownloadTask("volume=" + (muted == 1 ? 0 : volume), getResources().getInteger(R.integer.requestcode_mute_commons), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("volume=" + (muted == 1 ? 0 : volume), getResources().getInteger(R.integer.requestcode_mute_commons), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
         }
 
         int zoomMain = ActivitySettings.getZoomMain(getApplicationContext());
-        DownloadTask d = new DownloadTask("zoomMain=" + zoomMain, getResources().getInteger(R.integer.requestcode_zoom_main), getApplicationContext(), ActivitySwitchedOn.this);
+        RequestTask d = new RequestTask("zoomMain=" + zoomMain, getResources().getInteger(R.integer.requestcode_zoom_main), getApplicationContext(), ActivitySwitchedOn.this);
         d.execute();
 
         int zoomPip = ActivitySettings.getZoomPip(getApplicationContext());
-        DownloadTask d1 = new DownloadTask("zoomPip=" + zoomPip, getResources().getInteger(R.integer.requestcode_zoom_pip), getApplicationContext(), ActivitySwitchedOn.this);
+        RequestTask d1 = new RequestTask("zoomPip=" + zoomPip, getResources().getInteger(R.integer.requestcode_zoom_pip), getApplicationContext(), ActivitySwitchedOn.this);
         d1.execute();
     }
 
@@ -551,7 +551,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             // Hauptkanal
             int channelManagerIndex = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelManagerIndex);
-            DownloadTask d = new DownloadTask("channelMain=" + channelInstance.getChannelId(), getResources().getInteger(R.integer.requestcode_mainchannel), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("channelMain=" + channelInstance.getChannelId(), getResources().getInteger(R.integer.requestcode_mainchannel), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
 
             // Daten von aktuellem Main-Channel anzeigen
@@ -562,7 +562,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             currentPipIndex = channelAdapterPosition;
             Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
 
-            DownloadTask d = new DownloadTask("showPip=1&channelPip=" + channelInstance.getChannelId(), getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("showPip=1&channelPip=" + channelInstance.getChannelId(), getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_pipchannel_key), channelAdapterPosition);
 

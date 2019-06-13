@@ -11,18 +11,18 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class DownloadTask extends AsyncTask< Void, Void, JSONObject> {
+public class RequestTask extends AsyncTask<Void, Void, JSONObject> {
     private HttpRequest http;
     private String command;
     private int requestCode;
 
     private OnDownloadTaskCompleted listener;
 
-    public DownloadTask(String command, int requestCode, Context c, OnDownloadTaskCompleted listener) {
+    public RequestTask(String command, int requestCode, Context c, OnDownloadTaskCompleted listener) {
         this(command, requestCode, listener, ActivitySettings.getIP(c));
     }
 
-    public DownloadTask(String command, int requestCode, OnDownloadTaskCompleted listener, String ip) {
+    public RequestTask(String command, int requestCode, OnDownloadTaskCompleted listener, String ip) {
         this.listener = listener;
         this.command = command;
         this.requestCode = requestCode;

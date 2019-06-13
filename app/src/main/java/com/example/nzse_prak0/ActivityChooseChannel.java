@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nzse_prak0.helpers.Channel;
-import com.example.nzse_prak0.helpers.DownloadTask;
+import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.example.nzse_prak0.helpers.TileAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -151,7 +151,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             @Override
             public void onClick(View v) {
                 if (!favsOnly) {
-                    DownloadTask d = new DownloadTask("scanChannels=", getResources().getInteger(R.integer.requestcode_scanchannels), getApplicationContext(), ActivityChooseChannel.this);
+                    RequestTask d = new RequestTask("scanChannels=", getResources().getInteger(R.integer.requestcode_scanchannels), getApplicationContext(), ActivityChooseChannel.this);
                     d.execute();
                     Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
                     t.show();
