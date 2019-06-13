@@ -54,17 +54,30 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineH1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guidelineV2">
 
         <ImageButton
+            android:id="@+id/btnVolumeDown"
+            style="@android:style/Widget.Material.Light.ImageButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/descBtnVolumeDown"
+            android:elevation="@dimen/control_elevation_material"
+            android:padding="@dimen/control_icon_padding"
+            android:scaleType="fitCenter"
+            android:tint="@color/colorPrimaryText"
+            app:srcCompat="@drawable/ic_remove_black_36dp" />
+
+        <ImageButton
             android:id="@+id/btnVolumeUp"
             style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/descBtnVolumeDown"
             android:elevation="@dimen/control_elevation_material"
@@ -79,7 +92,8 @@
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_weight=".5">
+            android:layout_weight=".5"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/btnMute"
@@ -99,18 +113,6 @@
 
         </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/btnVolumeDown"
-            style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/descBtnVolumeDown"
-            android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
-            android:scaleType="fitCenter"
-            android:tint="@color/colorPrimaryText"
-            app:srcCompat="@drawable/ic_remove_black_36dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -119,50 +121,36 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineH2"
         app:layout_constraintTop_toTopOf="@+id/guidelineV2">
 
         <ImageButton
-            android:id="@+id/btnChannelNext"
-            style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/descBtnVolumeDown"
-            android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
-            android:scaleType="fitCenter"
-            android:tint="@color/colorPrimaryText"
-            app:layout_constraintDimensionRatio="1"
-            app:srcCompat="@drawable/ic_keyboard_arrow_up_black_36dp" />
-
-        <ImageView
-            android:id="@+id/imgTV"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight=".5"
-            android:contentDescription="@string/descImgTV"
-            android:tint="@color/colorPrimaryText"
-            app:srcCompat="@drawable/ic_tv_black_36dp" />
-
-        <ImageButton
             android:id="@+id/btnChannelPrevious"
             style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/descBtnVolumeDown"
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="fitCenter"
-            android:tint="@color/colorPrimaryText"
-            app:layout_constraintDimensionRatio="1"
-            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_36dp" />
+            android:src="@drawable/ic_keyboard_arrow_left_black_36dp"
+            android:tint="@color/colorPrimaryText" />
+
+        <ImageButton
+            android:id="@+id/btnChannelNext"
+            style="@android:style/Widget.Material.Light.ImageButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:elevation="@dimen/control_elevation_material"
+            android:padding="@dimen/control_icon_padding"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_arrow_right_black_36dp"
+            android:tint="@color/colorPrimaryText" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -172,7 +160,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:animateLayoutChanges="true"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineH2"
         app:layout_constraintStart_toStartOf="@+id/guidelineH1"
@@ -181,8 +169,8 @@
         <ImageButton
             android:id="@+id/btnPipToggle"
             style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/descBtnPiP"
             android:elevation="@dimen/control_elevation_material"
@@ -193,14 +181,14 @@
         <ImageButton
             android:id="@+id/btnPipChange"
             style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/lblBtnPipSwap"
             android:elevation="@dimen/control_elevation_material"
             android:padding="@dimen/control_icon_padding"
             android:scaleType="centerInside"
-            android:visibility="visible"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_swap_horiz_black_36dp" />
 
     </LinearLayout>
@@ -220,9 +208,6 @@
             android:id="@+id/layoutPlayingTile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/frameLayout"
             app:layout_constraintStart_toStartOf="parent"
@@ -235,6 +220,7 @@
                 android:alpha="0.3"
                 android:backgroundTint="#FFFFFF"
                 android:contentDescription="@string/descCurrentChannel"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/lblPlaying"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -246,18 +232,16 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:text="@string/lblPlayingPlaceholder"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textSize="42sp"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnPlayingFavorite"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblCurrentChannel" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/lblCurrentChannel"
@@ -266,6 +250,7 @@
                 android:text="@string/lblCurrentChannel"
                 android:textColor="@color/colorPrimaryLight"
                 android:textSize="18sp"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -277,6 +262,7 @@
                 android:layout_weight="1"
                 android:background="#00FFFFFF"
                 android:contentDescription="@string/descBtnFavs"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_favorite_anim_white_36dp" />
@@ -300,7 +286,7 @@
                 android:backgroundTint="#00FFFFFF"
                 android:contentDescription="@string/descBtnPause"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_pause_black_36dp"
+                android:src="@drawable/ic_pause_black_nopadding_36dp"
                 android:tint="@android:color/white" />
 
         </FrameLayout>

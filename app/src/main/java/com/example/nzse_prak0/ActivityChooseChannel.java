@@ -2,6 +2,7 @@ package com.example.nzse_prak0;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -41,7 +42,13 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         recyclerView.setHasFixedSize(true); // bessere Performance, wenn Layout-Größe sich nicht ändert
         recyclerView.setItemViewCacheSize(25);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
+        GridLayoutManager gridLayoutManager;
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 4);
+        } else {
+            gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
+        }
         recyclerView.setLayoutManager(gridLayoutManager);
 
         initTileAdapter();

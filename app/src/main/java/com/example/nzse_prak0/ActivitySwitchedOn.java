@@ -3,6 +3,7 @@ package com.example.nzse_prak0;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.ClipDrawable;
@@ -468,8 +469,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void onTimeshiftPaused() {
+        int orientation = getResources().getConfiguration().orientation;
         final ImageButton btnPause = findViewById(R.id.btnPause);
-        btnPause.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            btnPause.setImageResource(R.drawable.ic_play_arrow_black_nopadding_36dp);
+        } else {
+            btnPause.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+        }
 
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -481,9 +488,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void onTimeshiftResumed() {
-        // TODO: muss Offset kontinuierlich hochgezählt werden?
+        int orientation = getResources().getConfiguration().orientation;
         final ImageButton btnPause = findViewById(R.id.btnPause);
-        btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            btnPause.setImageResource(R.drawable.ic_pause_black_nopadding_36dp);
+        } else {
+            btnPause.setImageResource(R.drawable.ic_pause_black_36dp);
+        }
 
         // Restart pausedTime and destroy Timer object
         pausedTime = 0;

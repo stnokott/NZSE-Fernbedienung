@@ -134,20 +134,26 @@ public class ChannelTile extends ConstraintLayout {
 
     public void toggleFavButton() {
         Boolean isFav = getChannelInstance().getIsFav();
-        updateFavStatus(!isFav);
+        updateFavStatus(!isFav, true);
 
         getChannelInstance().setIsFav(!isFav);
     }
 
-    public void updateFavStatus(Boolean isFav) {
+    public void updateFavStatus(Boolean isFav, Boolean animate) {
         if (isFav) {
-            btnFav.setImageResource(R.drawable.ic_favorite_anim_white_36dp);
-            Animatable btnFavAnim = (Animatable) btnFav.getDrawable();
-            btnFavAnim.start();
+            if (animate) {
+                btnFav.setImageResource(R.drawable.ic_favorite_anim_white_36dp);
+                ((Animatable) btnFav.getDrawable()).start();
+            } else {
+                btnFav.setImageResource(R.drawable.ic_favorite_anim_reverse_white_36dp);
+            }
         } else {
-            btnFav.setImageResource(R.drawable.ic_favorite_anim_reverse_white_36dp);
-            Animatable btnFavAnim = (Animatable) btnFav.getDrawable();
-            btnFavAnim.start();
+            if (animate) {
+                btnFav.setImageResource(R.drawable.ic_favorite_anim_reverse_white_36dp);
+                ((Animatable) btnFav.getDrawable()).start();
+            } else {
+                btnFav.setImageResource(R.drawable.ic_favorite_anim_white_36dp);
+            }
         }
     }
 
@@ -166,7 +172,7 @@ public class ChannelTile extends ConstraintLayout {
     public void setChannelInstance(Channel channelInstance) {
         this.channelInstance = channelInstance;
         lblTitle.setText(channelInstance.getProgram());
-        updateFavStatus(channelInstance.getIsFav());
+        updateFavStatus(channelInstance.getIsFav(), false);
         try (InputStream ims = getContext().getAssets().open(ActivitySwitchedOn.channelIconFilenames.get(channelInstance.getProgram()))) {
             Drawable d = Drawable.createFromStream(ims, null);
             bgIcon.setImageDrawable(d);
