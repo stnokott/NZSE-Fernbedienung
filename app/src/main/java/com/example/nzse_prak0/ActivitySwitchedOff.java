@@ -67,7 +67,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
         // wenn IP noch nicht gesetzt
         if (ActivitySettings.getIP(getApplicationContext()).equals(getString(R.string.preferences_ip_default))) {
             CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
-            Snackbar snack = Snackbar.make(coordinatorLayout, getString(R.string.lblNoIpSetHint), Snackbar.LENGTH_INDEFINITE);
+            Snackbar snack = Snackbar.make(coordinatorLayout, getString(R.string.lblNoIpSetHint), Snackbar.LENGTH_LONG);
             snack.setAction(getString(R.string.lblNoIpSetAction), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
