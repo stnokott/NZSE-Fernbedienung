@@ -48,6 +48,8 @@
     <string name="lblSettingsPip">Bild-in-Bild</string>
     <string name="lbl_4_3">4:3</string>
     <string name="lbl_16_9">16:9</string>
+    <string name="lblNoIpSetHint">Keine IP-Adresse eingestellt!</string>
+    <string name="lblNoIpSetAction">Einstellen</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>
@@ -57,7 +59,7 @@
 
     <string name="preferences_file_name">settings</string>
     <string name="preferences_ip_key">ip</string>
-    <string name="preferences_ip_default">192.168.0.104</string>
+    <string name="preferences_ip_default">0.0.0.0</string>
     <string name="preferences_ratio_index_main_key">ratio_main</string>
     <string name="preferences_ratio_index_pip_key">ratio_pip</string>
     <string name="preferences_background_img_key">background_img</string>

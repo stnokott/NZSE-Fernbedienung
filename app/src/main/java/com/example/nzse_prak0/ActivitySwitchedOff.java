@@ -9,11 +9,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.SharedPrefs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
 
@@ -25,6 +27,19 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
 
         setContentView(R.layout.activity_main_off);
 
+        createListeners();
+
+        checkStatus();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main_on, menu);
+        return true;
+    }
+
+    private void createListeners() {
         final FloatingActionButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
         btnSwitchOn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,22 +50,32 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
                 progressSwitchedOff.setVisibility(View.VISIBLE);
             }
         });
+    }
 
-        int standbystate = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
-        int firstLaunch = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_first_launch_key), 1);
+    private void checkStatus() {
+        final FloatingActionButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
+        String commonsFileName = getString(R.string.commons_file_name);
+        int standbystate = SharedPrefs.getInt(getApplicationContext(), commonsFileName, getString(R.string.commons_standbystate_key), 1);
+        int firstLaunch = SharedPrefs.getInt(getApplicationContext(), commonsFileName, getString(R.string.commons_first_launch_key), 1);
         if (standbystate == 0 && firstLaunch != 1) {
             btnSwitchOn.callOnClick();
         }
         if (firstLaunch == 1) {
-            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_first_launch_key), 0);
+            SharedPrefs.setValue(getApplicationContext(), commonsFileName, getString(R.string.commons_first_launch_key), 0);
         }
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_on, menu);
-        return true;
+        // wenn IP noch nicht gesetzt
+        if (ActivitySettings.getIP(getApplicationContext()).equals(getString(R.string.preferences_ip_default))) {
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
+            Snackbar snack = Snackbar.make(coordinatorLayout, getString(R.string.lblNoIpSetHint), Snackbar.LENGTH_INDEFINITE);
+            snack.setAction(getString(R.string.lblNoIpSetAction), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ActivitySwitchedOff.this, ActivitySettings.class));
+                }
+            });
+            snack.show();
+        }
     }
 
     @Override
