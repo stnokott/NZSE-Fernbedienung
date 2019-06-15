@@ -37,8 +37,13 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
         });
 
         int standbystate = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 1);
-        if (standbystate == 0)
+        int firstLaunch = SharedPrefs.getInt(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_first_launch_key), 1);
+        if (standbystate == 0 && firstLaunch != 1) {
             btnSwitchOn.callOnClick();
+        }
+        if (firstLaunch == 1) {
+            SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_first_launch_key), 0);
+        }
     }
 
     @Override
