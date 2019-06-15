@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:digits="0123456789."
                         android:hint="@string/preferences_ip_default"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:singleLine="true"
                         android:textColor="@color/colorSecondaryText"
                         app:layout_constraintBottom_toBottomOf="parent"
