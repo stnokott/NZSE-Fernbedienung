@@ -17,7 +17,9 @@
         </activity>
         <activity
             android:name=".ActivitySettings"
-            android:label="Einstellungen">
+            android:label="Einstellungen"
+            android:windowSoftInputMode="stateHidden">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ActivitySwitchedOn" />
