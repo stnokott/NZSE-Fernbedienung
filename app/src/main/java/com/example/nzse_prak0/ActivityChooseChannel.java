@@ -115,7 +115,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         final CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutChooseChannel);
         Snackbar snack = Snackbar.make(coordinatorLayout, text, duration);
         if (actionText != null && actionListener != null) {
-            snack.setAction(text, actionListener);
+            snack.setAction(actionText, actionListener);
         }
         snack.show();
     }

@@ -11,6 +11,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
+    <string name="descBtnSwitchOn">TV aktivieren</string>
     <string name="descBtnSettings">Settings Button</string>
     <string name="descCurrentChannel">Aktueller Kanal</string>
     <string name="descChannelPrev">Vorheriger Kanal</string>

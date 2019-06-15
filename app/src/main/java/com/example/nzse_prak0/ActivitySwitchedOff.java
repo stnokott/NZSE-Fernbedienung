@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
@@ -14,7 +15,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.SharedPrefs;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
@@ -40,7 +40,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
     }
 
     private void createListeners() {
-        final FloatingActionButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
+        final ImageButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
         btnSwitchOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +53,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
     }
 
     private void checkStatus() {
-        final FloatingActionButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
+        final ImageButton btnSwitchOn = findViewById(R.id.btnSwitchOn);
         String commonsFileName = getString(R.string.commons_file_name);
         int standbystate = SharedPrefs.getInt(getApplicationContext(), commonsFileName, getString(R.string.commons_standbystate_key), 1);
         int firstLaunch = SharedPrefs.getInt(getApplicationContext(), commonsFileName, getString(R.string.commons_first_launch_key), 1);
@@ -66,7 +66,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
 
         // wenn IP noch nicht gesetzt
         if (ActivitySettings.getIP(getApplicationContext()).equals(getString(R.string.preferences_ip_default))) {
-            showSnack(getString(R.string.lblNoIpSetHint), Snackbar.LENGTH_LONG, getString(R.string.lblNoIpSetAction), new View.OnClickListener() {
+            showSnack(getString(R.string.lblNoIpSetHint), Snackbar.LENGTH_INDEFINITE, getString(R.string.lblNoIpSetAction), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(ActivitySwitchedOff.this, ActivitySettings.class));
@@ -79,7 +79,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
         final CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutMainOff);
         Snackbar snack = Snackbar.make(coordinatorLayout, text, duration);
         if (actionText != null && actionListener != null) {
-            snack.setAction(text, actionListener);
+            snack.setAction(actionText, actionListener);
         }
         snack.show();
     }

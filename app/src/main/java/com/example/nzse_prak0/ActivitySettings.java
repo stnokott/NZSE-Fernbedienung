@@ -53,7 +53,7 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         final CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutSettings);
         Snackbar snack = Snackbar.make(coordinatorLayout, text, duration);
         if (actionText != null && actionListener != null) {
-            snack.setAction(text, actionListener);
+            snack.setAction(actionText, actionListener);
         }
         snack.show();
     }
