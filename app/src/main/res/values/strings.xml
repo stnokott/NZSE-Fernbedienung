@@ -33,7 +33,8 @@
     <string name="lblSettingsBackgroundImgSubtitle">Für aktuellen Kanal</string>
     <string name="lblMisc">Beispieleinstellung</string>
     <string name="lblBtnSearch">Suche</string>
-    <string name="lblBtnLive">Live</string>
+    <string name="lblVolumes">V</string>
+    <string name="lblChannels">P</string>
     <string name="lblBtnSettings">Einstellungen</string>
     <string name="lblBtnSaveSettings">Speichern</string>
     <string name="lblBtnTestConnection">Test</string>

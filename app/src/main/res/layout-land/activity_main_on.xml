@@ -48,57 +48,26 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineH1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutVolume"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineH1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guidelineV2">
 
-        <ImageButton
-            android:id="@+id/btnVolumeDown"
-            style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btn_modular_bg_left"
-            android:contentDescription="@string/descBtnVolumeDown"
-            android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
-            android:scaleType="fitCenter"
-            android:tint="@color/colorPrimaryText"
-            app:srcCompat="@drawable/ic_remove_black_36dp" />
-
-        <ImageButton
-            android:id="@+id/btnVolumeUp"
-            style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btn_modular_bg_right"
-            android:contentDescription="@string/descBtnVolumeDown"
-            android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
-            android:scaleType="fitCenter"
-            android:tint="@color/colorPrimaryText"
-            app:layout_constraintDimensionRatio="1"
-            app:srcCompat="@drawable/ic_add_black_36dp" />
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight=".5"
             android:visibility="gone">
 
             <ImageView
                 android:id="@+id/btnMute"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:clickable="true"
                 android:contentDescription="@string/descBtnMute"
                 android:focusable="true"
@@ -107,54 +76,135 @@
 
             <ImageView
                 android:id="@+id/btnMuteOverlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="@string/descBtnMute"
                 app:srcCompat="@drawable/clip_source" />
-
         </FrameLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
+            <ImageButton
+                android:id="@+id/btnVolumeDown"
+                style="@android:style/Widget.Material.Light.ImageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_modular_bg_left"
+                android:contentDescription="@string/descBtnVolumeDown"
+                android:elevation="@dimen/control_elevation_material"
+                android:padding="@dimen/control_icon_padding"
+                android:scaleType="fitCenter"
+                android:tint="@color/colorPrimaryText"
+                app:srcCompat="@drawable/ic_remove_black_36dp" />
+
+            <ImageButton
+                android:id="@+id/btnVolumeUp"
+                style="@android:style/Widget.Material.Light.ImageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_modular_bg_right"
+                android:contentDescription="@string/descBtnVolumeDown"
+                android:elevation="@dimen/control_elevation_material"
+                android:padding="@dimen/control_icon_padding"
+                android:scaleType="fitCenter"
+                android:tint="@color/colorPrimaryText"
+                app:srcCompat="@drawable/ic_add_black_36dp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/lblVolumes"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutChannel"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="horizontal"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineH2"
         app:layout_constraintTop_toTopOf="@+id/guidelineV2">
 
-        <ImageButton
-            android:id="@+id/btnChannelPrevious"
-            style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btn_modular_bg_left"
-            android:contentDescription="@string/descChannelPrev"
-            android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_keyboard_arrow_left_black_36dp"
-            android:tint="@color/colorPrimaryText" />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/btnChannelNext"
-            style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btn_modular_bg_right"
-            android:contentDescription="@string/descChannelNext"
-            android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_keyboard_arrow_right_black_36dp"
-            android:tint="@color/colorPrimaryText" />
+            <ImageButton
+                android:id="@+id/btnChannelPrevious"
+                style="@android:style/Widget.Material.Light.ImageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_modular_bg_left"
+                android:contentDescription="@string/descChannelPrev"
+                android:elevation="@dimen/control_elevation_material"
+                android:padding="@dimen/control_icon_padding"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_keyboard_arrow_left_black_36dp"
+                android:tint="@color/colorPrimaryText" />
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btnChannelNext"
+                style="@android:style/Widget.Material.Light.ImageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_modular_bg_right"
+                android:contentDescription="@string/descChannelNext"
+                android:elevation="@dimen/control_elevation_material"
+                android:padding="@dimen/control_icon_padding"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_keyboard_arrow_right_black_36dp"
+                android:tint="@color/colorPrimaryText" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/lblChannels"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/layoutMisc"
