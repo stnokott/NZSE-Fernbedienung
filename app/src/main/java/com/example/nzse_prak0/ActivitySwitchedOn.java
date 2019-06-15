@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -544,6 +543,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         int reqChooseChannel = getResources().getInteger(R.integer.activitycode_choosechannel);
         int reqChoosePip = getResources().getInteger(R.integer.activitycode_choosepip);
         int reqSettings = getResources().getInteger(R.integer.activitycode_settings);
@@ -590,7 +590,6 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         if (!success) {
             if (requestCode == getResources().getInteger(R.integer.requestcode_connectiontest)) {
                 // wenn Verbindungstest nicht erfolgreich
-                Toast.makeText(getApplicationContext(), "Verbindung zu TV verloren!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(ActivitySwitchedOn.this, ActivitySwitchedOff.class));
             } else {
                 // wenn nicht erfolgreich, prüfe Verbindung

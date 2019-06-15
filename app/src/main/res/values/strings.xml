@@ -50,6 +50,12 @@
     <string name="lbl_16_9">16:9</string>
     <string name="lblNoIpSetHint">Keine IP-Adresse eingestellt!</string>
     <string name="lblNoIpSetAction">Einstellen</string>
+    <string name="lblConnectFailure">Verbindung zu TV fehlgeschlagen!</string>
+    <string name="lblConnectSuccess">Verbindung zu TV hergestellt!</string>
+    <string name="lblConnectionLost">Verbindung zu TV verloren!</string>
+    <string name="lblScanFailure">Fehler beim Kanal-Scan!</string>
+    <string name="lblScanSuccess">Kanäle gescannt!</string>
+    <string name="lblWaiting">Bitte warten....</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>

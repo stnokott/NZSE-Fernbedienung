@@ -15,14 +15,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Switch;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.SharedPrefs;
 import com.example.nzse_prak0.helpers.ViewHelper;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
 
@@ -45,6 +47,15 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_settings, menu);
         return true;
+    }
+
+    private void showSnack(String text, int duration, @Nullable String actionText, @Nullable View.OnClickListener actionListener) {
+        final CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutSettings);
+        Snackbar snack = Snackbar.make(coordinatorLayout, text, duration);
+        if (actionText != null && actionListener != null) {
+            snack.setAction(text, actionListener);
+        }
+        snack.show();
     }
 
     @Override
@@ -143,10 +154,10 @@ public class ActivitySettings extends AppCompatActivity implements OnDownloadTas
 
             if (success) {
                 ViewHelper.setViewBackgroundTint(btnTestConnection, getColor(R.color.colorValid));
-                Toast.makeText(getApplicationContext(), "Verbindung erfolgreich!", Toast.LENGTH_SHORT).show();
+                showSnack(getString(R.string.lblConnectSuccess), Snackbar.LENGTH_SHORT, null, null);
             } else {
                 ViewHelper.setViewBackgroundTint(btnTestConnection, getColor(R.color.colorInvalid));
-                Toast.makeText(getApplicationContext(), "Verbindung fehlgeschlagen!", Toast.LENGTH_LONG).show();
+                showSnack(getString(R.string.lblConnectFailure), Snackbar.LENGTH_SHORT, null, null);
             }
 
             final Handler handler = new Handler();

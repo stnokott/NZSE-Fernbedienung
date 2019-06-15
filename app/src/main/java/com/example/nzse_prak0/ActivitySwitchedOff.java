@@ -6,8 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
@@ -66,16 +66,22 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
 
         // wenn IP noch nicht gesetzt
         if (ActivitySettings.getIP(getApplicationContext()).equals(getString(R.string.preferences_ip_default))) {
-            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
-            Snackbar snack = Snackbar.make(coordinatorLayout, getString(R.string.lblNoIpSetHint), Snackbar.LENGTH_LONG);
-            snack.setAction(getString(R.string.lblNoIpSetAction), new View.OnClickListener() {
+            showSnack(getString(R.string.lblNoIpSetHint), Snackbar.LENGTH_LONG, getString(R.string.lblNoIpSetAction), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(ActivitySwitchedOff.this, ActivitySettings.class));
                 }
             });
-            snack.show();
         }
+    }
+
+    private void showSnack(String text, int duration, @Nullable String actionText, @Nullable View.OnClickListener actionListener) {
+        final CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutMainOff);
+        Snackbar snack = Snackbar.make(coordinatorLayout, text, duration);
+        if (actionText != null && actionListener != null) {
+            snack.setAction(text, actionListener);
+        }
+        snack.show();
     }
 
     @Override
@@ -102,7 +108,7 @@ public class ActivitySwitchedOff extends AppCompatActivity implements OnDownload
             SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_standbystate_key), 0);
             finish(); // verhindert, dass man aus ActivitySwitchedOn per Back-Button zurück gehen kann
         } else {
-            Toast.makeText(getApplicationContext(), "TV aktivieren fehlgeschlagen", Toast.LENGTH_SHORT).show();
+            showSnack(getString(R.string.lblConnectFailure), Snackbar.LENGTH_SHORT, null, null);
         }
     }
 

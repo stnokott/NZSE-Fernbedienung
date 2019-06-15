@@ -9,10 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.TileAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,6 +111,15 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         return true;
     }
 
+    private void showSnack(String text, int duration, @Nullable String actionText, @Nullable View.OnClickListener actionListener) {
+        final CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutChooseChannel);
+        Snackbar snack = Snackbar.make(coordinatorLayout, text, duration);
+        if (actionText != null && actionListener != null) {
+            snack.setAction(text, actionListener);
+        }
+        snack.show();
+    }
+
     @Override
     public void onBackPressed() {
         // close search view on back button pressed
@@ -152,8 +163,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
                 if (!favsOnly) {
                     RequestTask d = new RequestTask("scanChannels=", getResources().getInteger(R.integer.requestcode_scanchannels), getApplicationContext(), ActivityChooseChannel.this);
                     d.execute();
-                    Toast t = Toast.makeText(getApplicationContext(), "Bitte warten...", Toast.LENGTH_SHORT);
-                    t.show();
+                    showSnack(getString(R.string.lblWaiting), Snackbar.LENGTH_SHORT, null, null);
 
                     btnScanChannels.setEnabled(false);
                     findViewById(R.id.recyclerViewChannel).setEnabled(false);
@@ -167,8 +177,8 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     @Override
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
         if (requestCode == getResources().getInteger(R.integer.requestcode_scanchannels) && success) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Kanäle gescannt!", Toast.LENGTH_SHORT);
-            toast.show();
+            showSnack(getString(R.string.lblScanSuccess), Snackbar.LENGTH_SHORT, null, null);
+
             try {
                 ActivitySwitchedOn.channelManager.parseJSON(jsonObj);
                 ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
@@ -177,8 +187,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
                 Log.e("onDownloadTaskCompleted", e.getMessage());
             }
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "Fehler beim Channel-Scan!", Toast.LENGTH_SHORT);
-            toast.show();
+            showSnack(getString(R.string.lblScanFailure), Snackbar.LENGTH_SHORT, null, null);
         }
 
         findViewById(R.id.btnScanChannels).setEnabled(true);
