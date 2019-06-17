@@ -1,6 +1,7 @@
 package com.example.nzse_prak0;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -168,9 +170,27 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         btnScanChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scanChannels();
+                onBtnScanChannels();
             }
         });
+    }
+
+    private void onBtnScanChannels() {
+        if (ActivitySwitchedOn.CHANNEL_MANAGER.getChannelCount() > 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ActivityChooseChannel.this);
+            builder.setMessage(getString(R.string.lblAlertScanWarning)).setTitle(getString(R.string.titleAlertScanWarning));
+            builder.setPositiveButton(getString(R.string.lblAlertConfirm), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    scanChannels();
+                }
+            });
+            builder.setNegativeButton(getString(R.string.lblAlertDeny), null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            scanChannels();
+        }
     }
 
     private void scanChannels() {
@@ -192,26 +212,28 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     private void checkIntentExtras() {
         // falls beim Starten der Aktivität Kanalscan durchgeführt werden soll
         if (getIntent().hasExtra(getString(R.string.intentExtra_doChannelscanOnEnter_key)))
-            scanChannels();
+            onBtnScanChannels();
     }
 
     @Override
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
-        if (requestCode == getResources().getInteger(R.integer.requestcode_scanchannels) && success) {
-            try {
-                ActivitySwitchedOn.CHANNEL_MANAGER.parseJSON(jsonObj);
-                ActivitySwitchedOn.CHANNEL_MANAGER.saveToJSON(getApplicationContext());
-                tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getChannels());
-                if (getIntent().hasExtra(getString(R.string.intentExtra_doChannelscanOnEnter_key))) {
-                    // falls Aktivität nur für Kanalscan gestartet wurde, kann hier beendet werden
-                    finish();
+        if (requestCode == getResources().getInteger(R.integer.requestcode_scanchannels)) {
+            if (success && jsonObj.length() > 0) {
+                try {
+                    ActivitySwitchedOn.CHANNEL_MANAGER.parseJSON(jsonObj);
+                    ActivitySwitchedOn.CHANNEL_MANAGER.saveToJSON(getApplicationContext());
+                    tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getChannels());
+                    if (getIntent().hasExtra(getString(R.string.intentExtra_doChannelscanOnEnter_key))) {
+                        // falls Aktivität nur für Kanalscan gestartet wurde, kann hier beendet werden
+                        finish();
+                    }
+                    showSnack(getString(R.string.lblScanSuccess), Snackbar.LENGTH_SHORT, null, null);
+                } catch (JSONException e) {
+                    Log.e("onDownloadTaskCompleted", e.getMessage());
                 }
-                showSnack(getString(R.string.lblScanSuccess), Snackbar.LENGTH_SHORT, null, null);
-            } catch (JSONException e) {
-                Log.e("onDownloadTaskCompleted", e.getMessage());
+            } else {
+                showSnack(getString(R.string.lblScanFailure), Snackbar.LENGTH_SHORT, null, null);
             }
-        } else {
-            showSnack(getString(R.string.lblScanFailure), Snackbar.LENGTH_SHORT, null, null);
         }
 
         findViewById(R.id.btnScanChannels).setEnabled(true);

@@ -57,15 +57,18 @@
     <string name="lblScanFailure">Fehler beim Kanal-Scan!</string>
     <string name="lblScanSuccess">Kanäle gescannt!</string>
     <string name="lblWaiting">Bitte warten....</string>
-    <string name="lblAlertScan">Für die volle Funktionalität wird ein Kanalscan benötigt.\nJetzt durchführen?</string>
-    <string name="lblAlertScanConfirm">Ja</string>
-    <string name="lblAlertScanCancel">Nein</string>
+    <string name="lblAlertScanRequired">Für die volle Funktionalität wird ein Kanalscan benötigt.\nJetzt durchführen?</string>
+    <string name="lblAlertScanWarning">Der Kanalscan wird alle Favoriten zurücksetzen</string>
+
+    <string name="lblAlertConfirm">Ja</string>
+    <string name="lblAlertDeny">Nein</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>
     <string name="titleChooseChannel">Kanal wählen</string>
 
-    <string name="titleAlertScan">Kanalscan benötigt</string>
+    <string name="titleAlertScanRequired">Kanalscan benötigt</string>
+    <string name="titleAlertScanWarning">Fortfahren?</string>
 
     <string name="lblPlayingPlaceholder">Kein Kanal gewählt</string>
 

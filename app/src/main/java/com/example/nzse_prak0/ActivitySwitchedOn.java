@@ -96,8 +96,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             // Falls noch nicht geschehen, Kanalscan-Aufforderung zeigen
             if (!getHasShownScanAlert()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivitySwitchedOn.this);
-                builder.setMessage(getString(R.string.lblAlertScan)).setTitle(getString(R.string.titleAlertScan));
-                builder.setPositiveButton(getString(R.string.lblAlertScanConfirm), new DialogInterface.OnClickListener() {
+                builder.setMessage(getString(R.string.lblAlertScanRequired)).setTitle(getString(R.string.titleAlertScanRequired));
+                builder.setPositiveButton(getString(R.string.lblAlertConfirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class);
@@ -105,7 +105,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
                         startActivityForResult(intent, getResources().getInteger(R.integer.activitycode_choosechannel_scanonly));
                     }
                 });
-                builder.setNegativeButton(R.string.lblAlertScanCancel, null);
+                builder.setNegativeButton(R.string.lblAlertDeny, null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 setHasShownScanAlert(true);
