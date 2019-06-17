@@ -198,8 +198,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         d.execute();
         showSnack(getString(R.string.lblWaiting), Snackbar.LENGTH_SHORT, null, null);
 
-        final FloatingActionButton btnScanChannels = findViewById(R.id.btnScanChannels);
-        btnScanChannels.setEnabled(false);
+        findViewById(R.id.btnScanChannels).setVisibility(View.INVISIBLE);
         findViewById(R.id.recyclerViewChannel).setEnabled(false);
         findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
         findViewById(R.id.backgroundOverlay).setVisibility(View.VISIBLE);
@@ -236,7 +235,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
             }
         }
 
-        findViewById(R.id.btnScanChannels).setEnabled(true);
+        findViewById(R.id.btnScanChannels).setVisibility(View.VISIBLE);
         findViewById(R.id.recyclerViewChannel).setEnabled(true);
         findViewById(R.id.spinnerOverlay).setVisibility(View.INVISIBLE);
         findViewById(R.id.backgroundOverlay).setVisibility(View.INVISIBLE);
