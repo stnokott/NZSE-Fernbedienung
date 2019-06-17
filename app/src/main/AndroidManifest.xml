@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ActivityChooseChannel"
-            android:label="Kanal wählen">
+            android:label="Kanal wählen"
+            android:launchMode="singleTop">
         </activity>
         <activity
             android:name=".ActivitySettings"

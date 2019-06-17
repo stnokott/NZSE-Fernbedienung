@@ -132,6 +132,10 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
 
     @Override
     public void onBackPressed() {
+        if (findViewById(R.id.backgroundOverlay).getVisibility() == View.VISIBLE) {
+            // wenn Kanalscan durchgeführt wird, verhindere Backpress
+            return;
+        }
         // close search view on back button pressed
         if (!btnSearch.isIconified()) {
             btnSearch.setIconified(true);
