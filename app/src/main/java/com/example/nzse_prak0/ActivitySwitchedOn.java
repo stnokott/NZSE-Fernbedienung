@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.example.nzse_prak0.helpers.Channel;
@@ -163,6 +164,14 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
         final Button btnChannels = findViewById(R.id.btnChannels);
         btnChannels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), getResources().getInteger(R.integer.activitycode_choosechannel));
+            }
+        });
+
+        final ConstraintLayout layoutPlayingTile = findViewById(R.id.layoutPlayingTile);
+        layoutPlayingTile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class), getResources().getInteger(R.integer.activitycode_choosechannel));
