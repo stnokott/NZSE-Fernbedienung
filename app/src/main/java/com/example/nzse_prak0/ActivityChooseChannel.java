@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityChooseChannel extends AppCompatActivity implements OnDownloadTaskCompleted {
+    private Menu mMenu;
     private TileAdapter tileAdapter;
     private SearchView btnSearch;
     boolean favsOnly = false;
@@ -74,6 +75,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_choosechannel, menu);
 
@@ -96,20 +98,25 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         btnToggleFavs.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                favsOnly = !favsOnly;
-
-                if (favsOnly) {
-                    btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_white_36dp));
-                    tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getFavoriteChannels());
-                } else {
-                    btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_border_white_36dp));
-                    tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getChannels());
-                }
+                toggleFavsOnly();
                 return false;
             }
         });
 
         return true;
+    }
+
+    private void toggleFavsOnly() {
+        favsOnly = !favsOnly;
+
+        final MenuItem btnToggleFavs = mMenu.findItem(R.id.btnToggleFavs);
+        if (favsOnly) {
+            btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_white_36dp));
+            tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getFavoriteChannels());
+        } else {
+            btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_border_white_36dp));
+            tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getChannels());
+        }
     }
 
     private void showSnack(String text, int duration, @Nullable String actionText, @Nullable View.OnClickListener actionListener) {
@@ -167,16 +174,18 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
     }
 
     private void scanChannels() {
-        if (!favsOnly) {
-            RequestTask d = new RequestTask("scanChannels=", getResources().getInteger(R.integer.requestcode_scanchannels), getApplicationContext(), ActivityChooseChannel.this);
-            d.execute();
-            showSnack(getString(R.string.lblWaiting), Snackbar.LENGTH_SHORT, null, null);
+        RequestTask d = new RequestTask("scanChannels=", getResources().getInteger(R.integer.requestcode_scanchannels), getApplicationContext(), ActivityChooseChannel.this);
+        d.execute();
+        showSnack(getString(R.string.lblWaiting), Snackbar.LENGTH_SHORT, null, null);
 
-            final FloatingActionButton btnScanChannels = findViewById(R.id.btnScanChannels);
-            btnScanChannels.setEnabled(false);
-            findViewById(R.id.recyclerViewChannel).setEnabled(false);
-            findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
-            findViewById(R.id.backgroundOverlay).setVisibility(View.VISIBLE);
+        final FloatingActionButton btnScanChannels = findViewById(R.id.btnScanChannels);
+        btnScanChannels.setEnabled(false);
+        findViewById(R.id.recyclerViewChannel).setEnabled(false);
+        findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
+        findViewById(R.id.backgroundOverlay).setVisibility(View.VISIBLE);
+
+        if (favsOnly) {
+            toggleFavsOnly();
         }
     }
 
