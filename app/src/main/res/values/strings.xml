@@ -57,10 +57,15 @@
     <string name="lblScanFailure">Fehler beim Kanal-Scan!</string>
     <string name="lblScanSuccess">Kanäle gescannt!</string>
     <string name="lblWaiting">Bitte warten....</string>
+    <string name="lblAlertScan">Für die volle Funktionalität wird ein Kanalscan benötigt.\nJetzt durchführen?</string>
+    <string name="lblAlertScanConfirm">Ja</string>
+    <string name="lblAlertScanCancel">Nein</string>
 
     <string name="titleMainOff">Fernbedienung</string>
     <string name="titleMainOn">Fernseher bedienen</string>
     <string name="titleChooseChannel">Kanal wählen</string>
+
+    <string name="titleAlertScan">Kanalscan benötigt</string>
 
     <string name="lblPlayingPlaceholder">Kein Kanal gewählt</string>
 
@@ -82,4 +87,5 @@
 
     <string name="intentExtra_channelAdapterPosition_key">channelInstancePos</string>
     <string name="intentExtra_showBackgroundImg_key">background_img</string>
+    <string name="intentExtra_doChannelscanOnEnter_key">do_channelscan</string>
 </resources>

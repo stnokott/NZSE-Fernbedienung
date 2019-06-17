@@ -2,6 +2,7 @@
 <resources>
     <!-- Request Codes für startActivityForResult -->
     <integer name="activitycode_choosechannel">1</integer>
+    <integer name="activitycode_choosechannel_scanonly">2</integer>
     <integer name="activitycode_choosepip">3</integer>
     <integer name="activitycode_settings">4</integer>
 

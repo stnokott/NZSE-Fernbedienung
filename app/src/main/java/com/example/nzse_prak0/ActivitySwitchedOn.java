@@ -2,6 +2,7 @@ package com.example.nzse_prak0;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
@@ -19,14 +20,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.example.nzse_prak0.helpers.Channel;
 import com.example.nzse_prak0.helpers.ChannelManager;
 import com.example.nzse_prak0.helpers.OnDownloadTaskCompleted;
 import com.example.nzse_prak0.helpers.RequestTask;
 import com.example.nzse_prak0.helpers.SharedPrefs;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
 
@@ -39,7 +44,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadTaskCompleted {
-    public static final ChannelManager channelManager = new ChannelManager();
+    public static final ChannelManager CHANNEL_MANAGER = new ChannelManager();
+    public static boolean HAS_SHOWN_SCAN_ALERT = false;
 
     private static final String CHANNEL_ICON_FILENAMES_DICT_FILE = "filenames.json";
     public static final Map<String, String> channelIconFilenames = new HashMap<>();
@@ -63,9 +69,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
         btnPipChange.setVisibility(View.GONE);
 
-        channelManager.loadFromJSON(getApplicationContext());
+        CHANNEL_MANAGER.loadFromJSON(getApplicationContext());
         loadIconFilenamesFromJSON();
         applyLastKnownSettings();
+        checkStatus();
 
 
         // Start debug mode and shows a status bar at the bottom
@@ -76,6 +83,46 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         d1.execute();
 
         createListeners();
+    }
+
+    private void checkStatus() {
+        final ImageButton btnChannelNext = findViewById(R.id.btnChannelNext);
+        final ImageButton btnChannelPrev = findViewById(R.id.btnChannelPrevious);
+        // prüfe, ob Kanalscan schon durchgeführt
+        if (CHANNEL_MANAGER.getChannelCount() == 0) {
+            // Channel-Buttons deaktivieren
+            setButtonEnabled(btnChannelNext, false);
+            setButtonEnabled(btnChannelPrev, false);
+            // Falls noch nicht geschehen, Kanalscan-Aufforderung zeigen
+            if (!getHasShownScanAlert()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivitySwitchedOn.this);
+                builder.setMessage(getString(R.string.lblAlertScan)).setTitle(getString(R.string.titleAlertScan));
+                builder.setPositiveButton(getString(R.string.lblAlertScanConfirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(ActivitySwitchedOn.this, ActivityChooseChannel.class);
+                        intent.putExtra(getString(R.string.intentExtra_doChannelscanOnEnter_key), 1);
+                        startActivityForResult(intent, getResources().getInteger(R.integer.activitycode_choosechannel_scanonly));
+                    }
+                });
+                builder.setNegativeButton(R.string.lblAlertScanCancel, null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                setHasShownScanAlert(true);
+            }
+        } else {
+            // Channel-Buttons aktivieren
+            setButtonEnabled(btnChannelNext, true);
+            setButtonEnabled(btnChannelPrev, true);
+        }
+    }
+
+    public static void setHasShownScanAlert(boolean bool) {
+        HAS_SHOWN_SCAN_ALERT = bool;
+    }
+
+    public static boolean getHasShownScanAlert() {
+        return HAS_SHOWN_SCAN_ALERT;
     }
 
     @Override
@@ -241,13 +288,13 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     private void nextChannel() {
         int nextIndex;
-        if (currentChannelIndex == channelManager.getChannelCount() - 1) {
+        if (currentChannelIndex == CHANNEL_MANAGER.getChannelCount() - 1 || currentChannelIndex == -1) {
             // falls Ende erreicht, fange von vorne an
             nextIndex = 0;
         } else {
             nextIndex = currentChannelIndex + 1;
         }
-        Channel channel = channelManager.getChannelAt(nextIndex);
+        Channel channel = CHANNEL_MANAGER.getChannelAt(nextIndex);
         RequestTask d = new RequestTask("channelMain=" + channel.getChannelId(), getResources().getInteger(R.integer.requestcode_channel_change), getApplicationContext(), null);
         d.execute();
 
@@ -256,13 +303,13 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     private void previousChannel() {
         int nextIndex;
-        if (currentChannelIndex == 0) {
+        if (currentChannelIndex == 0 || currentChannelIndex == -1) {
             // falls Anfang erreicht, fange von hinten an
-            nextIndex = channelManager.getChannelCount() - 1;
+            nextIndex = CHANNEL_MANAGER.getChannelCount() - 1;
         } else {
             nextIndex = currentChannelIndex - 1;
         }
-        Channel channel = channelManager.getChannelAt(nextIndex);
+        Channel channel = CHANNEL_MANAGER.getChannelAt(nextIndex);
         RequestTask d = new RequestTask("channelMain=" + channel.getChannelId(), getResources().getInteger(R.integer.requestcode_channel_change), getApplicationContext(), null);
         d.execute();
 
@@ -284,11 +331,11 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     private void toggleFavButton() {
-        Boolean isFav = channelManager.getChannelAt(currentChannelIndex).getIsFav();
+        Boolean isFav = CHANNEL_MANAGER.getChannelAt(currentChannelIndex).getIsFav();
         updateCurPlayingFavStatus(!isFav, true);
 
-        channelManager.getChannelAt(currentChannelIndex).setIsFav(!isFav);
-        channelManager.saveToJSON(getApplicationContext());
+        CHANNEL_MANAGER.getChannelAt(currentChannelIndex).setIsFav(!isFav);
+        CHANNEL_MANAGER.saveToJSON(getApplicationContext());
     }
 
     private void pipActivate() {
@@ -307,7 +354,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     private void onPipChanged() {
         if (currentPipIndex != -1) {
             final ImageButton btnPipChange = findViewById(R.id.btnPipChange);
-            Channel pipChannel = channelManager.getChannelAt(currentPipIndex);
+            Channel pipChannel = CHANNEL_MANAGER.getChannelAt(currentPipIndex);
             try (InputStream ims = getAssets().open(channelIconFilenames.get(pipChannel.getProgram()))) {
                 Drawable drawable = Drawable.createFromStream(ims, null);
                 drawable.setAlpha(150);
@@ -351,8 +398,8 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         showBackgroundImg = ActivitySettings.getShowBackgroundImg(getApplicationContext());
 
         int curChannelIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_channelindex_key), -1);
-        if (curChannelIndex != -1 && channelManager.getChannelCount() > curChannelIndex) {
-            RequestTask d = new RequestTask("channelMain=" + channelManager.getChannelAt(curChannelIndex).getChannelId(), getResources().getInteger(R.integer.requestcode_mainchannel), getApplicationContext(), ActivitySwitchedOn.this);
+        if (curChannelIndex != -1 && CHANNEL_MANAGER.getChannelCount() > curChannelIndex) {
+            RequestTask d = new RequestTask("channelMain=" + CHANNEL_MANAGER.getChannelAt(curChannelIndex).getChannelId(), getResources().getInteger(R.integer.requestcode_mainchannel), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
             setCurrentPlayingChannel(curChannelIndex);
         }
@@ -369,7 +416,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         int curPipIndex = SharedPrefs.getInt(getApplicationContext(), filename, getString(R.string.commons_pipchannel_key), -1);
         currentPipIndex = curPipIndex;
         if (curPipIndex != -1 && curPipStatus == 1) {
-            RequestTask d = new RequestTask("channelPip=" + channelManager.getChannelAt(curPipIndex).getChannelId(), getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
+            RequestTask d = new RequestTask("channelPip=" + CHANNEL_MANAGER.getChannelAt(curPipIndex).getChannelId(), getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
             onPipChanged();
         }
@@ -424,7 +471,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
 
     private void refreshCurPlayingFavStatus() {
         if (currentChannelIndex != -1) {
-            updateCurPlayingFavStatus(channelManager.getChannelAt(currentChannelIndex).getIsFav(), false);
+            updateCurPlayingFavStatus(CHANNEL_MANAGER.getChannelAt(currentChannelIndex).getIsFav(), false);
         }
     }
 
@@ -512,10 +559,10 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
     }
 
     public void setCurrentPlayingChannel(int index) {
-        if (index < 0 || index >= channelManager.getChannelCount()) {
+        if (index < 0 || index >= CHANNEL_MANAGER.getChannelCount()) {
             return;
         }
-        Channel channel = channelManager.getChannelAt(index);
+        Channel channel = CHANNEL_MANAGER.getChannelAt(index);
         SharedPrefs.setValue(getApplicationContext(), getString(R.string.commons_file_name), getString(R.string.commons_channelindex_key), index);
         TextView lblPlaying = findViewById(R.id.lblPlaying);
         lblPlaying.setText(channel.getProgram());
@@ -541,23 +588,39 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
         currentChannelIndex = index;
     }
 
+    private void showSnack(String text, int duration, @Nullable String actionText, @Nullable View.OnClickListener actionListener) {
+        final CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutMainOn);
+        Snackbar snack = Snackbar.make(coordinatorLayout, text, duration);
+        if (actionText != null && actionListener != null) {
+            snack.setAction(actionText, actionListener);
+        }
+        snack.show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         int reqChooseChannel = getResources().getInteger(R.integer.activitycode_choosechannel);
+        int reqChooseChannelScanOnly = getResources().getInteger(R.integer.activitycode_choosechannel_scanonly);
         int reqChoosePip = getResources().getInteger(R.integer.activitycode_choosepip);
         int reqSettings = getResources().getInteger(R.integer.activitycode_settings);
 
+        if (requestCode == reqChooseChannelScanOnly) {
+            checkStatus();
+            showSnack(getString(R.string.lblScanSuccess), Snackbar.LENGTH_SHORT, null, null);
+        }
+
         if (requestCode == reqChoosePip || requestCode == reqChooseChannel) {
             // für Favoriten-Speicherung
-            ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
+            ActivitySwitchedOn.CHANNEL_MANAGER.saveToJSON(getApplicationContext());
             refreshCurPlayingFavStatus(); // Favo-Status aktualisieren
+            checkStatus();
         }
 
         if (requestCode == reqChooseChannel && resultCode == Activity.RESULT_OK) {
             // Hauptkanal
             int channelManagerIndex = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
-            Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelManagerIndex);
+            Channel channelInstance = ActivitySwitchedOn.CHANNEL_MANAGER.getChannelAt(channelManagerIndex);
             RequestTask d = new RequestTask("channelMain=" + channelInstance.getChannelId(), getResources().getInteger(R.integer.requestcode_mainchannel), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();
 
@@ -567,7 +630,7 @@ public class ActivitySwitchedOn extends AppCompatActivity implements OnDownloadT
             // Pip ausgewählt
             int channelAdapterPosition = data.getIntExtra(getString(R.string.intentExtra_channelAdapterPosition_key), 0);
             currentPipIndex = channelAdapterPosition;
-            Channel channelInstance = ActivitySwitchedOn.channelManager.getChannelAt(channelAdapterPosition);
+            Channel channelInstance = ActivitySwitchedOn.CHANNEL_MANAGER.getChannelAt(channelAdapterPosition);
 
             RequestTask d = new RequestTask("showPip=1&channelPip=" + channelInstance.getChannelId(), getResources().getInteger(R.integer.requestcode_pipactivate), getApplicationContext(), ActivitySwitchedOn.this);
             d.execute();

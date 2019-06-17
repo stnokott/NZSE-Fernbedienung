@@ -60,11 +60,12 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         }
 
         createListeners(tileAdapter);
+        checkIntentExtras();
         checkNoChannelsVisible();
     }
 
     private void initTileAdapter() {
-        List<Channel> channels = new ArrayList<>(ActivitySwitchedOn.channelManager.getChannels());
+        List<Channel> channels = new ArrayList<>(ActivitySwitchedOn.CHANNEL_MANAGER.getChannels());
 
         tileAdapter = new TileAdapter(channels);
         tileAdapter.setHasStableIds(false);
@@ -99,10 +100,10 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
 
                 if (favsOnly) {
                     btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_white_36dp));
-                    tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getFavoriteChannels());
+                    tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getFavoriteChannels());
                 } else {
                     btnToggleFavs.setIcon(getDrawable(R.drawable.ic_favorite_border_white_36dp));
-                    tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getChannels());
+                    tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getChannels());
                 }
                 return false;
             }
@@ -141,7 +142,7 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
 
                 String curChannelName = viewHolder.getChannelTile().getChannelInstance().getChannelId();
                 // um auch bei gefilterter RecyclerView (z.B. favOnly) den korrekten Index zu bekommen
-                int curChannelAdapterIndex = ActivitySwitchedOn.channelManager.getIndexFromChannelName(curChannelName);
+                int curChannelAdapterIndex = ActivitySwitchedOn.CHANNEL_MANAGER.getIndexFromChannelName(curChannelName);
                 returnIntent.putExtra(getString(R.string.intentExtra_channelAdapterPosition_key), curChannelAdapterIndex);
 
                 setResult(Activity.RESULT_OK, returnIntent);
@@ -160,29 +161,43 @@ public class ActivityChooseChannel extends AppCompatActivity implements OnDownlo
         btnScanChannels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!favsOnly) {
-                    RequestTask d = new RequestTask("scanChannels=", getResources().getInteger(R.integer.requestcode_scanchannels), getApplicationContext(), ActivityChooseChannel.this);
-                    d.execute();
-                    showSnack(getString(R.string.lblWaiting), Snackbar.LENGTH_SHORT, null, null);
-
-                    btnScanChannels.setEnabled(false);
-                    findViewById(R.id.recyclerViewChannel).setEnabled(false);
-                    findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
-                    findViewById(R.id.backgroundOverlay).setVisibility(View.VISIBLE);
-                }
+                scanChannels();
             }
         });
+    }
+
+    private void scanChannels() {
+        if (!favsOnly) {
+            RequestTask d = new RequestTask("scanChannels=", getResources().getInteger(R.integer.requestcode_scanchannels), getApplicationContext(), ActivityChooseChannel.this);
+            d.execute();
+            showSnack(getString(R.string.lblWaiting), Snackbar.LENGTH_SHORT, null, null);
+
+            final FloatingActionButton btnScanChannels = findViewById(R.id.btnScanChannels);
+            btnScanChannels.setEnabled(false);
+            findViewById(R.id.recyclerViewChannel).setEnabled(false);
+            findViewById(R.id.spinnerOverlay).setVisibility(View.VISIBLE);
+            findViewById(R.id.backgroundOverlay).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void checkIntentExtras() {
+        // falls beim Starten der Aktivität Kanalscan durchgeführt werden soll
+        if (getIntent().hasExtra(getString(R.string.intentExtra_doChannelscanOnEnter_key)))
+            scanChannels();
     }
 
     @Override
     public void onDownloadTaskCompleted(int requestCode, Boolean success, JSONObject jsonObj) {
         if (requestCode == getResources().getInteger(R.integer.requestcode_scanchannels) && success) {
-            showSnack(getString(R.string.lblScanSuccess), Snackbar.LENGTH_SHORT, null, null);
-
             try {
-                ActivitySwitchedOn.channelManager.parseJSON(jsonObj);
-                ActivitySwitchedOn.channelManager.saveToJSON(getApplicationContext());
-                tileAdapter.setChannelList(ActivitySwitchedOn.channelManager.getChannels());
+                ActivitySwitchedOn.CHANNEL_MANAGER.parseJSON(jsonObj);
+                ActivitySwitchedOn.CHANNEL_MANAGER.saveToJSON(getApplicationContext());
+                tileAdapter.setChannelList(ActivitySwitchedOn.CHANNEL_MANAGER.getChannels());
+                if (getIntent().hasExtra(getString(R.string.intentExtra_doChannelscanOnEnter_key))) {
+                    // falls Aktivität nur für Kanalscan gestartet wurde, kann hier beendet werden
+                    finish();
+                }
+                showSnack(getString(R.string.lblScanSuccess), Snackbar.LENGTH_SHORT, null, null);
             } catch (JSONException e) {
                 Log.e("onDownloadTaskCompleted", e.getMessage());
             }

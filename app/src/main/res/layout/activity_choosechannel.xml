@@ -25,11 +25,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/lblNoChannels"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/lblNoChannels"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recyclerViewChannel"
+            tools:visibility="invisible" />
+
         <View
             android:id="@+id/backgroundOverlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="#809E9E9E"
+            android:background="#BF9E9E9E"
             android:clickable="true"
             android:focusable="true"
             android:visibility="invisible"
@@ -50,19 +63,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/recyclerViewChannel" />
-
-        <TextView
-            android:id="@+id/lblNoChannels"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="@string/lblNoChannels"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/recyclerViewChannel"
-            tools:visibility="invisible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

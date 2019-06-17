@@ -1,383 +1,391 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayoutMainOn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActivitySwitchedOn">
 
-    <ImageButton
-        android:id="@+id/btnSwitchOff"
-        style="@android:style/Widget.Material.Light.ImageButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:adjustViewBounds="true"
-        android:backgroundTint="@color/colorPrimary"
-        android:backgroundTintMode="src_over"
-        android:contentDescription="@string/descBtnPower"
-        android:elevation="@dimen/control_elevation_material"
-        android:padding="20dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineV2"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineH1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_power_settings_new_white_36dp" />
-
-    <Button
-        android:id="@+id/btnChannels"
-        style="@android:style/Widget.Material.Light.Button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:elevation="@dimen/control_elevation_material"
-        android:padding="22dp"
-        android:text="@string/lblBtnChannels"
-        android:textColor="@color/colorPrimaryText"
-
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@id/guidelineV2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineH1"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutVolume"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineH1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineV2">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/btnMute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:contentDescription="@string/descBtnMute"
-                android:focusable="true"
-                android:tint="@color/colorPrimaryText"
-                app:srcCompat="@drawable/ic_volume_up_black_36dp" />
-
-            <ImageView
-                android:id="@+id/btnMuteOverlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/descBtnMute"
-                app:srcCompat="@drawable/clip_source" />
-        </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/btnVolumeDown"
-                style="@android:style/Widget.Material.Light.ImageButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_modular_bg_left"
-                android:contentDescription="@string/descBtnVolumeDown"
-                android:elevation="@dimen/control_elevation_material"
-                android:padding="@dimen/control_icon_padding"
-                android:scaleType="fitCenter"
-                android:tint="@color/colorPrimaryText"
-                app:srcCompat="@drawable/ic_remove_black_36dp" />
-
-            <ImageButton
-                android:id="@+id/btnVolumeUp"
-                style="@android:style/Widget.Material.Light.ImageButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_modular_bg_right"
-                android:contentDescription="@string/descBtnVolumeDown"
-                android:elevation="@dimen/control_elevation_material"
-                android:padding="@dimen/control_icon_padding"
-                android:scaleType="fitCenter"
-                android:tint="@color/colorPrimaryText"
-                app:srcCompat="@drawable/ic_add_black_36dp" />
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:text="@string/lblVolumes"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:typeface="sans"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutChannel"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineH2"
-        app:layout_constraintTop_toTopOf="@+id/guidelineV2">
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/btnChannelPrevious"
-                style="@android:style/Widget.Material.Light.ImageButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_modular_bg_left"
-                android:contentDescription="@string/descChannelPrev"
-                android:elevation="@dimen/control_elevation_material"
-                android:padding="@dimen/control_icon_padding"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_keyboard_arrow_left_black_36dp"
-                android:tint="@color/colorPrimaryText" />
-
-            <ImageButton
-                android:id="@+id/btnChannelNext"
-                style="@android:style/Widget.Material.Light.ImageButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_modular_bg_right"
-                android:contentDescription="@string/descChannelNext"
-                android:elevation="@dimen/control_elevation_material"
-                android:padding="@dimen/control_icon_padding"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_keyboard_arrow_right_black_36dp"
-                android:tint="@color/colorPrimaryText" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:text="@string/lblChannels"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:typeface="sans"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutMisc"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:animateLayoutChanges="true"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineH2"
-        app:layout_constraintStart_toStartOf="@+id/guidelineH1"
-        app:layout_constraintTop_toTopOf="@+id/guidelineV2">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ActivitySwitchedOn">
 
         <ImageButton
-            android:id="@+id/btnPipToggle"
+            android:id="@+id/btnSwitchOff"
             style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/descBtnPiP"
-            android:elevation="@dimen/control_elevation_material"
-            android:scaleType="centerInside"
-            android:tint="@color/colorPrimaryText"
-            app:srcCompat="@drawable/ic_picture_in_picture_black_36dp" />
-
-        <ImageButton
-            android:id="@+id/btnPipChange"
-            style="@android:style/Widget.Material.Light.ImageButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/lblBtnPipSwap"
-            android:elevation="@dimen/control_elevation_material"
-            android:padding="@dimen/control_icon_padding"
-            android:scaleType="centerInside"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_swap_horiz_black_36dp" />
-
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutPlayingBar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineV3">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutPlayingTile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/frameLayout"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTintMode="src_over"
+            android:contentDescription="@string/descBtnPower"
+            android:elevation="@dimen/control_elevation_material"
+            android:padding="20dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineV2"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineH1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_power_settings_new_white_36dp" />
 
-            <ImageView
-                android:id="@+id/imgCurrentChannel"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:alpha="0.3"
-                android:backgroundTint="#FFFFFF"
-                android:contentDescription="@string/descCurrentChannel"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/lblPlaying"
+        <Button
+            android:id="@+id/btnChannels"
+            style="@android:style/Widget.Material.Light.Button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:elevation="@dimen/control_elevation_material"
+            android:padding="22dp"
+            android:text="@string/lblBtnChannels"
+            android:textColor="@color/colorPrimaryText"
+
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@id/guidelineV2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineH1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutVolume"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineH1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineV2">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/btnMute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:contentDescription="@string/descBtnMute"
+                    android:focusable="true"
+                    android:tint="@color/colorPrimaryText"
+                    app:srcCompat="@drawable/ic_volume_up_black_36dp" />
+
+                <ImageView
+                    android:id="@+id/btnMuteOverlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/descBtnMute"
+                    app:srcCompat="@drawable/clip_source" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lblPlaying" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/btnVolumeDown"
+                    style="@android:style/Widget.Material.Light.ImageButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_modular_bg_left"
+                    android:contentDescription="@string/descBtnVolumeDown"
+                    android:elevation="@dimen/control_elevation_material"
+                    android:padding="@dimen/control_icon_padding"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/colorPrimaryText"
+                    app:srcCompat="@drawable/ic_remove_black_36dp" />
+
+                <ImageButton
+                    android:id="@+id/btnVolumeUp"
+                    style="@android:style/Widget.Material.Light.ImageButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_modular_bg_right"
+                    android:contentDescription="@string/descBtnVolumeDown"
+                    android:elevation="@dimen/control_elevation_material"
+                    android:padding="@dimen/control_icon_padding"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/colorPrimaryText"
+                    app:srcCompat="@drawable/ic_add_black_36dp" />
+            </LinearLayout>
+
 
             <TextView
-                android:id="@+id/lblPlaying"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:text="@string/lblPlayingPlaceholder"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/white"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnPlayingFavorite"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/lblCurrentChannel"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lblCurrentChannel"
-                android:textColor="@color/colorPrimaryLight"
-                android:textSize="18sp"
-                android:visibility="invisible"
+                android:clickable="false"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="@string/lblVolumes"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
-            <ImageButton
-                android:id="@+id/btnPlayingFavorite"
-                style="@android:style/Widget.Material.Light.ImageButton"
-                android:layout_width="40dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="#00FFFFFF"
-                android:contentDescription="@string/descBtnFavs"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_favorite_anim_white_36dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutChannel"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="@+id/guidelineH2"
+            app:layout_constraintTop_toTopOf="@+id/guidelineV2">
 
-            <ImageButton
-                android:id="@+id/btnPause"
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="#00FFFFFF"
-                android:contentDescription="@string/descBtnPause"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_pause_black_nopadding_36dp"
-                android:tint="@android:color/white" />
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </FrameLayout>
+                <ImageButton
+                    android:id="@+id/btnChannelPrevious"
+                    style="@android:style/Widget.Material.Light.ImageButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_modular_bg_left"
+                    android:contentDescription="@string/descChannelPrev"
+                    android:elevation="@dimen/control_elevation_material"
+                    android:padding="@dimen/control_icon_padding"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_keyboard_arrow_left_black_36dp"
+                    android:tint="@color/colorPrimaryText" />
+
+                <ImageButton
+                    android:id="@+id/btnChannelNext"
+                    style="@android:style/Widget.Material.Light.ImageButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_modular_bg_right"
+                    android:contentDescription="@string/descChannelNext"
+                    android:elevation="@dimen/control_elevation_material"
+                    android:padding="@dimen/control_icon_padding"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_36dp"
+                    android:tint="@color/colorPrimaryText" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="@string/lblChannels"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutMisc"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:animateLayoutChanges="true"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineV3"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineH2"
+            app:layout_constraintStart_toStartOf="@+id/guidelineH1"
+            app:layout_constraintTop_toTopOf="@+id/guidelineV2">
+
+            <ImageButton
+                android:id="@+id/btnPipToggle"
+                style="@android:style/Widget.Material.Light.ImageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/descBtnPiP"
+                android:elevation="@dimen/control_elevation_material"
+                android:scaleType="centerInside"
+                android:tint="@color/colorPrimaryText"
+                app:srcCompat="@drawable/ic_picture_in_picture_black_36dp" />
+
+            <ImageButton
+                android:id="@+id/btnPipChange"
+                style="@android:style/Widget.Material.Light.ImageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/lblBtnPipSwap"
+                android:elevation="@dimen/control_elevation_material"
+                android:padding="@dimen/control_icon_padding"
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_swap_horiz_black_36dp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutPlayingBar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guidelineV3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutPlayingTile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imgCurrentChannel"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:alpha="0.3"
+                    android:backgroundTint="#FFFFFF"
+                    android:contentDescription="@string/descCurrentChannel"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/lblPlaying"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/lblPlaying" />
+
+                <TextView
+                    android:id="@+id/lblPlaying"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:text="@string/lblPlayingPlaceholder"
+                    android:textAlignment="viewStart"
+                    android:textColor="@android:color/white"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnPlayingFavorite"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lblCurrentChannel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblCurrentChannel"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:textSize="18sp"
+                    android:visibility="invisible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnPlayingFavorite"
+                    style="@android:style/Widget.Material.Light.ImageButton"
+                    android:layout_width="40dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="#00FFFFFF"
+                    android:contentDescription="@string/descBtnFavs"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_favorite_anim_white_36dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/btnPause"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="#00FFFFFF"
+                    android:contentDescription="@string/descBtnPause"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_pause_black_nopadding_36dp"
+                    android:tint="@android:color/white" />
+
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.40117416" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineV3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.8" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineH1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineH2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineV1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineV2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.40117416" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineV3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineH1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.33" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineH2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.66" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
